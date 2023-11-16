@@ -20,7 +20,7 @@ def get_sos():
 
 
 def get_vt():
-    url = API_BASE_URL + '/positions?lowerLeftLat=57.721723&lowerLeftLong=12.011882&upperRightLat=57.737549&upperRightLong=12.039268&limit=100'
+    url = API_BASE_URL_VT + '/positions?lowerLeftLat=57.721723&lowerLeftLong=12.011882&upperRightLat=57.737549&upperRightLong=12.039268&limit=100'
     headers = {
         'Authorization': 'Bearer ' + ACCESS_TOKEN_VT
     }
