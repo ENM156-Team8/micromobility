@@ -2,7 +2,7 @@ import requests
 import json
 
 
-with open("api-token.txt", "r") as apiTokenFile:
+with open("apiToken.txt", "r") as apiTokenFile:
     apiTokenLines = apiTokenFile.readlines()
 
 
@@ -14,6 +14,7 @@ APPID_SOS = apiTokenLines[1].strip()
 def main():
     print("Hello World!")
     #get_sos()
+    
     
 
 
