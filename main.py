@@ -2,16 +2,19 @@ import requests
 import json
 
 
+with open("api-token.txt", "r") as apiTokenFile:
+    apiTokenLines = apiTokenFile.readlines()
 
 
 API_BASE_URL_VT = 'https://ext-api.vasttrafik.se/pr/v4'
-ACCESS_TOKEN_VT = ''
-APPID_SOS = ''
+ACCESS_TOKEN_VT = apiTokenLines[0].strip()
+APPID_SOS = apiTokenLines[1].strip()
 
 
 def main():
     print("Hello World!")
-    get_sos()
+    #get_sos()
+    
 
 
 def get_sos():
