@@ -1,5 +1,27 @@
 import requests
 import json
+from ast import literal_eval
+
+class sosStation:
+    def __init__(self, name, lat, long, dist):
+        self.name = name
+        self.lat = lat
+        self.long = long
+        self.dist = dist
+
+    def show(self):
+        return f'{self.name, self.lat, self.long, self.dist}'
+    
+class vtStation: 
+    def __init__(self, name, gid, lat, long, dist):
+        self.name = name
+        self.gid = gid
+        self.lat = lat
+        self.long = long
+        self.dist = dist 
+
+    def show(self):
+        return f'{self.name, self.gid, self.lat, self.long, self.dist}' 
 
 
 with open("apiToken.txt", "r") as apiTokenFile:
@@ -13,28 +35,52 @@ APPID_SOS = apiTokenLines[1].strip()
 
 def main():
     print("Hello World!")
-    #get_sos()
-    
+    sosData = get_sos()
+    sSos1 = formatResponseSos(sosData)
+    for n in sSos1:
+        print(n.show())
+
+    vtData = get_vt()
+    sVt1 = formatResponseVt(vtData)
+    for n in sVt1: 
+        print(n.show())
+
+
+def formatResponseVt(jDataStr): 
+    jData = json.loads(jDataStr)
+    stations = []
+    for n in jData["results"]: 
+        stations.append(vtStation(n["name"], n["gid"], n["latitude"], n["longitude"], n["straightLineDistanceInMeters"]))
+    return stations
     
 
+def formatResponseSos(jdata):
+    stations = []
+    for n in jdata: 
+        stations.append(sosStation(n['Name'], n['Lat'], n['Long'], n['Distance']))
+    return stations
 
 def get_sos():
     r = requests.get('https://data.goteborg.se/SelfServiceBicycleService/v2.0/Stations/' + APPID_SOS + '?getclosingperiods=500&latitude=57.687274&longitude=11.979054&radius=500&format=json'
                      )
-    print("test sos")
-    print(r)
-    print(r.json())
+    print("Styr&Ställ")
+    #print(r)
+    return(r.json())
 
 
 def get_vt():
-    url = API_BASE_URL_VT + '/positions?lowerLeftLat=57.721723&lowerLeftLong=12.011882&upperRightLat=57.737549&upperRightLong=12.039268&limit=100'
+    url = API_BASE_URL_VT + '/locations/by-coordinates?latitude=57.708734&longitude=11.974764&radiusInMeters=500&limit=10&offset=0'
     headers = {
         'Authorization': 'Bearer ' + ACCESS_TOKEN_VT
     }
-    res = requests.get(url, headers=headers)
-    print("test vt")
-    print(res)
-    print(res.content)
+    response = requests.get(url, headers=headers)
+    data = literal_eval(response.content.decode('utf8'))
+    jsonData = json.dumps(data, indent=4, sort_keys=True)
+
+    print('- ' * 20)
+    print("Västtrafik")
+    #print(jsonData)
+    return(jsonData)
 
 
 if __name__ == '__main__':
