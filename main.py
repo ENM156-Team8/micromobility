@@ -2,14 +2,22 @@ import json
 import requests
 from enum import Enum
 
+with open("apiToken.txt", "r") as apiTokenFile:
+    apiTokenLines = apiTokenFile.readlines()
+
+ACCESS_TOKEN_VT = apiTokenLines[0].strip()
 
 apiBaseUrlVt = 'https://ext-api.vasttrafik.se/pr/v4'
 appIdSos = ''
-accessTokenVt = ''
+accessTokenVt = ACCESS_TOKEN_VT
 vtHeaders = {
     'Authorization': 'Bearer ' + accessTokenVt
 }
 
+# Enums used to fetch different data from vtApi
+# POSITIONS: Returns journey positions within a bounding box
+# JOURNEY: Returns journeys matching the specified search parameters
+# LOCATIONS: Returns locations matching the specified text (stop areas, addresses, points of interest and meta-stations)
 vtApiType = Enum('vtApiType', ['POSITIONS', 'JOURNEY', 'LOCATIONS'])
 
 
