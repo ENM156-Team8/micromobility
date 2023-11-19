@@ -3,6 +3,84 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>Micromobility</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <div class="centered-body">
+            <h1>Search your trip</h1>
+            <p>Click the button to get your coordinates.</p>
+
+            <form id="tripForm">
+                <button type="button" onclick="getLocation()">Get current Position</button>
+                <p id="displayStartLocation"></p>
+                <input type="hidden" name="startLocation" id="startLocation" />
+            
+                <p>Enter the destination coordinates:</p>
+                <input type="text" name="destinationLocation" id="destinationLocation" placeholder="latitude, longitude" />
+                <button type="submit">Submit</button>
+            </form>
+            
+            <div id="output"></div>
+
+        </div>
+
+        <script>
+            const x = document.getElementById("displayStartLocation");
+            const startLocationInput = document.getElementById("startLocation");
+        
+            function getLocation() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(showPosition);
+                } else { 
+                    x.innerHTML = "Geolocation is not supported by this browser.";
+                }
+            }
+        
+            function showPosition(position) {
+                const coords = position.coords.latitude + ", " + position.coords.longitude;
+                x.innerHTML = coords;
+                startLocationInput.value = coords;
+            }
+
+            document.getElementById('tripForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                var startLocation = document.querySelector("#startLocation").value;
+                var destinationLocation = document.querySelector("#destinationLocation").value;
+
+                fetch('http://localhost:5000/submitTrip', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        startLocation: startLocation,
+                        destinationLocation: destinationLocation,
+                    }),
+                })
+                .then(response => {
+                    console.log('Server Response:', response);
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Data:', data);
+                    document.querySelector("#output").innerHTML = data.message;
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+            });
+        </script>
+    </body>  
+</html>
+
+
+<!-- <!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
         <title>Pyscript test</title>
         <script type="module" src="https://pyscript.net/releases/2023.11.1/core.js"></script>
         <link rel="stylesheet" href="styles.css">
@@ -18,6 +96,6 @@
                 <div id="output"></div>
             </div>
         </div>
-        <script type="py" src="./webApp.py" config="./pyscript.json"></script>
+        <script type="py" src="../webApp.py" config="./pyscript.json"></script>
     </body>  
-</html>
+</html> -->

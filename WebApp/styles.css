@@ -8,6 +8,7 @@ body {
     margin: 0;
     box-sizing: border-box;
     padding-top: 20px; /* add some space at the top */
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .centered-body {
