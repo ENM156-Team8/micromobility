@@ -5,28 +5,38 @@ from enum import Enum
 
 #Class for a Styr&Ställ station
 class sosStation:
-    def __init__(self, name, lat, long, dist, open, availableBikes):
+    def __init__(self, name, latitude, longitude, distance, open, availableBikes):
         self.name = name
-        self.lat = lat
-        self.long = long
-        self.dist = dist
+        self.latitude = latitude
+        self.longitude = longitude
+        self.distance = distance
         self.open = open
         self.availableBikes = availableBikes
 
     def show(self):
-        return f'{self.name, self.lat, self.long, self.dist, self.open, self.availableBikes}'
+        return f'{self.name, self.latitude, self.longitude, self.distance, self.open, self.availableBikes}'
 
 #Class for a Västtrafik station
 class vtStation:
-    def __init__(self, name, gid, lat, long, dist):
+    def __init__(self, name, gid, latitude, longitude, distance):
         self.name = name
         self.gid = gid
-        self.lat = lat
-        self.long = long
-        self.dist = dist
+        self.latitude = latitude
+        self.longitude = longitude
+        self.distance = distance
     
     def show(self):
-        return f'{self.name,self.gid, self.lat, self.long, self.dist}'
+        return f'{self.name,self.gid, self.latitude, self.longitude, self.distance}'
+
+class vtPosition:
+    def __init__(self, name, direction, latitude, longitude, transportMode):
+        self.name = name
+        self.direction = direction
+        self.latitude = latitude
+        self.longitude = longitude
+        self.transportMode = transportMode
+    def show(self):
+        return f'{self.name, self.direction, self. latitude, self.longitude, self.transportMode}'
 
 class coordinatePair:
     def __init__(self, latitude: int, longitude: int):
@@ -56,6 +66,7 @@ vtHeaders = {
 # JOURNEY: Returns journeys matching the specified search parameters
 # LOCATIONS: Returns locations matching the specified text (stop areas, addresses, points of interest and meta-stations)
 vtApiType = Enum('vtApiType', ['POSITIONS', 'JOURNEY', 'LOCATIONS'])
+vtResponseType = Enum('vtResponseType', ['POSITIONS', 'JOURNEY', 'LOCATIONS'])
 
 
 
@@ -71,12 +82,12 @@ def main():
     # getGid(vtTestCordStart)
    
     
-    sSos1 = formatResponseSos(sosData)
-    for n in sSos1:
-        print(n.show())
+    # sSos1 = formatResponseSos(sosData)
+    # for n in sSos1:
+    #     print(n.show())
 
-    sVt1 = formatResponseVtLocations(vtData)
-    for n in sVt1:
+    vt = formatResponseVt(vtData, vtResponseType.LOCATIONS)
+    for n in vt:
         print(n.show())
     
 #Takes the response from the Styr&Ställ API and returns a list of the stations and their status. 
@@ -86,14 +97,30 @@ def formatResponseSos(jData):
        stations.append(sosStation(n['Name'], n['Lat'], n['Long'], n['Distance'], n['IsOpen'], n['AvailableBikes']))
     return stations
     
-#Takes the response from the Västtrafik API and returns a list of the stations and their status. 
-def formatResponseVtLocations(jData):
-    stations = []
-    for n in jData['results']:
+#Takes the response from the Västtrafik API and returns a condensed list of the wanted attributes.
+#NOTE: Not finished, needs logic for the case: .JOURNEY
+def formatResponseVt(jData, type:vtResponseType):
+    list = []
+    match type:
+        case vtResponseType.LOCATIONS:
+            for n in jData['results']:
+                list.append(vtStation(n['name'], n['gid'], n['latitude'], n['longitude'], n['straightLineDistanceInMeters']))
+            
+        case vtResponseType.POSITIONS:
+            for n in jData:
+                list.append(vtPosition(n['name'], n['direction'], n['latitude'], n['longitude'], n['line']['transportMode']))
+            
+        case vtResponseType.JOURNEY:
+            print("NOTE: Not implemented.")
+            exit()
         
-        stations.append(vtStation(n['name'], n['gid'], n['latitude'], n['longitude'], n['straightLineDistanceInMeters']))
-    return stations
+        case _:
+            print("Invalid vtResponseType" + vtResponseType)
+            exit()
 
+    return list
+
+    
 
 
 def apiCallerSos(center: coordinatePair) -> dict:
