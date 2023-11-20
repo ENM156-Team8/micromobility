@@ -2,22 +2,18 @@ import requests
 import json
 from ast import literal_eval
 
-class sosStation:
-    def __init__(self, name, lat, long, dist):
-        self.name = name
-        self.lat = lat
-        self.long = long
-        self.dist = dist
 
 class sosStation:
-    def __init__(self, name, lat, long, dist):
+    def __init__(self, name, lat, long, dist, open, availableBikes):
         self.name = name
         self.lat = lat
         self.long = long
         self.dist = dist
+        self.open = open
+        self.availableBikes = availableBikes
 
     def show(self):
-        return f'{self.name, self.lat, self.long, self.dist}'
+        return f'{self.name, self.lat, self.long, self.dist, self.open, self.availableBikes}'
     
 class vtStation:
     def __init__(self, name, gid, lat, long, dist):
@@ -55,7 +51,7 @@ def main():
 def formatResponseSos(jData):
     stations = []
     for n in jData:
-       stations.append(sosStation(n['Name'], n['Lat'], n['Long'], n['Distance']))
+       stations.append(sosStation(n['Name'], n['Lat'], n['Long'], n['Distance'], n['IsOpen'], n['AvailableBikes']))
     return stations
     
 def formatResponseVt(jDataStr):
@@ -65,11 +61,6 @@ def formatResponseVt(jDataStr):
         stations.append(vtStation(n["name"], n["gid"], n["latitude"], n["longitude"], n["straightLineDistanceInMeters"]))
     return stations
 
-def formatResponseSos(jdata):
-    stations = []
-    for n in jdata: 
-        stations.append(sosStation(n['Name'], n['Lat'], n['Long'], n['Distance']))
-    return stations
 
 
 def get_sos():
