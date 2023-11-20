@@ -1,5 +1,6 @@
 import json
 import requests
+import pprint
 from enum import Enum
 
 with open("apiToken.txt", "r") as apiTokenFile:
@@ -18,7 +19,7 @@ vtHeaders = {
 # POSITIONS: Returns journey positions within a bounding box
 # JOURNEY: Returns journeys matching the specified search parameters
 # LOCATIONS: Returns locations matching the specified text (stop areas, addresses, points of interest and meta-stations)
-vtApiType = Enum('vtApiType', ['POSITIONS', 'JOURNEY', 'LOCATIONS'])
+vtApiType = Enum('vtApiType', ['POSITIONS', 'JOURNEY', 'LOCATIONS', 'LOCATIONSBYTEXT'])
 
 
 class coordinatePair:
@@ -33,8 +34,11 @@ def main():
     # apiCallerSos(sosTestCord)
     vtTestCordStart = coordinatePair(57.721723, 11.974764)
     vtTestCordEnd = coordinatePair(57.737549, 12.039268)
-    # apiCallerVt(vtTestCordStart, vtTestCordEnd, vtApiType.POSITIONS)
-    getGid(vtTestCordStart)
+    #apiCallerVt(vtTestCordStart, vtTestCordEnd, vtApiType.POSITIONS)
+    #getGid(vtTestCordStart)
+    #apiCallerVt(vtTestCordStart,vtTestCordEnd,vtApiType.LOCATIONSBYTEXT)
+    #getCordByName()
+    getTripByTram("Chalmers", "Korsvägen")
 
 
 def apiCallerSos(center: coordinatePair) -> dict:
@@ -65,6 +69,7 @@ def apiCallerVt(start: coordinatePair, end: coordinatePair, apiType: vtApiType) 
             exit()
 
     url = apiBaseUrlVt + urlEnd
+    #print(url)
     return requestHandler(url, vtHeaders)
 
 
@@ -90,9 +95,26 @@ def getGid(coordinatePair: coordinatePair) -> int:
         coordinatePair.longitude) + '&radiusInMeters=' + str(radius) + '&limit='+str(limit) + '&offset=0'
     response = requestHandler(apiBaseUrlVt + urlEnd, vtHeaders)
     closestResult = response["results"][0]
-    print(closestResult)
+    #print(closestResult)
     return closestResult.get("gid", None)
 
+# lite fulkod :)
+# call api with name of station 
+def apiCallerVtByName(station: str) -> coordinatePair:
+    urlEnd = '/locations/by-text?q=' + station + '&limit=10&offset=0'
+    url = apiBaseUrlVt + urlEnd
+    return requestHandler(url, vtHeaders)
 
+def getCordByName(station: str) -> coordinatePair: # output. format json response and receive time
+    data = apiCallerVtByName(station)
+    lat = data.get("results")[0].get("latitude")
+    long = data.get("results")[0].get("longitude")
+    return coordinatePair(lat,long) 
+
+def getTripByTram(start: str, end: str):
+    data = apiCallerVt(getCordByName(start), getCordByName(end), vtApiType.JOURNEY)
+    print(json.dumps(data.get("results")[0], indent=4, sort_keys=True))
+
+    
 if __name__ == '__main__':
     main()
