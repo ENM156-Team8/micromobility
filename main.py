@@ -1,3 +1,4 @@
+import json
 import requests
 import json
 from ast import literal_eval
@@ -35,9 +36,46 @@ with open("apiToken.txt", "r") as apiTokenFile:
 API_BASE_URL_VT = 'https://ext-api.vasttrafik.se/pr/v4'
 ACCESS_TOKEN_VT = apiTokenLines[0].strip()
 APPID_SOS = apiTokenLines[1].strip()
+from enum import Enum
+
+
+def getTokens():
+    with open("apiToken.txt", "r") as apiTokenFile:
+        apiTokenLines = apiTokenFile.readlines()
+    vtToken = apiTokenLines[0].strip()
+    sosToken = apiTokenLines[1].strip()
+    return {"vt": vtToken, "sos": sosToken}
+
+
+apiBaseUrlVt = 'https://ext-api.vasttrafik.se/pr/v4'
+tokens = getTokens()
+appIdSos = tokens.get("sos", '')
+accessTokenVt = tokens.get("vt", '')
+vtHeaders = {
+    'Authorization': 'Bearer ' + accessTokenVt
+}
+
+# Enums used to fetch different data from vtApi
+# POSITIONS: Returns journey positions within a bounding box
+# JOURNEY: Returns journeys matching the specified search parameters
+# LOCATIONS: Returns locations matching the specified text (stop areas, addresses, points of interest and meta-stations)
+vtApiType = Enum('vtApiType', ['POSITIONS', 'JOURNEY', 'LOCATIONS'])
+
+
+class coordinatePair:
+    def __init__(self, latitude: int, longitude: int):
+        self.latitude = latitude
+        self.longitude = longitude
 
 
 def main():
+    print("Main running")
+    sosTestCord = coordinatePair(57.687274, 11.979054)
+    # apiCallerSos(sosTestCord)
+    vtTestCordStart = coordinatePair(57.721723, 11.974764)
+    vtTestCordEnd = coordinatePair(57.737549, 12.039268)
+    apiCallerVt(vtTestCordStart, vtTestCordEnd, vtApiType.POSITIONS)
+    # getGid(vtTestCordStart)
     print("Hello World!")
     sosData = get_sos()
     sSos1 = formatResponseSos(sosData)
@@ -65,29 +103,61 @@ def formatResponseVt(jDataStr):
 
 
 
-def get_sos():
-    r = requests.get('https://data.goteborg.se/SelfServiceBicycleService/v2.0/Stations/' + APPID_SOS + '?getclosingperiods=500&latitude=57.687274&longitude=11.979054&radius=500&format=json'
-                     )
-    print("Styr och ställ")
-    print(r)
-    #print(r.json())
-    return r.json()
+def apiCallerSos(center: coordinatePair) -> dict:
+    radius = 500  # meters
+    url = 'https://data.goteborg.se/SelfServiceBicycleService/v2.0/Stations/' + appIdSos + '?getclosingperiods=500&latitude=' + \
+        str(center.latitude) + '&longitude=' + str(center.longitude) + \
+        '&radius=' + str(radius) + '&format=json'
+    return requestHandler(url, {})
 
 
-def get_vt():
-    url = API_BASE_URL_VT + '/locations/by-coordinates?latitude=57.708734&longitude=11.974764&radiusInMeters=500&limit=10&offset=0'
-    headers = {
-        'Authorization': 'Bearer ' + ACCESS_TOKEN_VT
-    }
-    
+def apiCallerVt(start: coordinatePair, end: coordinatePair, apiType: vtApiType) -> str:
+    match apiType:
+        case apiType.POSITIONS:
+            urlEnd = '/positions?lowerLeftLat=' + str(start.latitude) + '&lowerLeftLong=' + str(
+                start.longitude) + '&upperRightLat=' + str(end.latitude) + '&upperRightLong=' + str(end.longitude) + '&limit=100'
+        case apiType.JOURNEY:
+            startGid = getGid(start)
+            endGid = getGid(end)
+            urlEnd = '/journeys?originGid=' + \
+                str(startGid) + '&destinationGid=' + str(endGid)
+        case apiType.LOCATIONS:
+            urlEnd = '/locations/by-coordinates?latitude=' + \
+                str(start.latitude) + \
+                '&longitude='+str(start.longitude) + \
+                '&radiusInMeters=500&limit=10&offset=0'
+        case _:
+            print("Invalid apiType: " + apiType)
+            exit()
+
+    url = apiBaseUrlVt + urlEnd
+    return requestHandler(url, vtHeaders)
+
+
+def requestHandler(url: str, headers: dict) -> any:
     response = requests.get(url, headers=headers)
-    data = literal_eval(response.content.decode('utf8'))
-    jsonData = json.dumps(data, indent=4, sort_keys=True)
+    if response.status_code != 200:
+        print("Error in requestHandler")
+        print(response.status_code)
+        print(response.text)
+        exit()
 
+    data = response.json()
     print('- ' * 20)
-    print("västtrafik")
-    #print(jsonData)
-    return jsonData
+    print("RESPONSE")
+    print(json.dumps(data, indent=4, sort_keys=True))
+    return data
+
+
+def getGid(coordinatePair: coordinatePair) -> int:
+    radius = 1000  # meters
+    limit = 10
+    urlEnd = '/locations/by-coordinates?latitude='+str(coordinatePair.latitude) + '&longitude=' + str(
+        coordinatePair.longitude) + '&radiusInMeters=' + str(radius) + '&limit='+str(limit) + '&offset=0'
+    response = requestHandler(apiBaseUrlVt + urlEnd, vtHeaders)
+    closestResult = response["results"][0]
+    print(closestResult)
+    return closestResult.get("gid", None)
 
 
 if __name__ == '__main__':
