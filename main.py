@@ -63,18 +63,19 @@ vtApiType = Enum('vtApiType', ['POSITIONS', 'JOURNEY', 'LOCATIONS'])
 def main():
     print("Main running")
     sosTestCord = coordinatePair(57.687274, 11.979054)
-    # apiCallerSos(sosTestCord)
+    sosData = apiCallerSos(sosTestCord)
     vtTestCordStart = coordinatePair(57.721723, 11.974764)
     vtTestCordEnd = coordinatePair(57.737549, 12.039268)
-    apiCallerVt(vtTestCordStart, vtTestCordEnd, vtApiType.POSITIONS)
+    vtData = apiCallerVt(vtTestCordStart, vtTestCordEnd, vtApiType.LOCATIONS)
+    
     # getGid(vtTestCordStart)
-    print("Hello World!")
-    sosData = get_sos()
+   
+    
     sSos1 = formatResponseSos(sosData)
     for n in sSos1:
         print(n.show())
-    vtData = get_vt()
-    sVt1 = formatResponseVt(vtData)
+
+    sVt1 = formatResponseVtLocations(vtData)
     for n in sVt1:
         print(n.show())
     
@@ -86,11 +87,11 @@ def formatResponseSos(jData):
     return stations
     
 #Takes the response from the Västtrafik API and returns a list of the stations and their status. 
-def formatResponseVt(jDataStr):
-    jData = json.loads(jDataStr)
+def formatResponseVtLocations(jData):
     stations = []
-    for n in jData["results"]:
-        stations.append(vtStation(n["name"], n["gid"], n["latitude"], n["longitude"], n["straightLineDistanceInMeters"]))
+    for n in jData['results']:
+        
+        stations.append(vtStation(n['name'], n['gid'], n['latitude'], n['longitude'], n['straightLineDistanceInMeters']))
     return stations
 
 
