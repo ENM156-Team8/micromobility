@@ -2,7 +2,7 @@ import requests
 import json
 from ast import literal_eval
 
-
+#Class for a Styr&Ställ station
 class sosStation:
     def __init__(self, name, lat, long, dist, open, availableBikes):
         self.name = name
@@ -14,7 +14,8 @@ class sosStation:
 
     def show(self):
         return f'{self.name, self.lat, self.long, self.dist, self.open, self.availableBikes}'
-    
+
+#Class for a Västtrafik station
 class vtStation:
     def __init__(self, name, gid, lat, long, dist):
         self.name = name
@@ -47,13 +48,14 @@ def main():
     for n in sVt1:
         print(n.show())
     
-
+#Takes the response from the Styr&Ställ API and returns a list of the stations and their status. 
 def formatResponseSos(jData):
     stations = []
     for n in jData:
        stations.append(sosStation(n['Name'], n['Lat'], n['Long'], n['Distance'], n['IsOpen'], n['AvailableBikes']))
     return stations
     
+#Takes the response from the Västtrafik API and returns a list of the stations and their status. 
 def formatResponseVt(jDataStr):
     jData = json.loads(jDataStr)
     stations = []
