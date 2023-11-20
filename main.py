@@ -1,7 +1,7 @@
 import json
 import requests
 import json
-from ast import literal_eval
+from enum import Enum
 
 #Class for a Styr&Ställ station
 class sosStation:
@@ -28,15 +28,11 @@ class vtStation:
     def show(self):
         return f'{self.name,self.gid, self.lat, self.long, self.dist}'
 
+class coordinatePair:
+    def __init__(self, latitude: int, longitude: int):
+        self.latitude = latitude
+        self.longitude = longitude
 
-with open("apiToken.txt", "r") as apiTokenFile:
-    apiTokenLines = apiTokenFile.readlines()
-
-
-API_BASE_URL_VT = 'https://ext-api.vasttrafik.se/pr/v4'
-ACCESS_TOKEN_VT = apiTokenLines[0].strip()
-APPID_SOS = apiTokenLines[1].strip()
-from enum import Enum
 
 
 def getTokens():
@@ -62,10 +58,6 @@ vtHeaders = {
 vtApiType = Enum('vtApiType', ['POSITIONS', 'JOURNEY', 'LOCATIONS'])
 
 
-class coordinatePair:
-    def __init__(self, latitude: int, longitude: int):
-        self.latitude = latitude
-        self.longitude = longitude
 
 
 def main():
