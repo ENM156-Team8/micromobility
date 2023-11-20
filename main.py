@@ -2,14 +2,19 @@ import json
 import requests
 from enum import Enum
 
-with open("apiToken.txt", "r") as apiTokenFile:
-    apiTokenLines = apiTokenFile.readlines()
 
-ACCESS_TOKEN_VT = apiTokenLines[0].strip()
+def getTokens():
+    with open("apiToken.txt", "r") as apiTokenFile:
+        apiTokenLines = apiTokenFile.readlines()
+    vtToken = apiTokenLines[0].strip()
+    sosToken = apiTokenLines[1].strip()
+    return {"vt": vtToken, "sos": sosToken}
+
 
 apiBaseUrlVt = 'https://ext-api.vasttrafik.se/pr/v4'
-appIdSos = ''
-accessTokenVt = ACCESS_TOKEN_VT
+tokens = getTokens()
+appIdSos = tokens.get("sos", '')
+accessTokenVt = tokens.get("vt", '')
 vtHeaders = {
     'Authorization': 'Bearer ' + accessTokenVt
 }
@@ -33,8 +38,8 @@ def main():
     # apiCallerSos(sosTestCord)
     vtTestCordStart = coordinatePair(57.721723, 11.974764)
     vtTestCordEnd = coordinatePair(57.737549, 12.039268)
-    # apiCallerVt(vtTestCordStart, vtTestCordEnd, vtApiType.POSITIONS)
-    getGid(vtTestCordStart)
+    apiCallerVt(vtTestCordStart, vtTestCordEnd, vtApiType.POSITIONS)
+    # getGid(vtTestCordStart)
 
 
 def apiCallerSos(center: coordinatePair) -> dict:
