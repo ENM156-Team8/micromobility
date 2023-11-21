@@ -1,0 +1,80 @@
+
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+        <script type="text/javascript" src="{{ url_for('static', filename='app.js') }}"></script>
+        {% block head %}{% endblock %}
+    </head>
+    <body>
+
+        <div class="centered-body">
+            <div class="home-container">
+                <header data-role="Header" class="home-header">
+                    <img
+                        alt="logo"
+                        src="https://i.postimg.cc/nL5VQqPb/Vasttrafik-logo-svg.png"
+                        loading="lazy"
+                        class="home-image"
+                    />
+                    <h1>Västtrafik microbilitet</h1>
+                </header>
+                <div class="home-container1">
+                    <div class="home-container2">
+                        <span class="home-till">
+                            <span>Till</span>
+                            <br />
+                        </span>
+                        <input type="text" placeholder="Chalmers" required class="input" />
+                    </div>
+                    <div class="home-container3">
+                        <span class="home-frn">
+                            <span>Från</span>
+                            <br />
+                        </span>
+                        <input type="text" placeholder="Korsvägen" required class="input" />
+                    </div>
+                    <div class="home-container4">
+                        <span class="home-instllningar">
+                            <span>Inställningar</span>
+                            <br />
+                        </span>
+                        <div class="home-container5">
+                            <input type="checkbox" checked="true" class="home-checkbox" />
+                            <span class="home-text7">Placeholder</span>
+                        </div>
+                        <div class="home-container6">
+                            <input type="checkbox" checked="true" class="home-checkbox1" />
+                            <span class="home-text8">Placeholder</span>
+                        </div>
+                    </div>
+                    <button type="button" class="home-button button">Sök resa</button>
+                </div>
+                <div class="home-container7 list">
+                    {% block trips %}{% endblock %}
+                </div>
+            </div>
+
+            <div class="centered-body">
+                <h1>Search your trip</h1>
+                <p>Click the button to get your coordinates.</p>
+    
+                <form id="tripForm">
+                    <button type="button" onclick="getLocation()">Get current Position</button>
+                    <p id="displayStartLocation"></p>
+                    <input type="hidden" name="startLocation" id="startLocation" />
+                
+                    <p>Enter the destination coordinates:</p>
+                    <input type="text" name="destinationLocation" id="destinationLocation" placeholder="latitude, longitude" />
+                    <button type="submit">Submit</button>
+                </form>
+                
+                <div id="output"></div>
+            </div>
+        </div>
+
+    </body>  
+</html>

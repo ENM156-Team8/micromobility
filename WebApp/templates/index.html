@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+    <title>Micromobility</title>
+{% endblock %}
+
+
+{% block trips %}
+    {% for trip in trips %}
+        <div class="tripItem">{{ trip }}</div>
+    {% endfor %}
+{% endblock %}
