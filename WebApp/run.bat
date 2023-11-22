@@ -1,5 +1,4 @@
 pip install -r requirements.txt
-start cmd /k python webApp.py
-start cmd /k python -m http.server --directory WebApp
+python webApp.py
 explorer http://localhost:5000
 ```
