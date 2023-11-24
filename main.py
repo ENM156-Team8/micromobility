@@ -10,6 +10,12 @@ def getTokens():
     sosToken = apiTokenLines[1].strip()
     return {"vt": vtToken, "sos": sosToken}
 
+def getMapsToken():
+    with open("apiToken.txt", "r") as apiTokenFile:
+        apiTokenLines = apiTokenFile.readlines()
+    mapsToken = apiTokenLines[2].strip()
+    return mapsToken
+
 
 apiBaseUrlVt = 'https://ext-api.vasttrafik.se/pr/v4'
 tokens = getTokens()

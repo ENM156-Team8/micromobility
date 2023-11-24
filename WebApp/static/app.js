@@ -1,20 +1,37 @@
 
-const x = document.getElementById("displayStartLocation");
-const startLocationInput = document.getElementById("startLocation");
+// autocomplete and geocode address using google maps api
+function initMaps() {
+    // set default bounds to Gothenburg
+    const defaultBounds = new google.maps.LatLngBounds(
+        new google.maps.LatLng(57.7075, 11.9675),
+    );
+    const countryRestrict = { country: "se" };
 
-window.getLocation = function() {
-    const x = document.getElementById("displayStartLocation");
-    const startLocationInput = document.getElementById("startLocation");
+    // autocomplete and geocoding for start location
+    $("#startLocation").geocomplete({
+        bounds: defaultBounds,
+        componentRestrictions: countryRestrict
+    })
+    .bind("geocode:result", function(event, result){
+        var latLng = result.geometry.location.lat() + "," + result.geometry.location.lng();
+        $("#startLocationCoords").val(latLng);
+        console.log(latLng);
+    });
 
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-    } else { 
-        x.innerHTML = "Geolocation is not supported by this browser.";
-    }
+    // autocomplete and geocoding for destination location
+    $("#destinationLocation").geocomplete({
+        bounds: defaultBounds,
+        componentRestrictions: countryRestrict
+    })
+    .bind("geocode:result", function(event, result){
+        var latLng = result.geometry.location.lat() + "," + result.geometry.location.lng();
+        $("#destinationLocationCoords").val(latLng);
+        console.log(latLng);
+    });
 
-    function showPosition(position) {
-        const coords = position.coords.latitude + ", " + position.coords.longitude;
-        x.innerHTML = coords;
-        startLocationInput.value = coords;
-    }
+    // trigger geocoding when find button is clicked
+    $("#find").click(function(event){
+        $("#startLocation").trigger("geocode");
+        $("#destinationLocation").trigger("geocode");
+    });
 }

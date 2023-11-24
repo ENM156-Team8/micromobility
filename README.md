@@ -5,7 +5,7 @@
 Execute the following commands, or simply run the included run.bat file
 ```batch
 pip install -r WebApp/requirements.txt
-start cmd /k python WebApp/webApp.py
+python WebApp/webApp.py
 ```
 
 **Linux:**
@@ -15,10 +15,11 @@ pip install -r WebApp/requirements.txt
 python3 WebApp/webApp.py
 ```
 
-Remember to put the apiToken.txt file in /WebApp with the API tokens in this order:
+Remember to put the apiToken.txt file in /WebApp with the API tokens in this exact order:
 ```txt
 <västtrafik_token>
 <styr&ställ_token>
+<googleMaps_token>
 ```
 
 By default the site is opened on localhost:5000

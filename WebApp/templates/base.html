@@ -6,24 +6,26 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="{{ url_for('static', filename='libraries/jquery.geocomplete.js') }}"></script>
         <script type="text/javascript" src="{{ url_for('static', filename='app.js') }}"></script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ mapsAPIKey }}&callback=initMaps&libraries=places"></script>
         {% block head %}{% endblock %}
     </head>
     <body>
-
         <div class="centered-body">
             <div class="home-container">
                 <header data-role="Header" class="home-header">
                     <img
                         alt="logo"
-                        src="https://i.postimg.cc/nL5VQqPb/Vasttrafik-logo-svg.png"
+                        src="{{ url_for('static', filename='images/vasttrafik_logga.svg') }}"
                         loading="lazy"
                         class="home-image"
                     />
                     <h1>Västtrafik microbilitet</h1>
                 </header>
 
-                <form action="/" method="POST">
+                <form id="inputForm" action="/" method="POST">
                     {% block form %}{% endblock %}
                 </form>
                 
@@ -31,24 +33,6 @@
                     {% block trips %}{% endblock %}
                 </div>
             </div>
-
-            <div class="centered-body" hidden>
-                <h1>Search your trip</h1>
-                <p>Click the button to get your coordinates.</p>
-    
-                <form id="tripForm">
-                    <button type="button" onclick="getLocation()">Get current Position</button>
-                    <p id="displayStartLocation"></p>
-                    <input type="hidden" name="startLocation" id="startLocation" />
-                
-                    <p>Enter the destination coordinates:</p>
-                    <input type="text" name="destinationLocation" id="destinationLocation" placeholder="latitude, longitude" />
-                    <button type="submit">Submit</button>
-                </form>
-                
-                <div id="output"></div>
-            </div>
         </div>
-
     </body>  
 </html>
