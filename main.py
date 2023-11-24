@@ -78,7 +78,7 @@ def getSosTrip(start: coordinatePair, end: coordinatePair):
     print(trip)
     print(trip.get("instructions", "No instructions"))
 
-
+    
 # requests tram trip info
 def getTripByTram(startStation: str, endStation: str):
     startStationCord = _getCordByName(startStation)

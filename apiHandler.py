@@ -2,10 +2,12 @@
 __all__ = ["apiCallerSos", "apiCallerVt", "_getCordByName"]
 
 
+
 import requests
 from globals import coordinatePair, vtApiType
 
 # General
+
 def getTokens():
     with open("apiToken.txt", "r") as apiTokenFile:
         apiTokenLines = apiTokenFile.readlines()
@@ -42,6 +44,7 @@ def requestHandler(url: str, headers: dict) -> any:
 
 
 # Styr och Ställ
+
 def apiCallerSos(center: coordinatePair) -> dict:
     radius = 500  # meters
     url = 'https://data.goteborg.se/SelfServiceBicycleService/v2.0/Stations/' + appIdSos + '?getclosingperiods=500&latitude=' + \
@@ -49,8 +52,8 @@ def apiCallerSos(center: coordinatePair) -> dict:
         '&radius=' + str(radius) + '&format=json'
     return requestHandler(url, {})
 
-
 # Västtrafik
+
 def apiCallerVt(start: coordinatePair, end: coordinatePair, apiType: vtApiType) -> str:
     match apiType:
         case apiType.POSITIONS:
@@ -106,8 +109,8 @@ def _getCordByName(station: str) -> coordinatePair:
     long = data.get("results")[0].get("longitude")
     return coordinatePair(lat,long) 
 
-
 # Helper to get station id
+
 def getGid(coordinatePair: coordinatePair) -> int:
     radius = 1000  # meters
     limit = 10
