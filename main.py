@@ -34,11 +34,17 @@ def main():
     # apiCallerSos(sosTestCord)
     vtTestCordStart = coordinatePair(57.721723, 11.974764)
     vtTestCordEnd = coordinatePair(57.737549, 12.039268)
+
+    testCordStart = coordinatePair(57.690012, 11.972992)  # Chalmersplatsen
+    testCordEnd = coordinatePair(57.696868, 11.987018)  # Korsvägen
     #apiCallerVt(vtTestCordStart, vtTestCordEnd, vtApiType.POSITIONS)
     #getGid(vtTestCordStart)
     #apiCallerVt(vtTestCordStart,vtTestCordEnd,vtApiType.LOCATIONSBYTEXT)
     #getCordByName()
-    getTripByTram("Chalmers", "Korsvägen")
+    #getTripByTram("Chalmers", "Korsvägen")
+    #data = apiCallerVt(testCordStart, testCordEnd, vtApiType.JOURNEY)
+    #print(json.dumps(data.get("results"), indent=4, sort_keys=True))
+    getTripByTram(getGid(testCordStart),getGid(testCordEnd))
 
 
 def apiCallerSos(center: coordinatePair) -> dict:
@@ -84,7 +90,7 @@ def requestHandler(url: str, headers: dict) -> any:
     data = response.json()
     print('- ' * 20)
     print("RESPONSE")
-    print(json.dumps(data, indent=4, sort_keys=True))
+    #print(json.dumps(data, indent=4, sort_keys=True))
     return data
 
 
@@ -97,6 +103,9 @@ def getGid(coordinatePair: coordinatePair) -> int:
     closestResult = response["results"][0]
     #print(closestResult)
     return closestResult.get("gid", None)
+
+
+
 
 # lite fulkod :)
 # call api with name of station 
@@ -111,10 +120,16 @@ def getCordByName(station: str) -> coordinatePair: # output. format json respons
     long = data.get("results")[0].get("longitude")
     return coordinatePair(lat,long) 
 
-def getTripByTram(start: str, end: str):
-    data = apiCallerVt(getCordByName(start), getCordByName(end), vtApiType.JOURNEY)
-    print(json.dumps(data.get("results")[0], indent=4, sort_keys=True))
+def getTripByTram(startGid: str, endGid: str):
+    #data = apiCallerVt(testCordStart, testCordEnd, vtApiType.JOURNEY)
+    #print(json.dumps(data, indent=4, sort_keys=True))
+    #print(type(data))
+    #print(json.dumps(data.get("results")[0], indent=4, sort_keys=True))
+    urlEnd = '/journeys?originGid=' + str(startGid) + '&destinationGid=' + str(endGid) + '&transportModes=tram'
+    data = requestHandler(apiBaseUrlVt + urlEnd, vtHeaders)
+    with open("response.txt", "w") as f:
+        f.write(json.dumps(data.get("results"), indent=4, sort_keys=True))
+    return(data.get("results"))
 
-    
 if __name__ == '__main__':
     main()
