@@ -9,34 +9,48 @@
 {% block form %}
     <div class="home-container1">
         <div class="home-container2">
-            <span class="searchbar">
+            <span class="searchtitle">
                 <span>Från</span>
                 <br />
             </span>
-            <input type="text" placeholder="Chalmers" required class="input" name="startLocation" id="startLocation" value="{{ searchedTrip.startLocation }}"/>
+            <div class="input-group">
+                <input type="search" name="startLocation" id="startLocation" placeholder="Chalmers" value="{{ searchedTrip.startLocation }}">
+            </div>
         </div>
         <div class="home-container3">
-            <span class="searchbar">
+            <span class="searchtitle">
                 <span>Till</span>
                 <br />
             </span>
-            <input type="text" placeholder="Korsvägen" required class="input" name="destinationLocation" id="destinationLocation" value="{{ searchedTrip.destinationLocation }}"/>
+            <div class="input-group">
+                <input type="search" name="destinationLocation" id="destinationLocation" placeholder="Korsvägen" value="{{ searchedTrip.destinationLocation }}">
+            </div>
         </div>
-        <div class="home-container4">
+        <div class="searchsettings">
             <span class="home-instllningar">
-                <span>Inställningar</span>
-                <br />
+                <span class="searchtitle">
+                    <span>Inställningar</span>
+                    <br />
+                </span>
             </span>
-            <div class="home-container5">
-                <input type="checkbox" class="home-checkbox" name="opt1" id="opt1" {% if searchedTrip.opt1 %} checked {% endif %}/>
+            <div class="checkbox-container">
+                <!-- <input type="checkbox" class="home-checkbox" name="opt1" id="opt1" {% if searchedTrip.opt1 %} checked {% endif %}/> -->
+                <div class="checkbox-wrapper-3">
+                    <input type="checkbox" name="opt1" id="opt1" {% if searchedTrip.opt1 %} checked {% endif %}/>
+                    <label for="opt1" class="toggle"><span></span></label>
+                </div>
                 <span class="home-text7">Placeholder</span>
             </div>
-            <div class="home-container6">
-                <input type="checkbox" class="home-checkbox1" name="opt2" id="opt2" {% if searchedTrip.opt2 %} checked {% endif %}/>
+            <div class="checkbox-container">
+                <!-- <input type="checkbox" class="home-checkbox" name="opt2" id="opt2" {% if searchedTrip.opt2 %} checked {% endif %}/> -->
+                <div class="checkbox-wrapper-3">
+                    <input type="checkbox" name="opt2" id="opt2" {% if searchedTrip.opt2 %} checked {% endif %}/>
+                    <label for="opt2" class="toggle"><span></span></label>
+                </div>
                 <span class="home-text8">Placeholder</span>
             </div>
         </div>
-        <input type="submit" value="Sök Resa">
+        <button type="submit" class="form-control">Sök resa</button>
     </div>
 {% endblock %}
 
