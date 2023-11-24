@@ -107,25 +107,43 @@ def _apiCallerVtByName(station: str) -> coordinatePair:
     url = apiBaseUrlVt + urlEnd
     return requestHandler(url, vtHeaders)
 
+
 def _getCordByName(station: str) -> coordinatePair: 
     data = _apiCallerVtByName(station)
     lat = data.get("results")[0].get("latitude")
     long = data.get("results")[0].get("longitude")
     return coordinatePair(lat,long) 
 
-def getTripByTram(start: str, end: str):
-    data = apiCallerVt(_getCordByName(start), _getCordByName(end), vtApiType.TRAMTRIP)
-    with open("response.txt", "w") as f:
-        f.write(json.dumps(data.get("results")[0], indent=4, sort_keys=True))
 
-    estimatedArrivalTime = data.get("results")[0].get("tripLegs")[0].get("estimatedArrivalTime")
-    estimatedDepartureTime = data.get("results")[0].get("tripLegs")[0].get("estimatedDepartureTime")
-    estimatedDurationInMinutes = data.get("results")[0].get("tripLegs")[0].get("estimatedDurationInMinutes")
+# requests tram trip info
+def getTripByTram(startStation: str, endStation: str):
+    startStationCord = _getCordByName(startStation)
+    endStationCord = _getCordByName(endStation)
+    segments = []
+    data = apiCallerVt(startStationCord, endStationCord, vtApiType.TRAMTRIP)
 
-    print(estimatedArrivalTime)
-    print(estimatedDepartureTime)
-    print(estimatedDurationInMinutes)
-    return(data.get("results")[0])
+    # format response
+    tramJourney = data.get("results")[0].get("tripLegs")[0]
+
+    # ex. how arrival/departure might look like:
+    # 2023-11-24T13:52:00.0000000+01:00
+    arrival = tramJourney.get("estimatedArrivalTime")
+    departure = tramJourney.get("estimatedDepartureTime")
+    duration = tramJourney.get("estimatedDurationInMinutes")
+
+    # todo: implement what type of info we want regarding tramline
+    tramInfo = tramJourney.get("serviceJourney")
+
+    segments.append({"type": "tram", "duration": duration, 
+                     "from": startStationCord, "to": endStationCord, 
+                     "departure": departure, "arrival": arrival})
+    
+    # TESTING
+    # with open("response.txt", "w") as f:
+    #    f.write(json.dumps(tramJourney, indent=4, sort_keys=True))
+
+    return segments
+
 
 if __name__ == '__main__':
     main()
