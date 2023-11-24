@@ -9,15 +9,15 @@
 {% block form %}
     <div class="home-container1">
         <div class="home-container2">
-            <span class="home-till">
-                <span>Till</span>
+            <span class="searchbar">
+                <span>Från</span>
                 <br />
             </span>
             <input type="text" placeholder="Chalmers" required class="input" name="startLocation" id="startLocation" value="{{ searchedTrip.startLocation }}"/>
         </div>
         <div class="home-container3">
-            <span class="home-frn">
-                <span>Från</span>
+            <span class="searchbar">
+                <span>Till</span>
                 <br />
             </span>
             <input type="text" placeholder="Korsvägen" required class="input" name="destinationLocation" id="destinationLocation" value="{{ searchedTrip.destinationLocation }}"/>
@@ -43,7 +43,30 @@
 
 {% block trips %}
     {% for trip in trips %}
-        <div class="tripItem">{{ trip }}</div>
+        <!-- _<div class="tripItem">{{ trip }}</div> -->
+
+        <div class="trip-container-container">
+            <div class="trip-container-container1">
+                <div class="trip-container-container2">
+                    <div class="trip-container-location">
+                        <span class="trip-container-text"><span>FromField</span></span>
+                    </div>
+                    <div class="trip-container-time">
+                        <div class="trip-container-container3">
+                        <span class="trip-container-text1"><span>Time start</span></span>
+                        <span class="trip-container-text2"><span>-</span></span>
+                        <span class="trip-container-text3"><span>Time finish</span></span>
+                        </div>
+                        <span class="trip-container-text4"><span>Duration</span></span>
+                    </div>
+                </div>
+                <div class="trip-container-container4">
+                <span class="trip-container-text5"><span>Trip Output</span></span>
+                </div>
+            </div>
+        </div>
+
+          
     {% endfor %}
 
     {% if (noTripSearchedError != None) %}

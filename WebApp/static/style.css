@@ -7,7 +7,6 @@ body {
     height: 100vh;
     margin: 0;
     box-sizing: border-box;
-    padding-top: 20px; /* add some space at the top */
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -84,7 +83,7 @@ form {
     flex-direction: column;
     padding-bottom: var(--dl-space-space-unit);
   }
-  .home-till {
+  .searchbar {
     font-size: 20px;
   }
   .home-container3 {
@@ -103,9 +102,6 @@ form {
     padding-right: var(--dl-space-space-unit);
     flex-direction: column;
     padding-bottom: var(--dl-space-space-unit);
-  }
-  .home-frn {
-    font-size: 20px;
   }
   .home-container4 {
     width: auto;
@@ -207,4 +203,93 @@ form {
       padding: var(--dl-space-space-unit);
     }
   }
+
+  .trip-container-container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    position: relative;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    border-style: dashed;
+    border-width: 2px;
+    border-color: red;
+    margin-bottom: 10px;
+  }
+  .trip-container-container1 {
+    flex: 0 0 auto;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .trip-container-container2 {
+    flex: 0 0 auto;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+  .trip-container-location {
+    flex: 1;
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .trip-container-text {
+    font-size: 28px;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+  .trip-container-time {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+  }
+  .trip-container-container3 {
+    flex: 0 0 auto;
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+  .trip-container-text1 {
+    font-size: 28px;
+    margin: 10px;
+  }
+  .trip-container-text2 {
+    font-size: 28px;
+    margin: 10px;
+  }
+  .trip-container-text3 {
+    font-size: 28px;
+    margin: 10px;
+  }
+  .trip-container-text4 {
+    font-size: 24px;
+    margin: 10px;
+  }
+  .trip-container-container4 {
+    flex: 0 0 auto;
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: flex-start;
+  }
+  .trip-container-text5 {
+    font-size: 25px;
+    align-self: center;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  
   

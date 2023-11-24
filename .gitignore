@@ -2,3 +2,5 @@
 apiToken.txt
 __pycache__/*
 generateAccess.py
+.vscode
+WebApp/__pycache__
