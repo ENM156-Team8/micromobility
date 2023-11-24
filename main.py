@@ -1,6 +1,4 @@
-import json
 import requests
-import pprint
 from enum import Enum
 
 with open("apiToken.txt", "r") as apiTokenFile:
@@ -141,7 +139,6 @@ def getTripByTram(startStation: str, endStation: str):
     # TESTING
     # with open("response.txt", "w") as f:
     #    f.write(json.dumps(tramJourney, indent=4, sort_keys=True))
-
     return segments
 
 
