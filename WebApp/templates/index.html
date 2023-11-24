@@ -14,7 +14,7 @@
                 <br />
             </span>
             <div class="input-group">
-                <input type="search" name="startLocation" id="startLocation" placeholder="Chalmers" value="{{ searchedTrip.startLocation }}">
+                <input type="search" name="startLocation" id="startLocation" placeholder="Chalmers" value="{{ searchedTrip.startLocation }}" required>
             </div>
         </div>
         <div class="home-container3">
@@ -23,7 +23,7 @@
                 <br />
             </span>
             <div class="input-group">
-                <input type="search" name="destinationLocation" id="destinationLocation" placeholder="Korsvägen" value="{{ searchedTrip.destinationLocation }}">
+                <input type="search" name="destinationLocation" id="destinationLocation" placeholder="Korsvägen" value="{{ searchedTrip.destinationLocation }}" required>
             </div>
         </div>
         <div class="searchsettings">
@@ -34,7 +34,6 @@
                 </span>
             </span>
             <div class="checkbox-container">
-                <!-- <input type="checkbox" class="home-checkbox" name="opt1" id="opt1" {% if searchedTrip.opt1 %} checked {% endif %}/> -->
                 <div class="checkbox-wrapper-3">
                     <input type="checkbox" name="opt1" id="opt1" {% if searchedTrip.opt1 %} checked {% endif %}/>
                     <label for="opt1" class="toggle"><span></span></label>
@@ -42,7 +41,6 @@
                 <span class="home-text7">Placeholder</span>
             </div>
             <div class="checkbox-container">
-                <!-- <input type="checkbox" class="home-checkbox" name="opt2" id="opt2" {% if searchedTrip.opt2 %} checked {% endif %}/> -->
                 <div class="checkbox-wrapper-3">
                     <input type="checkbox" name="opt2" id="opt2" {% if searchedTrip.opt2 %} checked {% endif %}/>
                     <label for="opt2" class="toggle"><span></span></label>
@@ -63,7 +61,7 @@
             <div class="trip-container-container1">
                 <div class="trip-container-container2">
                     <div class="trip-container-location">
-                        <span class="trip-container-text"><span>FromField</span></span>
+                        <span class="trip-container-text"><span>{{ searchedTrip.startLocation }}</span></span>
                     </div>
                     <div class="trip-container-time">
                         <div class="trip-container-container3">
