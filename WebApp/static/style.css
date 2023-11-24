@@ -131,11 +131,8 @@ form {
     font-size: 20px;
     border-radius: var(--border-radius-large);
     color: var(--p-color);
-    /* margin-bottom: 24px; */
     padding-top: 13px;
     padding-bottom: 13px;
-    /* padding-left: 20px;
-    padding-right: 20px; */
     outline: none;
   }
   .home-container3 {
@@ -341,7 +338,6 @@ form {
   border-radius: var(--border-radius-large);
   padding: 8px 13px;
   outline: none;
-  /* margin-left: 20px; */
 }
 
 input[type="search"] {
@@ -383,7 +379,6 @@ button[type="submit"]:focus {
   padding-right: 20px;
   outline: none;
 }
-
 
 /*---------------------------------------
   CHECKBOX               
