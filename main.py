@@ -1,116 +1,82 @@
 import requests
 from enum import Enum
-
-with open("apiToken.txt", "r") as apiTokenFile:
-    apiTokenLines = apiTokenFile.readlines()
-
-ACCESS_TOKEN_VT = apiTokenLines[0].strip()
-
-apiBaseUrlVt = 'https://ext-api.vasttrafik.se/pr/v4'
-appIdSos = ''
-accessTokenVt = ACCESS_TOKEN_VT
-vtHeaders = {
-    'Authorization': 'Bearer ' + accessTokenVt
-}
-
-# Enums used to fetch different data from vtApi
-# POSITIONS: Returns journey positions within a bounding box
-# JOURNEY: Returns journeys matching the specified search parameters
-# LOCATIONS: Returns locations matching the specified text (stop areas, addresses, points of interest and meta-stations)
-vtApiType = Enum('vtApiType', ['POSITIONS', 'JOURNEY', 'LOCATIONS', 'TRAMTRIP'])
-
-
-class coordinatePair:
-    def __init__(self, latitude: int, longitude: int):
-        self.latitude = latitude
-        self.longitude = longitude
+from apiHandler import *
+from globals import coordinatePair, vtApiType
 
 
 def main():
     print("Main running")
-    sosTestCord = coordinatePair(57.687274, 11.979054)
-    # apiCallerSos(sosTestCord)
-    vtTestCordStart = coordinatePair(57.721723, 11.974764)
-    vtTestCordEnd = coordinatePair(57.737549, 12.039268)
-
+    testCord = coordinatePair(57.687274, 11.979054)
     testCordStart = coordinatePair(57.690012, 11.972992)  # Chalmersplatsen
     testCordEnd = coordinatePair(57.696868, 11.987018)  # Korsvägen
-
-    getTripByTram("Chalmers","Korsvägen")
-
-
-def apiCallerSos(center: coordinatePair) -> dict:
-    radius = 500  # meters
-    url = 'https://data.goteborg.se/SelfServiceBicycleService/v2.0/Stations/' + appIdSos + '?getclosingperiods=500&latitude=' + \
-        str(center.latitude) + '&longitude=' + str(center.longitude) + \
-        '&radius=' + str(radius) + '&format=json'
-    return requestHandler(url, {})
+    # apiCallerVt(TestCordStart, TestCordEnd, vtApiType.POSITIONS)
+    # getGid(TestCordStart)
+    # apiCallerSos(testCord)
+    getSosTrip(testCordStart, testCordEnd)
+    getTripByTram("Chalmers", "Korsvägen")
 
 
-def apiCallerVt(start: coordinatePair, end: coordinatePair, apiType: vtApiType) -> str:
-    match apiType:
-        case apiType.POSITIONS:
-            urlEnd = '/positions?lowerLeftLat=' + str(start.latitude) + '&lowerLeftLong=' + str(
-                start.longitude) + '&upperRightLat=' + str(end.latitude) + '&upperRightLong=' + str(end.longitude) + '&limit=100'
-        case apiType.JOURNEY:
-            startGid = getGid(start)
-            endGid = getGid(end)
-            urlEnd = '/journeys?originGid=' + \
-                str(startGid) + '&destinationGid=' + str(endGid)
-        case apiType.TRAMTRIP:
-            startGid = getGid(start)
-            endGid = getGid(end)
-            urlEnd = '/journeys?originGid=' + \
-                str(startGid) + '&destinationGid=' + \
-                str(endGid) + '&transportModes=tram'
-        case apiType.LOCATIONS:
-            urlEnd = '/locations/by-coordinates?latitude=' + \
-                str(start.latitude) + \
-                '&longitude='+str(start.longitude) + \
-                '&radiusInMeters=500&limit=10&offset=0'
-        case _:
-            print("Invalid apiType: " + apiType)
-            exit()
+def getSosTrip(start: coordinatePair, end: coordinatePair):
+    totalDuration = 0
+    totalDistance = 0
+    instructions = ""
+    segments = []
 
-    url = apiBaseUrlVt + urlEnd
-    return requestHandler(url, vtHeaders)
+    # Get closest stations
+    startStation = apiCallerSos(start)[0]
+    startStationCord = coordinatePair(
+        startStation.get("Lat", "invalid"), startStation.get("Long", "invalid"))
 
+    endStation = apiCallerSos(end)[0]
+    endStationCord = coordinatePair(
+        endStation.get("Lat", "invalid"), endStation.get("Long", "invalid"))
 
-def requestHandler(url: str, headers: dict) -> any:
-    response = requests.get(url, headers=headers)
-    if response.status_code != 200:
-        print("Error in requestHandler")
-        print(response.status_code)
-        print(response.text)
-        exit()
-    data = response.json()
-    print('- ' * 20)
-    print("RESPONSE")
-    return data
+    # Walk to start station
+    journey = apiCallerVt(start, startStationCord, vtApiType.WALKJOURNEY)
+    if journey != -1:
+        journey = journey["results"][0].get("destinationLink")
+        distance = journey.get("distanceInMeters")
+        duration = journey.get("plannedDurationInMinutes")
+        totalDuration += duration
+        totalDistance += distance
+        instructions += "Walk " + str(startStation.get("Distance", "invalid")) + \
+            " meters to: " + startStation.get("Name", "No name") + ".\n"
+        segments.append({"type": "walk", "distance": distance,
+                        "duration": duration, "from": start, "to": startStationCord})
 
+    # Bike between stations
+    bikeJourney = apiCallerVt(
+        startStationCord, endStationCord, vtApiType.BIKEJOURNEY)
+    bikeJourney = bikeJourney["results"][0].get("destinationLink")
+    bikeDistance = bikeJourney.get("distanceInMeters")
+    bikeDuration = bikeJourney.get("plannedDurationInMinutes")
+    totalDuration += bikeDuration
+    totalDistance += bikeDistance
+    instructions += "Bike " + \
+        str(bikeDistance) + " meters to: " + \
+        endStation.get("Name", "No name") + ".\n"
+    segments.append({"type": "bike", "distance": bikeDistance,
+                    "duration": bikeDuration, "from": startStationCord, "to": endStationCord})
 
-def getGid(coordinatePair: coordinatePair) -> int:
-    radius = 1000  # meters
-    limit = 10
-    urlEnd = '/locations/by-coordinates?latitude='+str(coordinatePair.latitude) + '&longitude=' + str(
-        coordinatePair.longitude) + '&radiusInMeters=' + str(radius) + '&limit='+str(limit) + '&offset=0'
-    response = requestHandler(apiBaseUrlVt + urlEnd, vtHeaders)
-    closestResult = response["results"][0]
-    return closestResult.get("gid", None)
+    # Walk from end station
+    journey = apiCallerVt(endStationCord, end, vtApiType.WALKJOURNEY)
+    if journey != -1:
+        journey = journey["results"][0].get("destinationLink")
+        distance = journey.get("distanceInMeters")
+        duration = journey.get("plannedDurationInMinutes")
+        totalDuration += duration
+        totalDistance += distance
+        instructions += "Walk " + str(endStation.get("Distance", "invalid")) + \
+            " meters from " + \
+            endStation.get("Name", "No name") + " to destination. \n"
+        segments.append({"type": "walk", "distance": distance,
+                        "duration": duration, "from": endStationCord, "to": end})
 
-
-# call api with name of station 
-def _apiCallerVtByName(station: str) -> coordinatePair:
-    urlEnd = '/locations/by-text?q=' + station + '&limit=10&offset=0'
-    url = apiBaseUrlVt + urlEnd
-    return requestHandler(url, vtHeaders)
-
-
-def _getCordByName(station: str) -> coordinatePair: 
-    data = _apiCallerVtByName(station)
-    lat = data.get("results")[0].get("latitude")
-    long = data.get("results")[0].get("longitude")
-    return coordinatePair(lat,long) 
+    trip = {"duration": totalDuration,
+            "distance": totalDistance, "instructions": instructions, "segments": segments}
+    print("TRIP:")
+    print(trip)
+    print(trip.get("instructions", "No instructions"))
 
 
 # requests tram trip info
@@ -118,7 +84,7 @@ def getTripByTram(startStation: str, endStation: str):
     startStationCord = _getCordByName(startStation)
     endStationCord = _getCordByName(endStation)
     segments = []
-    data = apiCallerVt(startStationCord, endStationCord, vtApiType.TRAMTRIP)
+    data = apiCallerVt(startStationCord, endStationCord, vtApiType.TRAMJOURNEY)
 
     # format response
     tramJourney = data.get("results")[0].get("tripLegs")[0]
@@ -139,6 +105,7 @@ def getTripByTram(startStation: str, endStation: str):
     # TESTING
     # with open("response.txt", "w") as f:
     #    f.write(json.dumps(tramJourney, indent=4, sort_keys=True))
+    print(segments)
     return segments
 
 
