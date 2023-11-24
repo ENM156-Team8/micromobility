@@ -2,7 +2,7 @@ import json
 import requests
 from enum import Enum
 from apiHandler import *
-from globals import coordinatePair, vtApiType
+from globals import coordinatePair, vtApiType, sosStation
 
 
 def main():
@@ -14,22 +14,26 @@ def main():
     # getGid(TestCordStart)
     # apiCallerSos(testCord)
     getSosTrip(testCordStart, testCordEnd)
+    # apiCallerVt(testCordStart, testCordEnd, vtApiType.JOURNEY)
 
 
 def getSosTrip(start: coordinatePair, end: coordinatePair):
     totalDuration = 0
     totalDistance = 0
+    cost = 0
     instructions = ""
     segments = []
 
     # Get closest stations
-    startStation = apiCallerSos(start)[0]
+    startStations = apiCallerSos(start)
+    startStation = startStations[0]
     startStationCord = coordinatePair(
-        startStation.get("Lat", "invalid"), startStation.get("Long", "invalid"))
+        startStation.latitude, startStation.longitude)
 
-    endStation = apiCallerSos(end)[0]
+    endStations: [sosStation] = apiCallerSos(end)
+    endStation = endStations[0]
     endStationCord = coordinatePair(
-        endStation.get("Lat", "invalid"), endStation.get("Long", "invalid"))
+        endStation.latitude, endStation.longitude)
 
     # Walk to start station
     journey = apiCallerVt(start, startStationCord, vtApiType.WALKJOURNEY)
@@ -39,10 +43,10 @@ def getSosTrip(start: coordinatePair, end: coordinatePair):
         duration = journey.get("plannedDurationInMinutes")
         totalDuration += duration
         totalDistance += distance
-        instructions += "Walk " + str(startStation.get("Distance", "invalid")) + \
-            " meters to: " + startStation.get("Name", "No name") + ".\n"
+        instructions += "Walk " + str(startStation.distance) + \
+            " meters to: " + startStation.name + ".\n"
         segments.append({"type": "walk", "distance": distance,
-                        "duration": duration, "from": start, "to": startStationCord})
+                        "duration": duration, "from": start.show(), "to": startStationCord.show()})
 
     # Bike betweem stations
     bikeJourney = apiCallerVt(
@@ -52,11 +56,12 @@ def getSosTrip(start: coordinatePair, end: coordinatePair):
     bikeDuration = bikeJourney.get("plannedDurationInMinutes")
     totalDuration += bikeDuration
     totalDistance += bikeDistance
+    cost += 20*(bikeDuration//20+1)
     instructions += "Bike " + \
         str(bikeDistance) + " meters to: " + \
-        endStation.get("Name", "No name") + ".\n"
+        endStation.name + ".\n"
     segments.append({"type": "bike", "distance": bikeDistance,
-                    "duration": bikeDuration, "from": startStationCord, "to": endStationCord})
+                    "duration": bikeDuration, "from": startStationCord.show(), "to": endStationCord.show()})
 
     # Walk from end station
     journey = apiCallerVt(endStationCord, end, vtApiType.WALKJOURNEY)
@@ -66,14 +71,14 @@ def getSosTrip(start: coordinatePair, end: coordinatePair):
         duration = journey.get("plannedDurationInMinutes")
         totalDuration += duration
         totalDistance += distance
-        instructions += "Walk " + str(endStation.get("Distance", "invalid")) + \
+        instructions += "Walk " + str(endStation.distance) + \
             " meters from " + \
-            endStation.get("Name", "No name") + " to destination. \n"
+            endStation.name + " to destination. \n"
         segments.append({"type": "walk", "distance": distance,
-                        "duration": duration, "from": endStationCord, "to": end})
+                        "duration": duration, "from": endStationCord.show(), "to": end.show()})
 
     trip = {"duration": totalDuration,
-            "distance": totalDistance, "instructions": instructions, "segments": segments}
+            "distance": totalDistance, "instructions": instructions, "segments": segments, "cost": cost}
     print("TRIP:")
     print(trip)
     print(trip.get("instructions", "No instructions"))

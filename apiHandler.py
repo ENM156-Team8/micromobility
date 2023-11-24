@@ -3,12 +3,13 @@ __all__ = ["apiCallerSos", "apiCallerVt"]
 
 
 import requests
-from globals import coordinatePair, vtApiType
+import json
+from globals import coordinatePair, vtApiType, sosStation
 
 # General
 
 
-def getTokens():
+def _getTokens():
     with open("apiToken.txt", "r") as apiTokenFile:
         apiTokenLines = apiTokenFile.readlines()
     vtToken = apiTokenLines[0].strip()
@@ -17,7 +18,7 @@ def getTokens():
 
 
 apiBaseUrlVt = 'https://ext-api.vasttrafik.se/pr/v4'
-tokens = getTokens()
+tokens = _getTokens()
 appIdSos = tokens.get("sos", '')
 accessTokenVt = tokens.get("vt", '')
 vtHeaders = {
@@ -25,7 +26,7 @@ vtHeaders = {
 }
 
 
-def requestHandler(url: str, headers: dict) -> any:
+def _requestHandler(url: str, headers: dict) -> any:
     response = requests.get(url, headers=headers)
     # the coordinates are percieved as identical
     if response.status_code == 400 and response.json().get("errorCode") == 2020:
@@ -37,20 +38,30 @@ def requestHandler(url: str, headers: dict) -> any:
         exit()
 
     data = response.json()
-    # print('- ' * 20)
-    # print("RESPONSE")
-    # print(json.dumps(data, indent=4, sort_keys=True))
+    print('- ' * 20)
+    print("RESPONSE")
+    print(json.dumps(data, indent=4, sort_keys=True))
     return data
 
 
 # Styr och Ställ
 
-def apiCallerSos(center: coordinatePair) -> dict:
+def apiCallerSos(center: coordinatePair) -> [sosStation]:
     radius = 500  # meters
     url = 'https://data.goteborg.se/SelfServiceBicycleService/v2.0/Stations/' + appIdSos + '?getclosingperiods=500&latitude=' + \
         str(center.latitude) + '&longitude=' + str(center.longitude) + \
         '&radius=' + str(radius) + '&format=json'
-    return requestHandler(url, {})
+    response = _requestHandler(url, {})
+    return formatResponseSos(response)
+
+
+def formatResponseSos(jData):
+    stations = []
+    for n in jData:
+        newStation = sosStation(
+            n['Name'], n['Lat'], n['Long'], n['Distance'], n['IsOpen'], n['AvailableBikes'])
+        stations.append(newStation)
+    return stations
 
 # Västtrafik
 
@@ -61,20 +72,20 @@ def apiCallerVt(start: coordinatePair, end: coordinatePair, apiType: vtApiType) 
             urlEnd = '/positions?lowerLeftLat=' + str(start.latitude) + '&lowerLeftLong=' + str(
                 start.longitude) + '&upperRightLat=' + str(end.latitude) + '&upperRightLong=' + str(end.longitude) + '&limit=100'
         case apiType.JOURNEY:
-            startGid = getGid(start)
-            endGid = getGid(end)
+            startGid = _getGid(start)
+            endGid = _getGid(end)
             urlEnd = '/journeys?originGid=' + \
                 str(startGid) + '&destinationGid=' + \
                 str(endGid)
         case apiType.BIKEJOURNEY:
-            startGid = getGid(start)
-            endGid = getGid(end)
+            startGid = _getGid(start)
+            endGid = _getGid(end)
             urlEnd = '/journeys?originGid=' + \
                 str(startGid) + '&destinationGid=' + \
                 str(endGid) + "&transportModes=bike"
         case apiType.WALKJOURNEY:
-            startGid = getGid(start)
-            endGid = getGid(end)
+            startGid = _getGid(start)
+            endGid = _getGid(end)
             urlEnd = '/journeys?originGid=' + \
                 str(startGid) + '&destinationGid=' + \
                 str(endGid) + "&transportModes=walk"
@@ -88,17 +99,17 @@ def apiCallerVt(start: coordinatePair, end: coordinatePair, apiType: vtApiType) 
             exit()
 
     url = apiBaseUrlVt + urlEnd
-    return requestHandler(url, vtHeaders)
+    return _requestHandler(url, vtHeaders)
 
 # Helper to get station id
 
 
-def getGid(coordinatePair: coordinatePair) -> int:
+def _getGid(coordinatePair: coordinatePair) -> int:
     radius = 1000  # meters
     limit = 10
     urlEnd = '/locations/by-coordinates?latitude='+str(coordinatePair.latitude) + '&longitude=' + str(
         coordinatePair.longitude) + '&radiusInMeters=' + str(radius) + '&limit='+str(limit) + '&offset=0'
-    response = requestHandler(apiBaseUrlVt + urlEnd, vtHeaders)
+    response = _requestHandler(apiBaseUrlVt + urlEnd, vtHeaders)
     closestResult = response["results"][0]
     # print(closestResult)
     return closestResult.get("gid", None)
