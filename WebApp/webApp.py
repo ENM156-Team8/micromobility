@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, send_from_directory, redirect, session
+from flask import Flask, render_template, request, url_for, redirect, session
 import os, sys, secrets
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from main import *
@@ -45,13 +45,12 @@ def index():
     # init the trip object and trips list
     searchedTrip: tripObj = None
     trips = []
-    noTripSearchedError: str = 'Sök en resa för att börja'
 
     # check if the trip object and trips list are stored in session
     if 'searchedTrip' in session:
         searchedTrip: tripObj = session['searchedTrip']
         trips: list = session['trips']
-        noTripSearchedError: str = None
+        noTripSearchedError: str = session['searchedTrip']
 
     # if the request is POST
     if request.method == 'POST':
@@ -61,9 +60,17 @@ def index():
         # get the coordinates from the form data
         startCoordsList: list[str] = formData.get('startLocationCoords').split(',')
         destinationCoordsList: list[str] = formData.get('destinationLocationCoords').split(',')
+        print(startCoordsList)
         # create coordinatePair objects from the coordinates TODO send to main.py
-        startCoordsPair: coordinatePair = coordinatePair(startCoordsList[0], startCoordsList[1])
-        destinationCoordsPair: coordinatePair = coordinatePair(destinationCoordsList[0], destinationCoordsList[1])
+        if len(startCoordsList) != 2 or len(destinationCoordsList) != 2:
+            print("Error: invalid coordinates")
+            session['searchedTrip'] = None
+            session['trips'] = []
+            session['noTripSearchedError'] = "Error: Ogiltig address"
+            return redirect(url_for('index'))
+        else:
+            startCoordsPair: coordinatePair = coordinatePair(startCoordsList[0], startCoordsList[1])
+            destinationCoordsPair: coordinatePair = coordinatePair(destinationCoordsList[0], destinationCoordsList[1])
 
         # create a trip object
         searchedTrip = tripObj(
@@ -76,8 +83,6 @@ def index():
             opt2 = False if formData.get('opt2') is None else True
         )
 
-        print(searchedTrip.to_dict())
-
         # TODO get trips from main.py
         tripStr="Your trip between: " + searchedTrip.startLocation + " and " + searchedTrip.destinationLocation + ", with options: " + str(searchedTrip.opt1) + " and " + str(searchedTrip.opt2) + ", with coords: (" + searchedTrip.startLocationCoords + ") and (" + searchedTrip.destinationLocationCoords + ") has been submitted."
         trips = [tripStr, "test2", "test3"]
@@ -85,13 +90,15 @@ def index():
         # store the trip object in session
         session['trips'] = trips
         session['searchedTrip'] = searchedTrip.to_dict()
+        session['noTripSearchedError'] = None
         
         return redirect(url_for('index'))
     
     # if the request is GET
     else:
-        session.pop('trips', None)
-        session.pop('searchedTrip', None)
+        trips = session.pop('trips', []) 
+        searchedTrip = session.pop('searchedTrip', None)
+        noTripSearchedError = session.pop('noTripSearchedError', "Sök en resa för att börja")
         return render_template('index.html', searchedTrip = searchedTrip, trips = trips, noTripSearchedError = noTripSearchedError, mapsAPIKey = mapsAPIKey)
 
 

@@ -467,3 +467,40 @@ button[type="submit"]:focus {
   transition: all 0.4s ease;
 }
 
+
+/*---------------------------------------
+  Address DROPDOWN
+-----------------------------------------*/
+
+/* Change the background color and text color of the dropdown items */
+.pac-item {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+/* Change the background color and text color of the selected dropdown item */
+.pac-item-selected {
+  background-color: #ddd;
+  color: #000;
+}
+
+/* Change the color of the query in the dropdown items */
+.pac-matched {
+  color: #4285f4;
+}
+
+/* remove google logo */
+.pac-container:after {
+  background-image: none !important;
+  height: 0px;
+}
+
+/* remove map pin icon */
+.pac-icon {
+  display: none !important;
+}
+
+/* rounded corners */
+.pac-container {
+  border-radius: 10px;
+}
