@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, url_for, redirect, session
 import os, sys, secrets
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from main import *
+from apiHandler import getMapsToken
 
 
 # TODO get maps api key from file
@@ -84,8 +85,17 @@ def index():
         )
 
         # TODO get trips from main.py
-        tripStr="Your trip between: " + searchedTrip.startLocation + " and " + searchedTrip.destinationLocation + ", with options: " + str(searchedTrip.opt1) + " and " + str(searchedTrip.opt2) + ", with coords: (" + searchedTrip.startLocationCoords + ") and (" + searchedTrip.destinationLocationCoords + ") has been submitted."
-        trips = [tripStr, "test2", "test3"]
+        sosTrip = getSosTrip(startCoordsPair, destinationCoordsPair)
+        print(sosTrip)
+
+        for segment in sosTrip["segments"]:
+            segment["from"] = segment["from"].to_dict()
+            segment["to"] = segment["to"].to_dict()
+
+        trips = [sosTrip]
+
+        #tripStr="Your trip between: " + searchedTrip.startLocation + " and " + searchedTrip.destinationLocation + ", with options: " + str(searchedTrip.opt1) + " and " + str(searchedTrip.opt2) + ", with coords: (" + searchedTrip.startLocationCoords + ") and (" + searchedTrip.destinationLocationCoords + ") has been submitted."
+        #trips = [tripStr, "test2", "test3"]
 
         # store the trip object in session
         session['trips'] = trips

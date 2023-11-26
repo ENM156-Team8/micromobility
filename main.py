@@ -16,7 +16,7 @@ def main():
     getSosTrip(testCordStart, testCordEnd)
 
 
-def getSosTrip(start: coordinatePair, end: coordinatePair):
+def getSosTrip(start: coordinatePair, end: coordinatePair) -> dict[str, any]:
     totalDuration = 0
     totalDistance = 0
     instructions = ""
@@ -77,6 +77,8 @@ def getSosTrip(start: coordinatePair, end: coordinatePair):
     print("TRIP:")
     print(trip)
     print(trip.get("instructions", "No instructions"))
+
+    return trip
 
 
 if __name__ == '__main__':
