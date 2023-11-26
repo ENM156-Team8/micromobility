@@ -6,6 +6,15 @@ class coordinatePair:
         self.latitude = latitude
         self.longitude = longitude
 
+    def __str__(self):
+        return "Lat: " + str(self.latitude) + ", Long: " + str(self.longitude)
+    
+    def to_dict(self):
+        return {
+            'latitude': self.latitude,
+            'longitude': self.longitude
+        }
+
 
 # Enums used to fetch different data from vtApi
 # POSITIONS: Returns journey positions within a bounding box
