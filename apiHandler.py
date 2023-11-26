@@ -16,6 +16,13 @@ def getTokens():
     return {"vt": vtToken, "sos": sosToken}
 
 
+def getMapsToken():
+    with open("apiToken.txt", "r") as apiTokenFile:
+        apiTokenLines = apiTokenFile.readlines()
+    mapsToken = apiTokenLines[2].strip()
+    return mapsToken
+
+
 apiBaseUrlVt = 'https://ext-api.vasttrafik.se/pr/v4'
 tokens = getTokens()
 appIdSos = tokens.get("sos", '')
@@ -99,6 +106,11 @@ def getGid(coordinatePair: coordinatePair) -> int:
     urlEnd = '/locations/by-coordinates?latitude='+str(coordinatePair.latitude) + '&longitude=' + str(
         coordinatePair.longitude) + '&radiusInMeters=' + str(radius) + '&limit='+str(limit) + '&offset=0'
     response = requestHandler(apiBaseUrlVt + urlEnd, vtHeaders)
-    closestResult = response["results"][0]
-    # print(closestResult)
+
+    # get closest result that is of type "stoparea"
+    for result in response["results"]:
+        if result["locationType"] == "stoparea":
+            closestResult = result
+            break
+
     return closestResult.get("gid", None)
