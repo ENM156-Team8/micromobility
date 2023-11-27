@@ -1,4 +1,3 @@
-import json
 import requests
 from enum import Enum
 from apiHandler import *
@@ -14,6 +13,7 @@ def main():
     # getGid(TestCordStart)
     # apiCallerSos(testCord)
     getSosTrip(testCordStart, testCordEnd)
+    getTripByTram("Chalmers", "Korsvägen")
 
 
 def getSosTrip(start: coordinatePair, end: coordinatePair):
@@ -44,7 +44,7 @@ def getSosTrip(start: coordinatePair, end: coordinatePair):
         segments.append({"type": "walk", "distance": distance,
                         "duration": duration, "from": start, "to": startStationCord})
 
-    # Bike betweem stations
+    # Bike between stations
     bikeJourney = apiCallerVt(
         startStationCord, endStationCord, vtApiType.BIKEJOURNEY)
     bikeJourney = bikeJourney["results"][0].get("destinationLink")
@@ -77,6 +77,36 @@ def getSosTrip(start: coordinatePair, end: coordinatePair):
     print("TRIP:")
     print(trip)
     print(trip.get("instructions", "No instructions"))
+
+    
+# requests tram trip info
+def getTripByTram(startStation: str, endStation: str):
+    startStationCord = _getCordByName(startStation)
+    endStationCord = _getCordByName(endStation)
+    segments = []
+    data = apiCallerVt(startStationCord, endStationCord, vtApiType.TRAMJOURNEY)
+
+    # format response
+    tramJourney = data.get("results")[0].get("tripLegs")[0]
+
+    # ex. how arrival/departure might look like:
+    # 2023-11-24T13:52:00.0000000+01:00
+    arrival = tramJourney.get("estimatedArrivalTime")
+    departure = tramJourney.get("estimatedDepartureTime")
+    duration = tramJourney.get("estimatedDurationInMinutes")
+
+    # todo: implement what type of info we want regarding tramline
+    tramInfo = tramJourney.get("serviceJourney")
+
+    segments.append({"type": "tram", "duration": duration, 
+                     "from": startStationCord, "to": endStationCord, 
+                     "departure": departure, "arrival": arrival})
+    
+    # TESTING
+    # with open("response.txt", "w") as f:
+    #    f.write(json.dumps(tramJourney, indent=4, sort_keys=True))
+    print(segments)
+    return segments
 
 
 if __name__ == '__main__':

@@ -1,12 +1,12 @@
 
-__all__ = ["apiCallerSos", "apiCallerVt"]
+__all__ = ["apiCallerSos", "apiCallerVt", "_getCordByName"]
+
 
 
 import requests
 from globals import coordinatePair, vtApiType
 
 # General
-
 
 def getTokens():
     with open("apiToken.txt", "r") as apiTokenFile:
@@ -54,7 +54,6 @@ def apiCallerSos(center: coordinatePair) -> dict:
 
 # Västtrafik
 
-
 def apiCallerVt(start: coordinatePair, end: coordinatePair, apiType: vtApiType) -> str:
     match apiType:
         case apiType.POSITIONS:
@@ -78,6 +77,12 @@ def apiCallerVt(start: coordinatePair, end: coordinatePair, apiType: vtApiType) 
             urlEnd = '/journeys?originGid=' + \
                 str(startGid) + '&destinationGid=' + \
                 str(endGid) + "&transportModes=walk"
+        case apiType.TRAMJOURNEY:
+            startGid = getGid(start)
+            endGid = getGid(end)
+            urlEnd = '/journeys?originGid=' + \
+                str(startGid) + '&destinationGid=' + \
+                str(endGid) + '&transportModes=tram'
         case apiType.LOCATIONS:
             urlEnd = '/locations/by-coordinates?latitude=' + \
                 str(start.latitude) + \
@@ -90,8 +95,21 @@ def apiCallerVt(start: coordinatePair, end: coordinatePair, apiType: vtApiType) 
     url = apiBaseUrlVt + urlEnd
     return requestHandler(url, vtHeaders)
 
-# Helper to get station id
 
+# call api with name of station 
+def _apiCallerVtByName(station: str) -> coordinatePair:
+    urlEnd = '/locations/by-text?q=' + station + '&limit=10&offset=0'
+    url = apiBaseUrlVt + urlEnd
+    return requestHandler(url, vtHeaders)
+
+
+def _getCordByName(station: str) -> coordinatePair: 
+    data = _apiCallerVtByName(station)
+    lat = data.get("results")[0].get("latitude")
+    long = data.get("results")[0].get("longitude")
+    return coordinatePair(lat,long) 
+
+# Helper to get station id
 
 def getGid(coordinatePair: coordinatePair) -> int:
     radius = 1000  # meters

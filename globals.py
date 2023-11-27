@@ -12,4 +12,4 @@ class coordinatePair:
 # JOURNEY: Returns journeys matching the specified search parameters
 # LOCATIONS: Returns locations matching the specified text (stop areas, addresses, points of interest and meta-stations)
 vtApiType = Enum(
-    'vtApiType', ['POSITIONS', 'JOURNEY', 'LOCATIONS', 'BIKEJOURNEY', 'WALKJOURNEY'])
+    'vtApiType', ['POSITIONS', 'JOURNEY', 'LOCATIONS', 'BIKEJOURNEY', 'WALKJOURNEY', 'TRAMJOURNEY'])
