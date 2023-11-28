@@ -2,6 +2,7 @@ import requests
 from enum import Enum
 from apiHandler import *
 from globals import coordinatePair, vtApiType
+import json
 
 
 def main():
@@ -13,7 +14,8 @@ def main():
     # getGid(TestCordStart)
     # apiCallerSos(testCord)
     getSosTrip(testCordStart, testCordEnd)
-    getTripByTram("Chalmers", "Korsvägen")
+    #getTripByTram("Chalmers", "Korsvägen")
+    getVsTrip("Chalmers", "Studiegången")
 
 
 def getSosTrip(start: coordinatePair, end: coordinatePair):
@@ -80,33 +82,68 @@ def getSosTrip(start: coordinatePair, end: coordinatePair):
 
     
 # requests tram trip info
-def getTripByTram(startStation: str, endStation: str):
+def getVsTrip(startStation: str, endStation: str):
     startStationCord = _getCordByName(startStation)
     endStationCord = _getCordByName(endStation)
     segments = []
-    data = apiCallerVt(startStationCord, endStationCord, vtApiType.TRAMJOURNEY)
+    data = apiCallerVt(startStationCord, endStationCord, vtApiType.JOURNEY)
+
+    journey = data.get("results")[0].get("tripLegs")[1]
+
+    with open("response.txt", "w") as f:
+        f.write(json.dumps(journey, indent=4, sort_keys=True))
 
     # format response
-    tramJourney = data.get("results")[0].get("tripLegs")[0]
+    if len(journey) > 1: 
+        # there is a connection
+        
+        # we're only interested in the first connection
+        totalConnectionTime = journey.get("estimatedConnectingTimeInMinutes") + journey.get("estimatedDurationInMinutes")
+        boolMissCon = journey.get("isRiskOfMissingConnection")
+        start = journey.get("origin").get("stopPoint").get("stopArea")
+        startLat = round(start.get("latitude"), 6)
+        startLong = round(start.get("longitude"), 6)
+
+        end = journey.get("destination").get("stopPoint").get("stopArea")
+        endLat = round(end.get("latitude"), 6)
+        endLong = round(end.get("longitude"), 6)
+
+        startCord = coordinatePair(startLat, startLong)
+        print(endLat)
+        print(endLong)
+        endCord = coordinatePair(endLat, endLong)
+
+        getSosTrip(startCord, endCord)
+
+    #print(totalConnectionTime)
+    #print(boolMissCon)
+
+
+    # hämta bytesstation
+    # skicka in kordinater i sos
+    # jämföra om sos går snabbare eller inte än vt
+
+
+    # TESTING
+    #with open("response.txt", "w") as f:
+    #    f.write(json.dumps(tramJourney, indent=4, sort_keys=True))
 
     # ex. how arrival/departure might look like:
     # 2023-11-24T13:52:00.0000000+01:00
-    arrival = tramJourney.get("estimatedArrivalTime")
-    departure = tramJourney.get("estimatedDepartureTime")
-    duration = tramJourney.get("estimatedDurationInMinutes")
+    #arrival = tramJourney.get("estimatedArrivalTime")
+    #departure = tramJourney.get("estimatedDepartureTime")
+    #duration = tramJourney.get("estimatedDurationInMinutes")
 
     # todo: implement what type of info we want regarding tramline
-    tramInfo = tramJourney.get("serviceJourney")
+    #tramInfo = tramJourney.get("serviceJourney")
 
-    segments.append({"type": "tram", "duration": duration, 
-                     "from": startStationCord, "to": endStationCord, 
-                     "departure": departure, "arrival": arrival})
+    #segments.append({"type": "tram", "duration": duration, 
+    #                 "from": startStationCord, "to": endStationCord, 
+    #                 "departure": departure, "arrival": arrival})
     
-    # TESTING
-    # with open("response.txt", "w") as f:
-    #    f.write(json.dumps(tramJourney, indent=4, sort_keys=True))
-    print(segments)
-    return segments
+
+    #print(segments)
+    return None
 
 
 if __name__ == '__main__':
