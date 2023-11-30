@@ -80,6 +80,13 @@ def getSosTrip(start: coordinatePair, end: coordinatePair):
     print(trip)
     print(trip.get("instructions", "No instructions"))
 
+# get stations in a radius or box around the station suggested in the original trip
+def getPositions(startStation: str, endStation: str)
+    startStationCord = _getCordByName(startStation)
+    endStationCord = _getCordByName(endStation)
+    data = apiCallerVt(startStationCord, endStationCord, vtApiType.POSITIONS)
+
+    return
     
 # requests tram trip info
 def getVsTrip(startStation: str, endStation: str):
@@ -123,6 +130,9 @@ def getVsTrip(startStation: str, endStation: str):
     # skicka in kordinater i sos
     # jämföra om sos går snabbare eller inte än vt
 
+    # hitta stationer runt omkring som går att cykla till
+    # kolla om det går att åka från dessa utan byte
+        
 
     # TESTING
     #with open("response.txt", "w") as f:
