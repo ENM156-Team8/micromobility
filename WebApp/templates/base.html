@@ -24,7 +24,15 @@
                         class="home-image"
                     />
                     <h1>Västtrafik microbilitet</h1>
+                    
+                    <div class="checkbox-wrapper-3">
+                        <input id="mode-switcher" name="light-dark-mode-switcher" aria-label="Switch Mode" type="checkbox">Light mode</input>
+                        <label for="mode-switcher" class="toggle"><span></span></label>
+                    </div>
+
+
                 </header>
+                
 
                 <form id="inputForm" action="/" method="POST">
                     {% block form %}{% endblock %}

@@ -35,3 +35,10 @@ function initMaps() {
         $("#destinationLocation").trigger("geocode");
     });
 }
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    document.getElementById('mode-switcher').addEventListener('click', function() {
+        document.body.classList.toggle('light-mode');
+        //this.nextSibling.textContent = document.body.classList.contains('light-mode') ? 'Dark mode' : 'Light mode';
+    });
+});

@@ -2,19 +2,24 @@
   CUSTOM PROPERTIES ( VARIABLES )             
 -----------------------------------------*/
 :root {
-  --white-color:                  #ffffff;
   --primary-color:                #13547a;
   --secondary-color:              #00acea;
-  --bg-color:                     #121212;
-  --section-bg-color:             #f0f8ff;
   --custom-btn-bg-color:          #00acea;
   --custom-btn-bg-hover-color:    #13547a;
-  --dark-color:                   #000000;
   --p-color:                      #717275;
-  --border-color:                 #7fffd4;
-  --link-hover-color:             #13547a;
+
   --checkbox-toggle-color:        #0075a0;
   --checkbox-bg-toggle-color:     #00a7e4;
+
+  /* Light mode */
+  --text-color-light:             #000;
+  --obj-bg-color-light:           #ffffff;
+  --background-color-light:       #e7e7e7;
+  
+  /* Dark mode */
+  --text-color-dark:              #fff;
+  --obj-bg-color-dark:            #1b1b1b;
+  --background-color-dark:        #121212;
 
 /*   --body-font-family:             'Open Sans', sans-serif;
   --title-font-family:            'Montserrat', sans-serif; */
@@ -44,8 +49,8 @@
 }
 
 body {
-    background-color: var(--bg-color);
-    color: #ffffff;
+    background-color: var(--background-color-dark);
+    color: var(--text-color-dark);
     display: flex;
     justify-content: center;
     align-items: flex-start; /* align to the top */
@@ -54,9 +59,24 @@ body {
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
 }
+body.light-mode {
+    color: var(--text-color-light);
+    background-color: var(--background-color-light);
+}
 
 form {
   width: 100%;
+}
+
+.light-dark-mode-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 /* PLACEHOLDER */
@@ -334,7 +354,7 @@ form {
 -----------------------------------------*/
 
 .input-group {
-  background-color: var(--white-color);
+  background-color: var(--obj-bg-color-light);
   border-radius: var(--border-radius-large);
   padding: 8px 13px;
   outline: none;
@@ -352,7 +372,7 @@ input[type="search"] {
 button[type="submit"] {
   background: var(--custom-btn-bg-color);
   border-radius: var(--border-radius-large);
-  color: var(--white-color);
+  color: var(--obj-bg-color-light);
   font-family: var(--title-font-family);
   font-size: var(--p-font-size);
   font-weight: var(--font-weight-semibold);
@@ -462,6 +482,21 @@ button[type="submit"]:focus {
   box-shadow: 0 3px 8px rgba(79, 46, 220, 0.2);
 }
 .checkbox-wrapper-3 #opt2:checked + .toggle span:before {
+  transform: scale(1);
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+/* Light dark mode switch */
+.checkbox-wrapper-3 #mode-switcher:checked + .toggle:before {
+  background: var(--checkbox-bg-toggle-color);
+}
+.checkbox-wrapper-3 #mode-switcher:checked + .toggle span {
+  background: var(--checkbox-toggle-color);
+  transform: translateX(20px);
+  transition: all 0.2s cubic-bezier(0.8, 0.4, 0.3, 1.25), background 0.15s ease;
+  box-shadow: 0 3px 8px rgba(79, 46, 220, 0.2);
+}
+.checkbox-wrapper-3 #mode-switcher:checked + .toggle span:before {
   transform: scale(1);
   opacity: 0;
   transition: all 0.4s ease;
