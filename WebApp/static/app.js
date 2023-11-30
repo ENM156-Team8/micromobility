@@ -37,8 +37,24 @@ function initMaps() {
 }
 
 document.addEventListener('DOMContentLoaded', (event) => {
-    document.getElementById('mode-switcher').addEventListener('click', function() {
-        document.body.classList.toggle('light-mode');
-        //this.nextSibling.textContent = document.body.classList.contains('light-mode') ? 'Dark mode' : 'Light mode';
+    // Check if the cookie exists and set the initial mode
+    var lightModeCookie = document.cookie.split('; ').find(row => row.startsWith('light-mode'));
+    var modeSwitcher = document.getElementById('mode-switcher');
+    if (lightModeCookie) {
+        var lightMode = lightModeCookie.split('=')[1];
+        document.body.classList.toggle('light-mode', lightMode === 'true');
+        // Update the switch's position based on the mode
+        modeSwitcher.checked = lightMode === 'true';
+    }
+
+    modeSwitcher.addEventListener('click', function() {
+        // Toggle the mode
+        var isLightMode = document.body.classList.toggle('light-mode');
+
+        // Set the cookie to store the mode
+        document.cookie = `light-mode=${isLightMode}; expires=Tue, 19 Jan 2038 03:14:07 UTC; path=/`;
+
+        // Update the switch's position based on the mode
+        this.checked = isLightMode;
     });
 });

@@ -65,7 +65,14 @@ def index():
         # create coordinatePair objects from the coordinates TODO send to main.py
         if len(startCoordsList) != 2 or len(destinationCoordsList) != 2:
             print("Error: invalid coordinates")
-            session['searchedTrip'] = None
+            session['searchedTrip'] = tripObj(
+                "", 
+                "", 
+                "", 
+                "", 
+                False if formData.get('opt1') is None else True, 
+                False if formData.get('opt2') is None else True
+            ).to_dict()
             session['trips'] = []
             session['noTripSearchedError'] = "Error: Ogiltig address"
             return redirect(url_for('index'))
