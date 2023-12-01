@@ -52,9 +52,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
         var isLightMode = document.body.classList.toggle('light-mode');
 
         // Set the cookie to store the mode
-        document.cookie = `light-mode=${isLightMode}; expires=Tue, 19 Jan 2038 03:14:07 UTC; path=/`;
+        var date = new Date();
+        date.setFullYear(date.getFullYear() + 10); // Set the date one year from now
+        document.cookie = `light-mode=${isLightMode}; SameSite=None; Secure; expires=${date.toUTCString()}; path=/`;
 
         // Update the switch's position based on the mode
         this.checked = isLightMode;
     });
 });
+
+
+function submitTrip() {
+    document.getElementById("noTripsText").innerText = "Laddar resor...";
+}

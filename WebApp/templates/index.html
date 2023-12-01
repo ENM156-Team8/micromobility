@@ -52,7 +52,7 @@
             <input type="hidden" name="startLocationCoords" id="startLocationCoords" value="{{ searchedTrip.startLocationCoords }}"/>
             <input type="hidden" name="destinationLocationCoords" id="destinationLocationCoords" value="{{ searchedTrip.destinationLocationCoords }}"/>
         </div>
-        <button type="submit" class="form-control">Sök resa</button>
+        <button type="submit" class="form-control" onclick="submitTrip()">Sök resa</button>
         <!-- <input type="submit" value="Sök Resa" id="find"> -->
     </div>
 {% endblock %}
@@ -92,7 +92,7 @@
     {% if (noTripSearchedError != None) %}
         <div style="width: 100%">
             <center>
-                <h3>{{ noTripSearchedError }}</h3>
+                <h3 id="noTripsText">{{ noTripSearchedError }}</h3>
             </center>
         </div>
     {% endif %}
