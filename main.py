@@ -8,13 +8,15 @@ def getTokens():
         apiTokenLines = apiTokenFile.readlines()
     vtToken = apiTokenLines[0].strip()
     sosToken = apiTokenLines[1].strip()
-    return {"vt": vtToken, "sos": sosToken}
+    googleToken = apiTokenLines[2].strip()
+    return {"vt": vtToken, "sos": sosToken, "google": googleToken}
 
 
 apiBaseUrlVt = 'https://ext-api.vasttrafik.se/pr/v4'
 tokens = getTokens()
 appIdSos = tokens.get("sos", '')
 accessTokenVt = tokens.get("vt", '')
+accessTokenGoogle = tokens.get("google", '')
 vtHeaders = {
     'Authorization': 'Bearer ' + accessTokenVt
 }
@@ -24,6 +26,8 @@ vtHeaders = {
 # JOURNEY: Returns journeys matching the specified search parameters
 # LOCATIONS: Returns locations matching the specified text (stop areas, addresses, points of interest and meta-stations)
 vtApiType = Enum('vtApiType', ['POSITIONS', 'JOURNEY', 'LOCATIONS'])
+googleApiMode = Enum('googleApiMode', ['WALK', 'BICYCLING', 'TRANSIT', 'DRIVE'])
+googleTripMode = Enum('googleTripMode', ['WALK', 'BICYCLING', 'VOI'])
 
 
 class coordinatePair:
@@ -36,10 +40,66 @@ def main():
     print("Main running")
     sosTestCord = coordinatePair(57.687274, 11.979054)
     # apiCallerSos(sosTestCord)
-    vtTestCordStart = coordinatePair(57.721723, 11.974764)
-    vtTestCordEnd = coordinatePair(57.737549, 12.039268)
-    apiCallerVt(vtTestCordStart, vtTestCordEnd, vtApiType.POSITIONS)
+    vtTestCordStart = coordinatePair(57.690012, 11.972992)
+    vtTestCordEnd = coordinatePair(57.713417, 12.035972)
+    #apiCallerVt(vtTestCordStart, vtTestCordEnd, vtApiType.POSITIONS)
     # getGid(vtTestCordStart)
+    #apiCallerGoogleDirections(vtTestCordStart, vtTestCordEnd, googleApiMode.BICYCLING)
+    trip = getGoogleTrip(vtTestCordStart, vtTestCordEnd, googleTripMode.VOI)
+    print(trip)
+
+def apiCallerGoogleDirections(start:coordinatePair, end:coordinatePair, mode: googleApiMode=None):
+    url = ""
+    if mode is None:
+        url = f'https://maps.googleapis.com/maps/api/directions/json?origin={start.latitude},{start.longitude}&destination={end.latitude},{end.longitude}&key={accessTokenGoogle}'
+    else:
+        match mode:
+            case mode.WALK: url = f'https://maps.googleapis.com/maps/api/directions/json?origin={start.latitude},{start.longitude}&mode=walk&destination={end.latitude},{end.longitude}&key={accessTokenGoogle}'
+            case mode.BICYCLING: url = f'https://maps.googleapis.com/maps/api/directions/json?origin={start.latitude},{start.longitude}&mode=bicycling&destination={end.latitude},{end.longitude}&key={accessTokenGoogle}'
+            case mode.TRANSIT: url = f'https://maps.googleapis.com/maps/api/directions/json?origin={start.latitude},{start.longitude}&mode=transit&destination={end.latitude},{end.longitude}&key={accessTokenGoogle}'
+            case mode.DRIVE: url = f'https://maps.googleapis.com/maps/api/directions/json?origin={start.latitude},{start.longitude}&destination={end.latitude},{end.longitude}&key={accessTokenGoogle}'
+            case _: raise ValueError(f'Unsupported transport mode: {mode}')
+    #print(url)
+    response = requests.get(url)
+    data = response.json()
+    # print('- ' * 20)
+    # print("RESPONSE")
+    # print(json.dumps(data, indent=4, sort_keys=True))
+    return data
+
+def tripCost(duration, mode:googleTripMode):
+    cost = 0
+    if mode == googleTripMode.VOI:
+        cost += 10 + 2.5*float(duration)
+    if mode == googleTripMode.BICYCLING:
+        cost += 20*(duration//30+1)
+     
+    return cost
+
+def getGoogleTrip(start:coordinatePair, end:coordinatePair, mode:googleTripMode):
+    totalDuration = 0
+    totalDistance = 0
+    totalCost = 0
+    match mode:
+        case mode.WALK: 
+            data = apiCallerGoogleDirections(start, end, googleApiMode.WALK)
+        case mode.BICYCLING:
+            data = apiCallerGoogleDirections(start, end, googleApiMode.BICYCLING)
+        case mode.VOI:
+            data = apiCallerGoogleDirections(start, end, googleApiMode.BICYCLING)
+        case _:
+            raise ValueError(f'Unsupported trip: {mode}')
+    
+
+
+    journey = data.get('routes', [{}])[0].get('legs', [{}])[0]
+    totalDuration += int(journey.get('duration').get('text').split(" ")[0])
+    totalDistance += float(journey.get('distance').get('text').split(" ")[0])
+    totalCost += tripCost(totalDuration, mode)
+
+    #print(f'{totalDuration},{totalDistance},{totalCost}')
+    trip = {"duration" : totalDuration, "distance": totalDistance, "cost": totalCost}
+    return trip
 
 
 def apiCallerSos(center: coordinatePair) -> dict:
