@@ -63,5 +63,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 
 function submitTrip() {
-    document.getElementById("noTripsText").innerText = "Laddar resor...";
+    if (document.getElementById("noTripsText") != null) {
+        document.getElementById("noTripsText").innerText = "Laddar resor...";
+    }
 }
