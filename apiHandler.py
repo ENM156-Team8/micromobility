@@ -4,7 +4,7 @@ __all__ = ["apiCallerSos", "apiCallerVt", "_getCordByName", "apiCallerGoogleDire
 
 
 import requests
-from globals import coordinatePair, vtApiType, googleTripMode, googleApiMode
+from globals import coordinatePair, vtApiType, googleApiMode
 
 # General
 
@@ -151,6 +151,6 @@ def apiCallerGoogleDirections(start:coordinatePair, end:coordinatePair, mode: go
     data = response.json()
     # print('- ' * 20)
     # print("RESPONSE")
-    # print(json.dumps(data, indent=4, sort_keys=True))
+    # print(data, indent=4, sort_keys=True)
     return data
 

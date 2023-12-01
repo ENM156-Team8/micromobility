@@ -1,3 +1,4 @@
+import json
 import requests
 from enum import Enum
 from apiHandler import *
@@ -28,6 +29,8 @@ def main():
     # getGid(vtTestCordStart)
     #apiCallerGoogleDirections(vtTestCordStart, vtTestCordEnd, googleApiMode.BICYCLING)
     getGoogleTrip(googleTestCordStart, googleTestCordEnd, googleTripMode.VOI)
+    getGoogleTrip(googleTestCordStart, googleTestCordEnd, googleTripMode.WALK)
+    getGoogleTrip(googleTestCordStart, googleTestCordEnd, googleTripMode.BICYCLING)
     
 
 
@@ -130,25 +133,42 @@ def getGoogleTrip(start:coordinatePair, end:coordinatePair, mode:googleTripMode)
     totalDuration = 0
     totalDistance = 0
     totalCost = 0
+    instructions = ""
+
     match mode:
         case mode.WALK: 
             data = apiCallerGoogleDirections(start, end, googleApiMode.WALK)
+            instructions += "\n Walk "
         case mode.BICYCLING:
             data = apiCallerGoogleDirections(start, end, googleApiMode.BICYCLING)
+            instructions += "\n Bike "
         case mode.VOI:
             data = apiCallerGoogleDirections(start, end, googleApiMode.BICYCLING)
+            instructions += "\n Voi "
         case _:
             raise ValueError(f'Unsupported trip: {mode}')
+            
+    
+
+    # print('- ' * 20)
+    # print("RESPONSE")
+    # print(json.dumps(data, indent=4, sort_keys=True))
+
+    journey = data.get('routes', [{}])[0].get('legs', [{}])[0]
+    durationText = journey.get('duration').get('text')
+    distanceText = journey.get('distance').get('text')
+
+    totalDuration += int(durationText.split(" ")[0])
+    totalDistance += float(distanceText.split(" ")[0])
+    totalCost += tripCost(totalDuration, mode)
+
+    
+    instructions += f'{distanceText} from {journey.get("start_address")} for {durationText} to {journey.get("end_address")}.' + "\n" + f'This trip will cost you: {totalCost} kr.'
     
 
 
-    journey = data.get('routes', [{}])[0].get('legs', [{}])[0]
-    totalDuration += int(journey.get('duration').get('text').split(" ")[0])
-    totalDistance += float(journey.get('distance').get('text').split(" ")[0])
-    totalCost += tripCost(totalDuration, mode)
-
     #print(f'{totalDuration},{totalDistance},{totalCost}')
-    trip = {"duration" : totalDuration, "distance": totalDistance, "cost": totalCost}
+    trip = {"duration" : totalDuration, "distance": totalDistance, "cost": totalCost, "instructions":instructions}
     print("TRIP:")
     print(trip)
 
