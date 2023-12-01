@@ -4,3 +4,4 @@ __pycache__/*
 generateAccess.py
 .vscode
 WebApp/__pycache__
+response.txt
