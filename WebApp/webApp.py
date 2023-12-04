@@ -129,6 +129,10 @@ def index():
         return render_template('index.html', searchedTrip = searchedTrip, trips = trips, noTripSearchedError = noTripSearchedError, mapsAPIKey = mapsAPIKey)
 
 
+@app.route('/detailedTrip/tripIndex=<int:tripIndex>', methods=['POST', 'GET'])
+def detailedTrip(tripIndex):
+    print("index = " + str(tripIndex))
+    return render_template('detailedTrip.html', mapsAPIKey = mapsAPIKey)
 
 
 if __name__ == "__main__":

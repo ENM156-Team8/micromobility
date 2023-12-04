@@ -8,9 +8,7 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
         <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="{{ url_for('static', filename='libraries/jquery.geocomplete.js') }}"></script>
         <script type="text/javascript" src="{{ url_for('static', filename='app.js') }}"></script>
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ mapsAPIKey }}&callback=initMaps&libraries=places"></script>
         {% block head %}{% endblock %}
     </head>
     <body>
@@ -34,13 +32,11 @@
                 </header>
                 
 
-                <form id="inputForm" action="/" method="POST">
-                    {% block form %}{% endblock %}
-                </form>
+                <!-- `{% block form %}{% endblock %}` is a template tag in the Django web framework. It
+                is used to define a block of content that can be overridden in child templates. -->
+
+                {%block body %}{% endblock %}
                 
-                <div class="home-container7 list">
-                    {% block trips %}{% endblock %}
-                </div>
             </div>
         </div>
     </body>  
