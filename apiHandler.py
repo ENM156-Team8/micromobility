@@ -3,6 +3,7 @@ __all__ = ["apiCallerSos", "apiCallerVt", "_getCordByName"]
 
 
 
+import json
 import requests
 from globals import coordinatePair, vtApiType
 
@@ -41,7 +42,14 @@ def requestHandler(url: str, headers: dict) -> any:
         print("Error in requestHandler")
         print(response.status_code)
         print(response.text)
-        exit()
+
+        errorData = {
+            "url": url,
+            "statusCode": response.status_code,
+            "message": json.loads(response.text)['fault']['message'],
+            "description": json.loads(response.text)['fault']['description']
+        }
+        raise Exception(errorData)
 
     data = response.json()
     # print('- ' * 20)

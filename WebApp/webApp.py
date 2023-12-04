@@ -3,6 +3,7 @@ import os, sys, secrets
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from main import *
 from apiHandler import getMapsToken
+from colorama import Fore
 
 
 # TODO get maps api key from file
@@ -92,17 +93,26 @@ def index():
         )
 
         # TODO get trips from main.py
-        sosTrip = getSosTrip(startCoordsPair, destinationCoordsPair)
-        print(sosTrip)
+        try:
+            sosTrip = getSosTrip(startCoordsPair, destinationCoordsPair)
+            print(sosTrip)
+            for segment in sosTrip["segments"]:
+                segment["from"] = segment["from"].to_dict()
+                segment["to"] = segment["to"].to_dict()
+                trips = [sosTrip]
+        except Exception as error:
+            errorData = error.args[0]
+            if isinstance(errorData, dict):
+                statusCode = errorData.get('statusCode')
+                errorText = "Error: " + str(statusCode) + " " + str(errorData.get('message'))
+                print(Fore.RED + errorText + ", url: " + str(errorData.get('url')))
+            else:
+                errorText = "Error: 500 Internal Server Error"
+                print(Fore.RED + "Error: " + str(error))
+            trips = []
+            session['noTripSearchedError'] = errorText
+            return redirect(url_for('index'))
 
-        for segment in sosTrip["segments"]:
-            segment["from"] = segment["from"].to_dict()
-            segment["to"] = segment["to"].to_dict()
-
-        trips = [sosTrip]
-
-        #tripStr="Your trip between: " + searchedTrip.startLocation + " and " + searchedTrip.destinationLocation + ", with options: " + str(searchedTrip.opt1) + " and " + str(searchedTrip.opt2) + ", with coords: (" + searchedTrip.startLocationCoords + ") and (" + searchedTrip.destinationLocationCoords + ") has been submitted."
-        #trips = [tripStr, "test2", "test3"]
 
         # store the trip object in session
         session['trips'] = trips
