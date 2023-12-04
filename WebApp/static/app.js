@@ -64,6 +64,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 function submitTrip() {
     if (document.getElementById("noTripsText") != null) {
-        document.getElementById("noTripsText").innerText = "Laddar resor...";
+        document.getElementById("noTripsText").innerHTML = '<div class="center-noTripsText">Laddar resor<span id="wait">.</span></div>';
     }
+    var dots = window.setInterval( function() {
+        var wait = document.getElementById("wait");
+        if ( wait.innerHTML.length > 3 ) 
+            wait.innerHTML = "";
+        else 
+            wait.innerHTML += ".";
+        }, 500);
 }
+

@@ -17,12 +17,15 @@
         <div class="centered-body">
             <div class="home-container">
                 <header data-role="Header" class="home-header">
-                    <img
-                        alt="logo"
-                        src="{{ url_for('static', filename='images/vasttrafik_logga.svg') }}"
-                        loading="lazy"
-                        class="home-image"
-                    />
+                    <a href="/">
+                        <img
+                            alt="logo"
+                            src="{{ url_for('static', filename='images/vasttrafik_logga.svg') }}"
+                            loading="lazy"
+                            class="home-image"
+                        />
+                    </a>
+
                     <h1>Västtrafik microbilitet</h1>
                     
                     <div class="checkbox-wrapper-3">

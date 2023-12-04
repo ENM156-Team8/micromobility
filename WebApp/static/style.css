@@ -332,7 +332,7 @@ form {
     margin: 10px;
   }
   .trip-container-text4 {
-    font-size: 24px;
+    font-size: 22px;
     margin: 10px;
   }
   .trip-container-container4 {
@@ -343,10 +343,23 @@ form {
     align-items: flex-start;
   }
   .trip-container-text5 {
-    font-size: 25px;
+    font-size: 22px;
     align-self: center;
     margin-left: 10px;
     margin-right: 10px;
+  }
+
+  .center-noTripsText {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Adjust as needed */
+    width: 100%; /* Adjust as needed */
+  }
+
+  #wait {
+      min-width: 4ch; /* Reserve space for 3 dots and one space */
+      text-align: left;
   }
 
 /*---------------------------------------
