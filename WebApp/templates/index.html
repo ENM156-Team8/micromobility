@@ -64,37 +64,30 @@
 
     <div class="home-container7 list">
 
-        {% for trip in trips %}
-            <!-- _<div class="tripItem">{{ trip }}</div> -->
-
+    {% for trip in trips %}
         <!-- <a href="detailedTrip.html?tripIndex={{trips.index(trip)}}" class="tripButton"> -->
-            <!-- <a href="detailedTrip.html?tripIndex={{trips.index(trip)}}" class="trip-container-container tripButton"> -->
-                <a href="/detailedTrip/tripIndex={{trips.index(trip)}}" class="trip-container-container tripButton">
-                <div class="trip-container-container1">
-                    <div class="trip-container-container2">
-                        <div class="trip-container-location">
-                            <span class="trip-container-text"><span>{{ searchedTrip.startLocation }}</span></span>
-                        </div>
-                        <div class="trip-container-time">
-                            <div class="trip-container-container3">
-                            <span class="trip-container-text1"><span>Time start</span></span>
-                            <span class="trip-container-text2"><span>-</span></span>
-                            <span class="trip-container-text3"><span>Time finish</span></span>
-                            </div>
-                            <span class="trip-container-text4"><span>Duration</span></span>
-                        </div>
+        <!-- <a href="detailedTrip.html?tripIndex={{trips.index(trip)}}" class="trip-container-container tripButton"> -->
+        <a href="/detailedTrip/tripIndex={{trips.index(trip)}}" class="trip-container-container tripButton">
+            <div class="trip-container-container1">
+                <div class="trip-container-container2">
+                    <div class="trip-container-location">
+                        <span class="trip-container-text"><span>{{ searchedTrip.startLocation.split(",")[0] }} - {{ searchedTrip.destinationLocation.split(",")[0] }}</span></span>
                     </div>
-                    <div class="trip-container-container4">
-                    <span class="trip-container-text5"><span>Trip Output</span></span>
+                    <div class="trip-container-time">
+                        <div class="trip-container-container3">
+                        <span class="trip-container-text1"><span>{{ trip['startTime'] }}</span></span>
+                        <span class="trip-container-text2"><span>-</span></span>
+                        <span class="trip-container-text3"><span>{{ trip['endTime'] }}</span></span>
+                        </div>
+                        <span class="trip-container-text4"><span>{{ trip['duration'] }} minuter</span></span>
                     </div>
                 </div>
-            </a>
-        <!-- </a> -->
-            
-            <!-- for debug -->
-            <p>{{ trip.get("instructions", "No instructions") }}</p>
-
-        {% endfor %}
+                <div class="trip-container-container4">
+                <span class="trip-container-text5"><span>{{ trip['instructions'] }}</span></span>
+                </div>
+            </div>
+        </a>    
+    {% endfor %} 
 
         {% if (noTripSearchedError != None) %}
             <div style="width: 100%">

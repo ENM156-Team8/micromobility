@@ -4,6 +4,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from main import *
 from apiHandler import getMapsToken
 from colorama import Fore
+from datetime import datetime, timedelta
 
 
 # TODO get maps api key from file
@@ -99,6 +100,9 @@ def index():
             for segment in sosTrip["segments"]:
                 segment["from"] = segment["from"].to_dict()
                 segment["to"] = segment["to"].to_dict()
+                sosTrip["startTime"] = datetime.now().strftime("%H:%M")
+                sosTrip["endTime"] = (datetime.now() + timedelta(minutes = sosTrip["duration"])).strftime("%H:%M")
+                print(sosTrip["startTime"])
                 trips = [sosTrip]
         except Exception as error:
             errorData = error.args[0]
