@@ -1,44 +1,16 @@
 from globals import coordinatePair, vtApiType, googleTripMode, googleApiMode, sosStation
-import json
-import logging
 import threading
-import time
-import requests
 from enum import Enum
 from apiHandler import *
 
 
 def main():
-
-    print("Main running")
-    # testCord = coordinatePair(57.687274, 11.979054)
+    testCord = coordinatePair(57.687274, 11.979054)
     testCordStart = coordinatePair(57.690012, 11.972992)  # Chalmersplatsen
     testCordEnd = coordinatePair(57.696868, 11.987018)  # Korsvägen
-
-    # apiCallerGoogleDirections(
-    # testCordStart, testCordEnd, googleApiMode.WALK)
-    # apiCallerVt(TestCordStart, TestCordEnd, vtApiType.POSITIONS)
-    # getGid(TestCordStart)
-    # apiCallerSos(testCord)
     getSosTrip(testCordStart, testCordEnd)
-    # apiCallerVt(testCordStart, testCordEnd, vtApiType.JOURNEY)
-    # # apiCallerVt(TestCordStart, TestCordEnd, vtApiType.POSITIONS)
-    # # getGid(TestCordStart)
-    # # apiCallerSos(testCord)
-    # getSosTrip(testCordStart, testCordEnd)
-    # getTripByTram("Chalmers", "Korsvägen")
-    # sosTestCord = coordinatePair(57.687274, 11.979054)'
-    # apiCallerSos(sosTestCord)
     googleTestCordStart = coordinatePair(57.690012, 11.972992)
     googleTestCordEnd = coordinatePair(57.713417, 12.035972)
-    # apiCallerVt(vtTestCordStart, vtTestCordEnd, vtApiType.POSITIONS)
-    # getGid(vtTestCordStart)
-    # apiCallerGoogleDirections(vtTestCordStart, vtTestCordEnd, googleApiMode.BICYCLING)
-    getGoogleTrip(testCordStart, testCordEnd, googleTripMode.VOI)
-    getGoogleTrip(testCordStart, testCordEnd, googleTripMode.WALK)
-    getGoogleTrip(testCordStart, testCordEnd, googleTripMode.BICYCLING)
-
-    print(apiCallerSos(testCordStart))
 
 
 def getSosTrip(start: coordinatePair, end: coordinatePair):
@@ -81,7 +53,7 @@ def getSosTrip(start: coordinatePair, end: coordinatePair):
         if trip.get("duration") < shortestTrip.get("duration"):
             shortestTrip = trip
 
-    print("Shortest trip:", shortestTrip)
+    # print("Shortest trip:", shortestTrip)
     # print("--- %s seconds ---" % (time.time() - start_time))
     return shortestTrip
 
@@ -159,9 +131,11 @@ def getTripByTram(startStation: str, endStation: str):
     return segments
 
 
-# Request google trip
-# Either walking, bicycling or Voi
 def getGoogleTrip(start: coordinatePair, end: coordinatePair, mode: googleTripMode):
+    '''
+    Request google trip
+    Either walking, bicycling or Voi
+    '''
     totalDuration = 0
     totalDistance = 0
     totalCost = 0
@@ -192,7 +166,7 @@ def getGoogleTrip(start: coordinatePair, end: coordinatePair, mode: googleTripMo
 
     totalDuration += int(durationText.split(" ")[0])
     totalDistance += float(distanceText.split(" ")[0])
-    totalCost += tripCost(totalDuration, mode)
+    totalCost += _tripCost(totalDuration, mode)
 
     instructions += f'{distanceText} from {journey.get("start_address")} for {durationText} to {journey.get("end_address")}.' + \
         "\n" + f'This trip will cost you: {totalCost} kr.'
@@ -206,7 +180,10 @@ def getGoogleTrip(start: coordinatePair, end: coordinatePair, mode: googleTripMo
     return trip
 
 
-def tripCost(duration, mode: googleTripMode):
+def _tripCost(duration, mode: googleTripMode):
+    '''
+    Calculates cost of a trip
+    '''
     cost = 0
     if mode == googleTripMode.VOI:
         cost += 10 + 2.5*float(duration)
