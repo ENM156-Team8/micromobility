@@ -1,10 +1,9 @@
 
-__all__ = ["apiCallerSos", "apiCallerVt"]
-
+__all__ = ["apiCallerSos", "apiCallerVt",
+           "_getCordByName", "apiCallerGoogleDirections"]
 
 import requests
-import json
-from globals import coordinatePair, vtApiType, sosStation
+from globals import coordinatePair, vtApiType, googleApiMode, sosStation
 
 # General
 
@@ -14,13 +13,15 @@ def _getTokens():
         apiTokenLines = apiTokenFile.readlines()
     vtToken = apiTokenLines[0].strip()
     sosToken = apiTokenLines[1].strip()
-    return {"vt": vtToken, "sos": sosToken}
+    googleToken = apiTokenLines[2].strip()
+    return {"vt": vtToken, "sos": sosToken, "google": googleToken}
 
 
 apiBaseUrlVt = 'https://ext-api.vasttrafik.se/pr/v4'
 tokens = _getTokens()
 appIdSos = tokens.get("sos", '')
 accessTokenVt = tokens.get("vt", '')
+accessTokenGoogle = tokens.get("google", '')
 vtHeaders = {
     'Authorization': 'Bearer ' + accessTokenVt
 }
@@ -35,12 +36,14 @@ def _requestHandler(url: str, headers: dict) -> any:
         print("Error in requestHandler")
         print(response.status_code)
         print(response.text)
+        print(url)
+        print(headers)
         exit()
 
     data = response.json()
-    print('- ' * 20)
-    print("RESPONSE")
-    print(json.dumps(data, indent=4, sort_keys=True))
+    # print('- ' * 20)
+    # print("RESPONSE")
+    # print(json.dumps(data, indent=4, sort_keys=True))
     return data
 
 
@@ -89,6 +92,12 @@ def apiCallerVt(start: coordinatePair, end: coordinatePair, apiType: vtApiType) 
             urlEnd = '/journeys?originGid=' + \
                 str(startGid) + '&destinationGid=' + \
                 str(endGid) + "&transportModes=walk"
+        case apiType.TRAMJOURNEY:
+            startGid = _getGid(start)
+            endGid = _getGid(end)
+            urlEnd = '/journeys?originGid=' + \
+                str(startGid) + '&destinationGid=' + \
+                str(endGid) + '&transportModes=tram'
         case apiType.LOCATIONS:
             urlEnd = '/locations/by-coordinates?latitude=' + \
                 str(start.latitude) + \
@@ -101,6 +110,20 @@ def apiCallerVt(start: coordinatePair, end: coordinatePair, apiType: vtApiType) 
     url = apiBaseUrlVt + urlEnd
     return _requestHandler(url, vtHeaders)
 
+
+# call api with name of station
+def _apiCallerVtByName(station: str) -> coordinatePair:
+    urlEnd = '/locations/by-text?q=' + station + '&limit=10&offset=0'
+    url = apiBaseUrlVt + urlEnd
+    return _requestHandler(url, vtHeaders)
+
+
+def _getCordByName(station: str) -> coordinatePair:
+    data = _apiCallerVtByName(station)
+    lat = data.get("results")[0].get("latitude")
+    long = data.get("results")[0].get("longitude")
+    return coordinatePair(lat, long)
+
 # Helper to get station id
 
 
@@ -112,4 +135,42 @@ def _getGid(coordinatePair: coordinatePair) -> int:
     response = _requestHandler(apiBaseUrlVt + urlEnd, vtHeaders)
     closestResult = response["results"][0]
     # print(closestResult)
-    return closestResult.get("gid", None)
+    for result in response["results"]:
+        if result.get("gid", None) != None:
+            closestResult = result
+            return closestResult.get("gid")
+    print("no valid gid found")
+    print(response)
+    exit()
+    return -1
+
+
+def apiCallerGoogleDirections(start: coordinatePair, end: coordinatePair, mode: googleApiMode = None):
+    url = ""
+    # print(mode)
+    if mode is None:
+        url = f'https://maps.googleapis.com/maps/api/directions/json?origin={start.latitude},{start.longitude}&destination={end.latitude},{end.longitude}&key={accessTokenGoogle}'
+    else:
+        match mode:
+            case mode.WALK:
+                url = f'https://maps.googleapis.com/maps/api/directions/json?origin={start.latitude},{start.longitude}&mode=walking&destination={end.latitude},{end.longitude}&key={accessTokenGoogle}'
+
+            case mode.BICYCLING:
+                url = f'https://maps.googleapis.com/maps/api/directions/json?origin={start.latitude},{start.longitude}&mode=bicycling&destination={end.latitude},{end.longitude}&key={accessTokenGoogle}'
+
+            case mode.TRANSIT:
+                url = f'https://maps.googleapis.com/maps/api/directions/json?origin={start.latitude},{start.longitude}&mode=transit&destination={end.latitude},{end.longitude}&key={accessTokenGoogle}'
+
+            case mode.DRIVE:
+                url = f'https://maps.googleapis.com/maps/api/directions/json?origin={start.latitude},{start.longitude}&destination={end.latitude},{end.longitude}&key={accessTokenGoogle}'
+
+            case _:
+                raise ValueError(f'Unsupported transport mode: {mode}')
+
+    # print(url)
+    response = requests.get(url)
+    data = response.json()
+    # print('- ' * 20)
+    # print("RESPONSE")
+    # print(json.dumps(data, indent=4, sort_keys=True))
+    return data
