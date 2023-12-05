@@ -1,0 +1,37 @@
+# VTApiPlaneraResaWebV4ModelsJourneyDetailsLinkEndpointApiModel
+
+Information about an endpoint on an access link.
+
+## Properties
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**gid** | **str** | The 16-digit Västtrafik gid. | [optional] 
+**name** | **str** | The location name. | 
+**location_type** | [**VTApiPlaneraResaCoreModelsLocationType**](VTApiPlaneraResaCoreModelsLocationType.md) |  | 
+**latitude** | **float** | The WGS84 latitude of the location. | [optional] 
+**longitude** | **float** | The WGS84 longitude of the location. | [optional] 
+**planned_time** | **str** | The planned time in RFC 3339 format. | 
+**estimated_time** | **str** | The estimated time in RFC 3339 format. | [optional] 
+**estimated_otherwise_planned_time** | **str** | The best known time of the link in RFC 3339 format. Is EstimatedTime if exists, otherwise PlannedTime. | [optional] [readonly] 
+**notes** | [**List[VTApiPlaneraResaCoreModelsNote]**](VTApiPlaneraResaCoreModelsNote.md) | An ordered list (most important first) of notes related to the end point. | [optional] 
+
+## Example
+
+```python
+from openapi_client.models.vt_api_planera_resa_web_v4_models_journey_details_link_endpoint_api_model import VTApiPlaneraResaWebV4ModelsJourneyDetailsLinkEndpointApiModel
+
+# TODO update the JSON string below
+json = "{}"
+# create an instance of VTApiPlaneraResaWebV4ModelsJourneyDetailsLinkEndpointApiModel from a JSON string
+vt_api_planera_resa_web_v4_models_journey_details_link_endpoint_api_model_instance = VTApiPlaneraResaWebV4ModelsJourneyDetailsLinkEndpointApiModel.from_json(json)
+# print the JSON string representation of the object
+print VTApiPlaneraResaWebV4ModelsJourneyDetailsLinkEndpointApiModel.to_json()
+
+# convert the object into a dict
+vt_api_planera_resa_web_v4_models_journey_details_link_endpoint_api_model_dict = vt_api_planera_resa_web_v4_models_journey_details_link_endpoint_api_model_instance.to_dict()
+# create an instance of VTApiPlaneraResaWebV4ModelsJourneyDetailsLinkEndpointApiModel from a dict
+vt_api_planera_resa_web_v4_models_journey_details_link_endpoint_api_model_form_dict = vt_api_planera_resa_web_v4_models_journey_details_link_endpoint_api_model.from_dict(vt_api_planera_resa_web_v4_models_journey_details_link_endpoint_api_model_dict)
+```
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

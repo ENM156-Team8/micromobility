@@ -1,0 +1,31 @@
+# VTApiPlaneraResaWebV4ModelsDeparturesAndArrivalsGetArrivalsResponse
+
+The response to a get arrivals request, includes the results and pagination information.
+
+## Properties
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**results** | [**List[VTApiPlaneraResaWebV4ModelsDeparturesAndArrivalsArrivalApiModel]**](VTApiPlaneraResaWebV4ModelsDeparturesAndArrivalsArrivalApiModel.md) | The results. | [optional] 
+**pagination** | [**VTApiPlaneraResaWebV4ModelsPaginationProperties**](VTApiPlaneraResaWebV4ModelsPaginationProperties.md) |  | [optional] 
+**links** | [**VTApiPlaneraResaWebV4ModelsPaginationLinks**](VTApiPlaneraResaWebV4ModelsPaginationLinks.md) |  | [optional] 
+
+## Example
+
+```python
+from openapi_client.models.vt_api_planera_resa_web_v4_models_departures_and_arrivals_get_arrivals_response import VTApiPlaneraResaWebV4ModelsDeparturesAndArrivalsGetArrivalsResponse
+
+# TODO update the JSON string below
+json = "{}"
+# create an instance of VTApiPlaneraResaWebV4ModelsDeparturesAndArrivalsGetArrivalsResponse from a JSON string
+vt_api_planera_resa_web_v4_models_departures_and_arrivals_get_arrivals_response_instance = VTApiPlaneraResaWebV4ModelsDeparturesAndArrivalsGetArrivalsResponse.from_json(json)
+# print the JSON string representation of the object
+print VTApiPlaneraResaWebV4ModelsDeparturesAndArrivalsGetArrivalsResponse.to_json()
+
+# convert the object into a dict
+vt_api_planera_resa_web_v4_models_departures_and_arrivals_get_arrivals_response_dict = vt_api_planera_resa_web_v4_models_departures_and_arrivals_get_arrivals_response_instance.to_dict()
+# create an instance of VTApiPlaneraResaWebV4ModelsDeparturesAndArrivalsGetArrivalsResponse from a dict
+vt_api_planera_resa_web_v4_models_departures_and_arrivals_get_arrivals_response_form_dict = vt_api_planera_resa_web_v4_models_departures_and_arrivals_get_arrivals_response.from_dict(vt_api_planera_resa_web_v4_models_departures_and_arrivals_get_arrivals_response_dict)
+```
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

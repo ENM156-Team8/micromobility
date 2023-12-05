@@ -9,18 +9,20 @@ def main():
     print("Main running")
     testCord = coordinatePair(57.687274, 11.979054)
     testCordStart = coordinatePair(57.690012, 11.972992)  # Chalmersplatsen
-    testCordEnd = coordinatePair(57.696868, 11.987018)  # Korsvägen
+    #testCordEnd = coordinatePair(57.696868, 11.987018)  # Korsvägen
+    testCordEnd = coordinatePair(57.719998787966006, 12.932556366328921) # Borås Station
     # apiCallerVt(TestCordStart, TestCordEnd, vtApiType.POSITIONS)
     # getGid(TestCordStart)
     # apiCallerSos(testCord)
-    getSosTrip(testCordStart, testCordEnd)
+    #getSosTrip(testCordStart, testCordEnd)
     #getTripByTram("Chalmers", "Korsvägen")
-    getVsTrip("Chalmers", "Studiegången")
+    getVsTrip("Chalmers", "Kapellplatsen")
 
 
 def getSosTrip(start: coordinatePair, end: coordinatePair):
     totalDuration = 0
     totalDistance = 0
+    totalCostSOS = 0
     instructions = ""
     segments = []
 
@@ -28,7 +30,10 @@ def getSosTrip(start: coordinatePair, end: coordinatePair):
     startStation = apiCallerSos(start)[0]
     startStationCord = coordinatePair(
         startStation.get("Lat", "invalid"), startStation.get("Long", "invalid"))
-
+    
+        
+    try: apiCallerSos(end)[0]
+    except: print("Ingen station i närheten")
     endStation = apiCallerSos(end)[0]
     endStationCord = coordinatePair(
         endStation.get("Lat", "invalid"), endStation.get("Long", "invalid"))
@@ -52,13 +57,15 @@ def getSosTrip(start: coordinatePair, end: coordinatePair):
     bikeJourney = bikeJourney["results"][0].get("destinationLink")
     bikeDistance = bikeJourney.get("distanceInMeters")
     bikeDuration = bikeJourney.get("plannedDurationInMinutes")
+    bikeCost = 20*(bikeDuration//30)
+    totalCostSOS += bikeCost
     totalDuration += bikeDuration
     totalDistance += bikeDistance
     instructions += "Bike " + \
         str(bikeDistance) + " meters to: " + \
         endStation.get("Name", "No name") + ".\n"
     segments.append({"type": "bike", "distance": bikeDistance,
-                    "duration": bikeDuration, "from": startStationCord, "to": endStationCord})
+                    "duration": bikeDuration, "from": startStationCord, "to": endStationCord, "cost": totalCostSOS})
 
     # Walk from end station
     journey = apiCallerVt(endStationCord, end, vtApiType.WALKJOURNEY)
