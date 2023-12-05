@@ -5,6 +5,7 @@ from globals import coordinatePair, vtApiType
 import json
 
 
+
 def main():
     print("Main running")
     testCord = coordinatePair(57.687274, 11.979054)
@@ -15,7 +16,7 @@ def main():
     # apiCallerSos(testCord)
     getSosTrip(testCordStart, testCordEnd)
     #getTripByTram("Chalmers", "Korsvägen")
-    getVsTrip("Chalmers", "Studiegången")
+    getVtTrip("Chalmers", "Korsvägen")
 
 
 def getSosTrip(start: coordinatePair, end: coordinatePair):
@@ -81,21 +82,27 @@ def getSosTrip(start: coordinatePair, end: coordinatePair):
     print(trip.get("instructions", "No instructions"))
 
 # get stations in a radius or box around the station suggested in the original trip
-def getPositions(startStation: str, endStation: str)
+def getPositions(startStation: str, endStation: str):
     startStationCord = _getCordByName(startStation)
     endStationCord = _getCordByName(endStation)
     data = apiCallerVt(startStationCord, endStationCord, vtApiType.POSITIONS)
+    #positions = data.get()
 
     return
     
 # requests tram trip info
-def getVsTrip(startStation: str, endStation: str):
+def getVtTrip(startStation: str, endStation: str):
     startStationCord = _getCordByName(startStation)
     endStationCord = _getCordByName(endStation)
     segments = []
     data = apiCallerVt(startStationCord, endStationCord, vtApiType.JOURNEY)
 
-    journey = data.get("results")[0].get("tripLegs")[1]
+    # for i in data: 
+    #     if data[i] == "tripLegs":
+    #         print(True)
+
+    journey = data.get("results")[1].get("tripLegs")[0]
+    print(json.dumps(journey))
 
     with open("response.txt", "w") as f:
         f.write(json.dumps(journey, indent=4, sort_keys=True))
@@ -122,8 +129,8 @@ def getVsTrip(startStation: str, endStation: str):
 
         getSosTrip(startCord, endCord)
 
-    #print(totalConnectionTime)
-    #print(boolMissCon)
+    print(totalConnectionTime)
+    print(boolMissCon)
 
 
     # hämta bytesstation
@@ -135,24 +142,24 @@ def getVsTrip(startStation: str, endStation: str):
         
 
     # TESTING
-    #with open("response.txt", "w") as f:
-    #    f.write(json.dumps(tramJourney, indent=4, sort_keys=True))
+    with open("response.txt", "w") as f:
+       f.write(json.dumps(journey, indent=4, sort_keys=True))
 
     # ex. how arrival/departure might look like:
     # 2023-11-24T13:52:00.0000000+01:00
-    #arrival = tramJourney.get("estimatedArrivalTime")
-    #departure = tramJourney.get("estimatedDepartureTime")
-    #duration = tramJourney.get("estimatedDurationInMinutes")
+    arrival = journey.get("estimatedArrivalTime")
+    departure = journey.get("estimatedDepartureTime")
+    duration = journey.get("estimatedDurationInMinutes")
 
     # todo: implement what type of info we want regarding tramline
-    #tramInfo = tramJourney.get("serviceJourney")
+    # tramInfo = tramJourney.get("serviceJourney")
 
-    #segments.append({"type": "tram", "duration": duration, 
-    #                 "from": startStationCord, "to": endStationCord, 
-    #                 "departure": departure, "arrival": arrival})
+    segments.append({"type": "tram", "duration": duration, 
+                    "from": startStationCord, "to": endStationCord, 
+                    "departure": departure, "arrival": arrival})
     
 
-    #print(segments)
+    print(segments)
     return None
 
 
