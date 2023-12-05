@@ -46,3 +46,4 @@ googleApiMode = Enum(
 # VOI: Retruns Voi trip
 googleTripMode = Enum(
     'googleTripMode', ['WALK', 'BICYCLING', 'VOI'])
+
