@@ -132,7 +132,7 @@ def apiCallerGoogleDirections(start:coordinatePair, end:coordinatePair, mode: go
     else:
         match mode:
             case mode.WALK:
-                url = f'https://maps.googleapis.com/maps/api/directions/json?origin={start.latitude},{start.longitude}&mode=walk&destination={end.latitude},{end.longitude}&key={accessTokenGoogle}'
+                url = f'https://maps.googleapis.com/maps/api/directions/json?origin={start.latitude},{start.longitude}&mode=walking&destination={end.latitude},{end.longitude}&key={accessTokenGoogle}'
             
             case mode.BICYCLING:
                 url = f'https://maps.googleapis.com/maps/api/directions/json?origin={start.latitude},{start.longitude}&mode=bicycling&destination={end.latitude},{end.longitude}&key={accessTokenGoogle}'

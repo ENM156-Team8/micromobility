@@ -13,13 +13,13 @@ from globals import coordinatePair, vtApiType, googleTripMode, googleApiMode
 
 def main():
     print("Main running")
-    # testCord = coordinatePair(57.687274, 11.979054)
-    # testCordStart = coordinatePair(57.690012, 11.972992)  # Chalmersplatsen
-    # testCordEnd = coordinatePair(57.696868, 11.987018)  # Korsvägen
+    #testCord = coordinatePair(57.687274, 11.979054)
+    testCordStart = coordinatePair(57.690012, 11.972992)  # Chalmersplatsen
+    testCordEnd = coordinatePair(57.696868, 11.987018)  # Korsvägen
     # # apiCallerVt(TestCordStart, TestCordEnd, vtApiType.POSITIONS)
     # # getGid(TestCordStart)
     # # apiCallerSos(testCord)
-    # getSosTrip(testCordStart, testCordEnd)
+    #getSosTrip(testCordStart, testCordEnd)
     # getTripByTram("Chalmers", "Korsvägen")
     # sosTestCord = coordinatePair(57.687274, 11.979054)'
     # apiCallerSos(sosTestCord)
@@ -28,9 +28,11 @@ def main():
     #apiCallerVt(vtTestCordStart, vtTestCordEnd, vtApiType.POSITIONS)
     # getGid(vtTestCordStart)
     #apiCallerGoogleDirections(vtTestCordStart, vtTestCordEnd, googleApiMode.BICYCLING)
-    getGoogleTrip(googleTestCordStart, googleTestCordEnd, googleTripMode.VOI)
-    getGoogleTrip(googleTestCordStart, googleTestCordEnd, googleTripMode.WALK)
-    getGoogleTrip(googleTestCordStart, googleTestCordEnd, googleTripMode.BICYCLING)
+    getGoogleTrip(testCordStart, testCordEnd, googleTripMode.VOI)
+    getGoogleTrip(testCordStart, testCordEnd, googleTripMode.WALK)
+    getGoogleTrip(testCordStart, testCordEnd, googleTripMode.BICYCLING)
+
+    print(apiCallerSos(testCordStart))
     
 
 
@@ -178,10 +180,13 @@ def tripCost(duration, mode:googleTripMode):
     cost = 0
     if mode == googleTripMode.VOI:
         cost += 10 + 2.5*float(duration)
-    if mode == googleTripMode.BICYCLING:
+    elif mode == googleTripMode.BICYCLING:
         cost += 20*(duration//30+1)
      
     return cost
+
+
+
 
 if __name__ == '__main__':
     main()
