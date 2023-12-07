@@ -12,8 +12,10 @@ def main():
     # apiCallerVt(TestCordStart, TestCordEnd, vtApiType.POSITIONS)
     # getGid(TestCordStart)
     # apiCallerSos(testCord)
-    getSosTrip(testCordStart, testCordEnd)
-    getTripByTram("Chalmers", "Korsvägen")
+    
+    #getSosTrip(testCordStart, testCordEnd)
+    #getTripByTram("Chalmers", "Korsvägen")
+    client()
 
 
 def getSosTrip(start: coordinatePair, end: coordinatePair):
