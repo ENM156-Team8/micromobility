@@ -82,9 +82,11 @@ def getSosTrip(start: coordinatePair, end: coordinatePair) -> dict[str, any]:
 
     
 # requests tram trip info
-def getTripByTram(startStation: str, endStation: str):
-    startStationCord = _getCordByName(startStation)
-    endStationCord = _getCordByName(endStation)
+
+# def getTripByTram(startStation: str, endStation: str):
+    # startStationCord = _getCordByName(startStation)
+    # endStationCord = _getCordByName(endStation)
+def getTripByTram(startStationCord: str, endStationCord: str):
     segments = []
     data = apiCallerVt(startStationCord, endStationCord, vtApiType.TRAMJOURNEY)
 

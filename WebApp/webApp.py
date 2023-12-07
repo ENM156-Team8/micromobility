@@ -1,3 +1,4 @@
+import traceback
 from flask import Flask, render_template, request, url_for, redirect, session
 import os, sys, secrets
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -31,6 +32,31 @@ class tripObj:
             'opt1': self.opt1,
             'opt2': self.opt2
         }
+    
+
+def formatTime(timeDate: str) -> str:
+    time = timeDate.split("T")[1]
+    timeArr = time.split(":")
+    return timeArr[0] + ":" + timeArr[1]
+
+def searchSosTrip(startCoordsPair, destinationCoordsPair):
+    sosTrip = getSosTrip(startCoordsPair, destinationCoordsPair)
+    print(sosTrip)
+    for segment in sosTrip["segments"]:
+        segment["from"] = segment["from"].to_dict()
+        segment["to"] = segment["to"].to_dict()
+        sosTrip["departure"] = datetime.now().strftime("%H:%M")
+        sosTrip["arrival"] = (datetime.now() + timedelta(minutes = sosTrip["duration"])).strftime("%H:%M")
+    return sosTrip
+
+def searchTramTrip(startCoordsPair, destinationCoordsPair):
+    tramTrip = getTripByTram(startCoordsPair, destinationCoordsPair)[0]
+    print(tramTrip)
+    tramTrip["from"] = tramTrip["from"].to_dict()
+    tramTrip["to"] = tramTrip["to"].to_dict()
+    tramTrip["departure"] = formatTime(tramTrip["departure"])
+    tramTrip["arrival"] = formatTime(tramTrip["arrival"])
+    return tramTrip
 
 
 
@@ -95,24 +121,20 @@ def index():
 
         # TODO get trips from main.py
         try:
-            sosTrip = getSosTrip(startCoordsPair, destinationCoordsPair)
-            print(sosTrip)
-            for segment in sosTrip["segments"]:
-                segment["from"] = segment["from"].to_dict()
-                segment["to"] = segment["to"].to_dict()
-                sosTrip["startTime"] = datetime.now().strftime("%H:%M")
-                sosTrip["endTime"] = (datetime.now() + timedelta(minutes = sosTrip["duration"])).strftime("%H:%M")
-                print(sosTrip["startTime"])
-                trips = [sosTrip]
+            trips.append(searchSosTrip(startCoordsPair, destinationCoordsPair))
+            trips.append(searchTramTrip(startCoordsPair, destinationCoordsPair))
         except Exception as error:
+            print(Fore.RED + "\n----------ERROR-----------\n")
+            print(traceback.format_exc())
             errorData = error.args[0]
             if isinstance(errorData, dict):
                 statusCode = errorData.get('statusCode')
                 errorText = "Error: " + str(statusCode) + " " + str(errorData.get('message'))
-                print(Fore.RED + errorText + ", url: " + str(errorData.get('url')))
+                print(errorText + ", url: " + str(errorData.get('url')))
             else:
                 errorText = "Error: 500 Internal Server Error"
-                print(Fore.RED + "Error: " + str(error))
+                print("Error: " + str(error))
+            print("\n----------ERROR-----------\n" + Fore.RESET)
             trips = []
             session['noTripSearchedError'] = errorText
             return redirect(url_for('index'))
@@ -130,6 +152,7 @@ def index():
         trips = session.pop('trips', []) 
         searchedTrip = session.pop('searchedTrip', None)
         noTripSearchedError = session.pop('noTripSearchedError', "Sök en resa för att börja")
+        print(trips)
         return render_template('index.html', searchedTrip = searchedTrip, trips = trips, noTripSearchedError = noTripSearchedError, mapsAPIKey = mapsAPIKey)
 
 

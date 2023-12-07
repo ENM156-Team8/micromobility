@@ -292,6 +292,7 @@ form {
     padding-bottom: 10px;
     border-radius: var(--border-radius-medium);
     outline: none;
+    margin-bottom: 10px;
   }
   .trip-container-container1 {
     flex: 0 0 auto;
