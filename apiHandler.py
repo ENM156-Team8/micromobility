@@ -1,8 +1,8 @@
 
-__all__ = ["apiCallerSos", "apiCallerVt", "_getCordByName", "apiCallerGoogleDirections"]
+__all__ = ["apiCallerSos", "apiCallerVt", "_getCordByName", "apiCallerGoogleDirections", "location_api", "journey_api"]
 
 
-
+import openapi_client
 import requests
 from globals import coordinatePair, vtApiType, googleApiMode
 
@@ -25,6 +25,17 @@ accessTokenGoogle = tokens.get("google", '')
 vtHeaders = {
     'Authorization': 'Bearer ' + accessTokenVt
 }
+
+configuration = openapi_client.Configuration(
+    host = "https://ext-api.vasttrafik.se/pr/v4",
+    access_token = accessTokenVt)
+
+api_client = openapi_client.api_client.ApiClient(configuration)
+location_api = openapi_client.api.locations_api.LocationsApi(api_client)
+journey_api = openapi_client.api.journeys_api.JourneysApi(api_client)
+
+
+
 
 
 def requestHandler(url: str, headers: dict) -> any:
