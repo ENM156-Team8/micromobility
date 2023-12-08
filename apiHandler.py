@@ -9,6 +9,7 @@ from globals import coordinatePair, vtApiType, googleApiMode, sosStation
 
 # General
 
+
 def _getTokens():
     with open("apiToken.txt", "r") as apiTokenFile:
         apiTokenLines = apiTokenFile.readlines()
@@ -69,6 +70,7 @@ def formatResponseSos(jData):
 
 # Västtrafik
 
+
 def apiCallerVt(start: coordinatePair, end: coordinatePair, apiType: vtApiType) -> str:
     match apiType:
         case apiType.POSITIONS:
@@ -125,20 +127,21 @@ def _getCordByName(station: str) -> coordinatePair:
     return coordinatePair(lat, long)
 
 
-# call api with name of station 
+# call api with name of station
 def _apiCallerVtByName(station: str) -> coordinatePair:
     urlEnd = '/locations/by-text?q=' + station + '&limit=10&offset=0'
     url = apiBaseUrlVt + urlEnd
-    return requestHandler(url, vtHeaders)
+    return _requestHandler(url, vtHeaders)
 
 
-def _getCordByName(station: str) -> coordinatePair: 
+def _getCordByName(station: str) -> coordinatePair:
     data = _apiCallerVtByName(station)
     lat = data.get("results")[0].get("latitude")
     long = data.get("results")[0].get("longitude")
-    return coordinatePair(lat,long) 
+    return coordinatePair(lat, long)
 
 # Helper to get station id
+
 
 def _getGid(coordinatePair: coordinatePair) -> int:
     radius = 1000  # meters

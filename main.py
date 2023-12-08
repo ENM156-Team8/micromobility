@@ -12,7 +12,7 @@ def main():
     testCordEnd = coordinatePair(57.696868, 11.987018)  # Korsvägen
     googleTestCordStart = coordinatePair(57.690012, 11.972992)
     googleTestCordEnd = coordinatePair(57.713417, 12.035972)
-
+    getSosTrip(testCordStart, testCordEnd)
 
 
 def getSosTrip(start: coordinatePair, end: coordinatePair):
@@ -77,7 +77,6 @@ def _calculateTripHelper(name, startDuration, startDistance, startInstructions, 
     endStationCord = coordinatePair(
         endStation.latitude, endStation.longitude)
 
-    
     # Bike betweem stations
     bikeJourney = getGoogleTrip(startStationCord, endStationCord,
                                 googleTripMode.BICYCLING)
