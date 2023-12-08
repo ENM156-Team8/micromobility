@@ -1,5 +1,6 @@
 from globals import coordinatePair, vtApiType, googleTripMode, googleApiMode, sosStation
 import threading
+import time
 from enum import Enum
 from apiHandler import *
 
@@ -18,7 +19,7 @@ def getSosTrip(start: coordinatePair, end: coordinatePair):
     Calculates the shortest trip from start to end using Styr&Ställ stations.
     :return: shortest trip as a dictionary with keys: duration, distance, instructions, segments, cost
     '''
-    # start_time = time.time()
+    start_time = time.time()
 
     # Get closest stations
     startStations: [sosStation] = apiCallerSos(start)
@@ -26,35 +27,38 @@ def getSosTrip(start: coordinatePair, end: coordinatePair):
 
     possibleTrips = []
     for startStation in startStations:
-        startStationCord = coordinatePair(
-            startStation.latitude, startStation.longitude)
+        if startStation.open == True and startStation.availableBikes > 0:
+            startStationCord = coordinatePair(
+                startStation.latitude, startStation.longitude)
 
-        # Walk to start station
-        firstWalk = getGoogleTrip(start, startStationCord, googleTripMode.WALK)
-        if firstWalk != -1:
-            startDistance = firstWalk.get("distance")
-            startDuration = firstWalk.get("duration")
-            startInstructions = firstWalk.get("instructions")
-            startSegment = {"type": "walk", "distance": startDistance,
-                            "duration": startDuration, "from": start.show(), "to": startStationCord.show()}
+            # Walk to start station
+            firstWalk = getGoogleTrip(
+                start, startStationCord, googleTripMode.WALK)
+            if firstWalk != -1:
+                startDistance = firstWalk.get("distance")
+                startDuration = firstWalk.get("duration")
+                startInstructions = firstWalk.get("instructions")
+                startSegment = {"type": "walk", "distance": startDistance,
+                                "duration": startDuration, "from": start.show(), "to": startStationCord.show()}
 
-            threads = list()
-            for endStation in endStations:
-                x = threading.Thread(
-                    target=_calculateTripHelper, args=(endStation.name, startDuration, startDistance, startInstructions, startSegment, startStationCord, endStation, end, possibleTrips))
-                threads.append(x)
-                x.start()
+                threads = list()
+                for endStation in endStations:
+                    if endStation.open == True:
+                        x = threading.Thread(
+                            target=_calculateTripHelper, args=(endStation.name, startDuration, startDistance, startInstructions, startSegment, startStationCord, endStation, end, possibleTrips))
+                        threads.append(x)
+                        x.start()
 
-            for thread in threads:
-                thread.join()
+                for thread in threads:
+                    thread.join()
 
     shortestTrip = possibleTrips[0]
     for trip in possibleTrips:
         if trip.get("duration") < shortestTrip.get("duration"):
             shortestTrip = trip
 
-    # print("Shortest trip:", shortestTrip)
-    # print("--- %s seconds ---" % (time.time() - start_time))
+    print("Shortest trip:", shortestTrip)
+    print("--- %s seconds ---" % (time.time() - start_time))
     return shortestTrip
 
 
@@ -174,8 +178,8 @@ def getGoogleTrip(start: coordinatePair, end: coordinatePair, mode: googleTripMo
     # print(f'{totalDuration},{totalDistance},{totalCost}')
     trip = {"duration": totalDuration, "distance": totalDistance,
             "cost": totalCost, "instructions": instructions}
-    print("TRIP:")
-    print(trip)
+    # print("TRIP:")
+    # print(trip)
 
     return trip
 
