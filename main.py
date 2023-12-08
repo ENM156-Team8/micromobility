@@ -1,3 +1,4 @@
+
 from globals import coordinatePair, vtApiType, googleTripMode, googleApiMode, sosStation
 import threading
 import time
@@ -9,9 +10,9 @@ def main():
     testCord = coordinatePair(57.687274, 11.979054)
     testCordStart = coordinatePair(57.690012, 11.972992)  # Chalmersplatsen
     testCordEnd = coordinatePair(57.696868, 11.987018)  # Korsvägen
-    getSosTrip(testCordStart, testCordEnd)
     googleTestCordStart = coordinatePair(57.690012, 11.972992)
     googleTestCordEnd = coordinatePair(57.713417, 12.035972)
+
 
 
 def getSosTrip(start: coordinatePair, end: coordinatePair):
@@ -76,11 +77,13 @@ def _calculateTripHelper(name, startDuration, startDistance, startInstructions, 
     endStationCord = coordinatePair(
         endStation.latitude, endStation.longitude)
 
+    
     # Bike betweem stations
     bikeJourney = getGoogleTrip(startStationCord, endStationCord,
                                 googleTripMode.BICYCLING)
     bikeDistance = bikeJourney.get("distance")
     bikeDuration = bikeJourney.get("duration")
+
     totalDuration += bikeDuration
     totalDistance += bikeDistance
     cost = bikeJourney.get("cost")

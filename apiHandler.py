@@ -1,12 +1,13 @@
 
+
 __all__ = ["apiCallerSos", "apiCallerVt",
            "_getCordByName", "apiCallerGoogleDirections"]
+
 
 import requests
 from globals import coordinatePair, vtApiType, googleApiMode, sosStation
 
 # General
-
 
 def _getTokens():
     with open("apiToken.txt", "r") as apiTokenFile:
@@ -68,7 +69,6 @@ def formatResponseSos(jData):
 
 # Västtrafik
 
-
 def apiCallerVt(start: coordinatePair, end: coordinatePair, apiType: vtApiType) -> str:
     match apiType:
         case apiType.POSITIONS:
@@ -124,8 +124,21 @@ def _getCordByName(station: str) -> coordinatePair:
     long = data.get("results")[0].get("longitude")
     return coordinatePair(lat, long)
 
-# Helper to get station id
 
+# call api with name of station 
+def _apiCallerVtByName(station: str) -> coordinatePair:
+    urlEnd = '/locations/by-text?q=' + station + '&limit=10&offset=0'
+    url = apiBaseUrlVt + urlEnd
+    return requestHandler(url, vtHeaders)
+
+
+def _getCordByName(station: str) -> coordinatePair: 
+    data = _apiCallerVtByName(station)
+    lat = data.get("results")[0].get("latitude")
+    long = data.get("results")[0].get("longitude")
+    return coordinatePair(lat,long) 
+
+# Helper to get station id
 
 def _getGid(coordinatePair: coordinatePair) -> int:
     radius = 1000  # meters
