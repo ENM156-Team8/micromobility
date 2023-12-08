@@ -41,9 +41,11 @@ def formatTime(timeDate: str) -> str:
 
 def searchSosTrip(startCoordsPair, destinationCoordsPair):
     sosTrip = getSosTrip(startCoordsPair, destinationCoordsPair)
-    print(sosTrip)
+    #print(sosTrip)
     for segment in sosTrip["segments"]:
+        # print("from " + str(segment["from"]))
         segment["from"] = segment["from"].to_dict()
+        # print("to " + str(segment["to"]))
         segment["to"] = segment["to"].to_dict()
         sosTrip["departure"] = datetime.now().strftime("%H:%M")
         sosTrip["arrival"] = (datetime.now() + timedelta(minutes = sosTrip["duration"])).strftime("%H:%M")
@@ -122,7 +124,7 @@ def index():
         # TODO get trips from main.py
         try:
             trips.append(searchSosTrip(startCoordsPair, destinationCoordsPair))
-            trips.append(searchTramTrip(startCoordsPair, destinationCoordsPair))
+            #trips.append(searchTramTrip(startCoordsPair, destinationCoordsPair))
         except Exception as error:
             print(Fore.RED + "\n----------ERROR-----------\n")
             print(traceback.format_exc())

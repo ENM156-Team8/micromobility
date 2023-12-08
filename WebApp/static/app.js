@@ -3,7 +3,7 @@
 function initMaps() {
     // set default bounds to Gothenburg
     const defaultBounds = new google.maps.LatLngBounds(
-        new google.maps.LatLng(57.7075, 11.9675),
+        new google.maps.LatLng(57.689461, 11.973725),
     );
     const countryRestrict = { country: "se" };
 
