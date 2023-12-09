@@ -8,8 +8,11 @@ from colorama import Fore
 from datetime import datetime, timedelta
 
 
-# TODO get maps api key from file
+# get maps api key from file
 mapsAPIKey = getMapsToken()
+
+# global var for list of trips
+trips = []
 
 
 
@@ -75,12 +78,13 @@ app.config.update(
 def index():
     # init the trip object and trips list
     searchedTrip: tripObj = None
+    global trips
     trips = []
 
     # check if the trip object and trips list are stored in session
     if 'searchedTrip' in session:
         searchedTrip: tripObj = session['searchedTrip']
-        trips: list = session['trips']
+        trips = session['trips']
         noTripSearchedError: str = session['searchedTrip']
 
     # if the request is POST
@@ -161,7 +165,8 @@ def index():
 @app.route('/detailedTrip/tripIndex=<int:tripIndex>', methods=['POST', 'GET'])
 def detailedTrip(tripIndex):
     print("index = " + str(tripIndex))
-    return render_template('detailedTrip.html', mapsAPIKey = mapsAPIKey)
+    print(trips)
+    return render_template('detailedTrip.html', mapsAPIKey = mapsAPIKey, trip = trips[tripIndex])
 
 
 if __name__ == "__main__":
