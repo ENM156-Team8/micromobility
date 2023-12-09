@@ -77,8 +77,8 @@ app.config.update(
 @app.route('/', methods=['POST', 'GET'])
 def index():
     # init the trip object and trips list
-    searchedTrip: tripObj = None
     global trips
+    searchedTrip: tripObj = None
     trips = []
 
     # check if the trip object and trips list are stored in session
@@ -156,7 +156,7 @@ def index():
     # if the request is GET
     else:
         trips = session.pop('trips', []) 
-        searchedTrip = session.pop('searchedTrip', None)
+        searchedTrip = session.pop('searchedTrip', searchedTrip)
         noTripSearchedError = session.pop('noTripSearchedError', "Sök en resa för att börja")
         print(trips)
         return render_template('index.html', searchedTrip = searchedTrip, trips = trips, noTripSearchedError = noTripSearchedError, mapsAPIKey = mapsAPIKey)

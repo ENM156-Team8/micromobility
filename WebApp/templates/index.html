@@ -66,18 +66,18 @@
 
     {% for trip in trips %}
         <!-- <a href="detailedTrip.html?tripIndex={{trips.index(trip)}}" class="tripButton"> -->
-        <!-- <a href="detailedTrip.html?tripIndex={{trips.index(trip)}}" class="trip-container-container tripButton"> -->
-        <a href="/detailedTrip/tripIndex={{trips.index(trip)}}" class="trip-container-container tripButton">
-            <div class="trip-container-container1">
-                <div class="trip-container-container2">
-                    <div class="trip-container-location">
+            <!-- <a href="detailedTrip.html?tripIndex={{trips.index(trip)}}" class="trip-container-container tripButton"> -->
+            <a href="/detailedTrip/tripIndex={{trips.index(trip)}}" class="trip-container-container tripButton">
+                <div class="trip-container-container1">
+                    <div class="trip-container-container2">
+                        <div class="trip-container-location">
                         <span class="trip-container-text"><span>{{ searchedTrip.startLocation.split(",")[0] }} - {{ searchedTrip.destinationLocation.split(",")[0] }}</span></span>
-                    </div>
                     <div class="trip-container-time">
                         <div class="trip-container-container3">
                         <span class="trip-container-text1"><span>{{ trip['departure'] }}</span></span>
                         <span class="trip-container-text2"><span>-</span></span>
                         <span class="trip-container-text3"><span>{{ trip['arrival'] }}</span></span>
+                    </div>
                         </div>
                         <span class="trip-container-text4"><span>{{ trip['duration'] }} minuter</span></span>
                     </div>
