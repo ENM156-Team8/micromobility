@@ -34,8 +34,7 @@ def main():
 
     print(apiCallerSos(testCordStart))
     
-
-
+    
 def getSosTrip(start: coordinatePair, end: coordinatePair):
     totalDuration = 0
     totalDistance = 0
