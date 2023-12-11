@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, url_for, redirect, session
 import os, sys, secrets
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from globals import waypoint, trip
+from findTrip import getTripSuggestions
 from main import *
 from apiHandler import getMapsToken
 from colorama import Fore
@@ -43,7 +44,7 @@ def formatTime(timeDate: str) -> str:
     timeArr = time.split(":")
     return timeArr[0] + ":" + timeArr[1]
 
-def searchSosTrip(startCoordsPair, destinationCoordsPair):
+""" def searchSosTrip(startCoordsPair, destinationCoordsPair):
     sosTrip = getSosTrip(startCoordsPair, destinationCoordsPair)
     #print(sosTrip)
     for segment in sosTrip["segments"]:
@@ -62,9 +63,9 @@ def searchTramTrip(startCoordsPair, destinationCoordsPair):
     tramTrip["to"] = tramTrip["to"].to_dict()
     tramTrip["departure"] = formatTime(tramTrip["departure"])
     tramTrip["arrival"] = formatTime(tramTrip["arrival"])
-    return tramTrip
+    return tramTrip """
 
-def searchTrip(startCoordsPair, destinationCoordsPair):
+""" def searchTrip(startCoordsPair, destinationCoordsPair):
     # TODO replace with real function
     #result = searchCombinedTrip(startCoordsPair, destinationCoordsPair)
     result = getSosTrip(startCoordsPair, destinationCoordsPair)
@@ -83,11 +84,9 @@ def searchTrip(startCoordsPair, destinationCoordsPair):
     # TODO replace with real names
     #combinedTrip = result['combinedTrip']
     #bikeTrip = result['bikeTrip']
-    #walkTrip = result['walkTrip']
+    #walkTrip = result['walkTrip'] """
 
-""" origin: '57.689784, 11.973249', 
-    destination: '57.727428, 12.004718',
-    travelMode: google.maps.TravelMode.BICYCLING, """
+
 
 def formatCoords(coords: str) -> str:
     print("original: " + coords)
@@ -117,6 +116,8 @@ def index():
     global trips
     searchedTrip: tripObj = None
     trips = []
+            
+    
 
     # check if the trip object and trips list are stored in session
     if 'searchedTrip' in session:
@@ -166,7 +167,11 @@ def index():
         try:
             #trips.append(searchSosTrip(startCoordsPair, destinationCoordsPair))
             #trips.append(searchTramTrip(startCoordsPair, destinationCoordsPair))
-            trips.append(searchTrip(startCoordsPair, destinationCoordsPair))
+            #trips.append(searchTrip(startCoordsPair, destinationCoordsPair))
+            result = getTripSuggestions(startCoordsPair, destinationCoordsPair)
+            for trip in result:
+                if result[trip] is not None:
+                    trips.append(result[trip].to_dict())
             print(trips)
         except Exception as error:
             print(Fore.RED + "\n----------ERROR-----------\n")

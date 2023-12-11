@@ -5,11 +5,14 @@ class coordinatePair:
     def __init__(self, latitude: int, longitude: int):
         self.latitude = latitude
         self.longitude = longitude
+    def __init__(self, latitude: str, longitude: str):
+        self.latitude = float(latitude)
+        self.longitude = float(longitude)
 
     def show(self):
         return f'{self.latitude, self.longitude}'
     def __str__(self):
-        return "Lat: " + str(self.latitude) + ", Long: " + str(self.longitude)
+        return str(self.latitude) + ", " + str(self.longitude)
     
     def to_dict(self):
         return {
@@ -50,11 +53,12 @@ class trip:
     def to_dict(self):
         return {
             'waypoints': [waypoint.to_dict() for waypoint in self.waypoints],
-            'duration': self.duration
+            'duration': self.duration,
+            'cost': self.cost
         }
 
 class waypoint:
-    def __init__(self, start: str, destination: str, mode, duration: int, distance: int, line: tuple):
+    def __init__(self, start: coordinatePair, destination: coordinatePair, mode, duration: int, distance: int, line: tuple):
         self.start = start
         self.destination = destination
         self.mode = mode
@@ -64,16 +68,16 @@ class waypoint:
     
     def to_dict(self):
         return {
-            'start': self.start,
-            'destination': self.destination,
-            'mode': self.mode,
+            'start': str(self.start),
+            'destination': str(self.destination),
+            'mode': self.mode.name if self.mode else self.mode,
             'duration': self.duration,
             'distance': self.distance,
-            'line': self.line
+            'line': list(self.line) if self.line else self.line
         }
 
     def show(self):
-        return f'{self.start.show(), self.destination.show(), self.mode, self.duration, self.distance, self.line}'
+        return f'{self.start, self.destination, self.mode, self.duration, self.distance, self.line}'
 
 
 # Enums used to fetch different data from vtApi
