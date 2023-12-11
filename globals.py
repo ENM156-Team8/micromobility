@@ -26,9 +26,17 @@ class sosStation:
 
 
 class trip:
-    def __init__(self, waypoints: list, duration: int):
+    def __init__(self, waypoints: list, duration: int, cost: int):
         self.waypoints = waypoints
         self.duration = duration
+        self.cost = cost
+
+    def show(self):
+        listOfWaypoints = []
+        for waypoint in self.waypoints:
+            listOfWaypoints.append(waypoint.show())
+        return f'{listOfWaypoints, self.duration, self.cost}'
+
 
 class waypoint:
     def __init__(self, start: coordinatePair, destination: coordinatePair, mode: Enum, duration: int, distance: int, line: tuple):
@@ -38,6 +46,9 @@ class waypoint:
         self.duration = duration
         self.distance = distance
         self.line = line
+
+    def show(self):
+        return f'{self.start.show(), self.destination.show(), self.mode, self.duration, self.distance, self.line}'
 
 
 # Enums used to fetch different data from vtApi
@@ -61,4 +72,3 @@ googleApiMode = Enum(
 # VOI: Retruns Voi trip
 googleTripMode = Enum(
     'googleTripMode', ['WALK', 'BICYCLING', 'VOI'])
-
