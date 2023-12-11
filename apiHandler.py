@@ -6,6 +6,7 @@ __all__ = ["apiCallerSos", "apiCallerVt", "_getCordByName", "apiCallerGoogleDire
 
 import openapi_client
 from openapi_client.models.vt_api_planera_resa_web_v4_models_journey_transport_mode import VTApiPlaneraResaWebV4ModelsJourneyTransportMode
+from openapi_client.models.vt_api_planera_resa_web_v4_models_location_by_coordinates_type import VTApiPlaneraResaWebV4ModelsLocationByCoordinatesType
 import requests
 from globals import coordinatePair, vtApiType, googleApiMode, sosStation
 from globals import coordinatePair, vtApiType, googleApiMode
@@ -99,7 +100,7 @@ def apiCallerVt(start: coordinatePair, end: coordinatePair, apiType: vtApiType, 
             #     str(endGid)
             response = journey_api.journeys_get(origin_latitude=start.latitude, origin_longitude=start.longitude, destination_latitude=end.latitude, destination_longitude=end.longitude, transport_modes=[VTApiPlaneraResaWebV4ModelsJourneyTransportMode.TRAM, VTApiPlaneraResaWebV4ModelsJourneyTransportMode.BUS])
         case apiType.LOCATION:
-            response = location_api.locations_by_coordinates_get(start.latitude, start.longitude, radius_in_meters=radius, limit=100)
+            response = location_api.locations_by_coordinates_get(start.latitude, start.longitude, radius_in_meters=radius, types = [VTApiPlaneraResaWebV4ModelsLocationByCoordinatesType.STOPPOINT, VTApiPlaneraResaWebV4ModelsLocationByCoordinatesType.STOPAREA], limit=100)
         
         case _:
             print("Invalid apiType: " + apiType)

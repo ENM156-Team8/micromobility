@@ -106,14 +106,14 @@ def checkVtJourney(start: coordinatePair, end: coordinatePair, journey : vtJourn
         for station in stations:
             print(station.show())
 
-        if len(stations) >= 20:
-            farAway = stations[len(stations)-20:]
+        if len(stations) >= 30:
+            farAway = stations[len(stations)-30:]
         else:
             farAway = stations 
 
         for station in farAway:
             response = journey_api.journeys_get(origin_latitude=station.coord.latitude, origin_longitude=station.coord.longitude, destination_latitude=end.latitude, destination_longitude=end.longitude, transport_modes=[VTApiPlaneraResaWebV4ModelsJourneyTransportMode.TRAM, VTApiPlaneraResaWebV4ModelsJourneyTransportMode.BUS], only_direct_connections=True)
-            print(response.json())
+            #print(response.json())
             if len(response.results) > 0:
                 isNewJourney = True
                 return getVtJourneyStats(response), isNewJourney
