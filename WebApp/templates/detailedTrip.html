@@ -22,9 +22,9 @@
                 },
                 colors = ['red', 'blue', 'yellow', 'green', 'purple']; // Add more colors if needed
 
-            var waypoints = [
+            /* var waypoints = [
                 {
-                    origin: '57.689784, 11.973249',
+                    origin: '57.689784, 11.973249', 
                     destination: '57.727428, 12.004718',
                     travelMode: google.maps.TravelMode.BICYCLING,
                 },
@@ -33,7 +33,42 @@
                     destination: '57.7295286, 12.0077593',
                     travelMode: google.maps.TravelMode.WALKING,
                 }
-            ];
+            ]; */
+
+            /* TODO test if it works */
+
+            var waypoints = [];
+            
+
+            $('.waypoint').each(function(){
+                console.log("Object: ");
+                console.log(this);
+
+                var start = $(this).find('.start').text();
+                console.log("Start: " + start);
+
+                var end = $(this).find('.end').text();
+                console.log("End: " + end);
+
+                var mode = $(this).find('.mode').text();
+                console.log("Mode: " + mode);
+                if (mode == "bike") {
+                    mode = google.maps.TravelMode.BICYCLING;
+                } else if (mode == "walk") {
+                    mode = google.maps.TravelMode.WALKING;
+                }
+
+                waypoint = {
+                    origin: start,
+                    destination: end,
+                    travelMode: mode
+                }
+                console.log("Waypoint: ");
+                console.log(waypoint);
+                waypoints.push(waypoint);
+            });
+            console.log("Waypointafter : ");
+            console.log(waypoints);
 
             for (var i = 0; i < waypoints.length; i++) {
                 var directionsDisplay = new goo.DirectionsRenderer({
@@ -74,7 +109,7 @@
                     }
                 });
             }
-        }
+        };
 
         window.onload = function() {
             document.getElementById('mode-switcher').addEventListener('change', function() {
@@ -92,5 +127,15 @@
 
         <!-- test -->
         <p>{{ trip['instructions'] }}</p>
+    </div>
+
+    <div id="trip" hidden>
+        {% for waypoint in trip['waypoints'] %}
+            <div class="waypoint">
+                <div class="start">{{ waypoint['start'] }}</div>
+                <div class="end">{{ waypoint['destination'] }}</div>
+                <div class="mode">{{ waypoint['mode'] }}</div>
+            </div>
+        {% endfor %}
     </div>
 {% endblock %}

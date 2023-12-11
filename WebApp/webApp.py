@@ -2,6 +2,7 @@ import traceback
 from flask import Flask, render_template, request, url_for, redirect, session
 import os, sys, secrets
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from globals import waypoint, trip
 from main import *
 from apiHandler import getMapsToken
 from colorama import Fore
@@ -47,9 +48,9 @@ def searchSosTrip(startCoordsPair, destinationCoordsPair):
     #print(sosTrip)
     for segment in sosTrip["segments"]:
         # print("from " + str(segment["from"]))
-        segment["from"] = segment["from"].to_dict()
+        # segment["from"] = segment["from"].to_dict()
         # print("to " + str(segment["to"]))
-        segment["to"] = segment["to"].to_dict()
+        # segment["to"] = segment["to"].to_dict()
         sosTrip["departure"] = datetime.now().strftime("%H:%M")
         sosTrip["arrival"] = (datetime.now() + timedelta(minutes = sosTrip["duration"])).strftime("%H:%M")
     return sosTrip
@@ -63,6 +64,42 @@ def searchTramTrip(startCoordsPair, destinationCoordsPair):
     tramTrip["arrival"] = formatTime(tramTrip["arrival"])
     return tramTrip
 
+def searchTrip(startCoordsPair, destinationCoordsPair):
+    # TODO replace with real function
+    #result = searchCombinedTrip(startCoordsPair, destinationCoordsPair)
+    result = getSosTrip(startCoordsPair, destinationCoordsPair)
+    print(result)
+    waypoints: list = []
+    for segment in result["segments"]:
+        start: str = formatCoords(segment["from"])
+        end: str = formatCoords(segment["to"])
+        mode = segment["type"]
+        currentWaypoint = waypoint(start, end, mode, None, None, None)
+        waypoints.append(currentWaypoint)
+    print("number of waypoints: " + str(len(waypoints)))
+    newTrip = trip(waypoints, None).to_dict()
+    return newTrip
+
+    # TODO replace with real names
+    #combinedTrip = result['combinedTrip']
+    #bikeTrip = result['bikeTrip']
+    #walkTrip = result['walkTrip']
+
+""" origin: '57.689784, 11.973249', 
+    destination: '57.727428, 12.004718',
+    travelMode: google.maps.TravelMode.BICYCLING, """
+
+def formatCoords(coords: str) -> str:
+    print("original: " + coords)
+    if (coords.__contains__("'")):
+        temp = coords.split("'")
+        coords = temp[1] + ", " + temp[3]
+        print("remove ':" + coords)
+    if (coords.__contains__("(")):
+        # TODO substring doesnt extist
+        coords = coords[1:-1]
+    print("remove ():" + coords)
+    return coords
 
 
 app = Flask(__name__)  
@@ -127,8 +164,10 @@ def index():
 
         # TODO get trips from main.py
         try:
-            trips.append(searchSosTrip(startCoordsPair, destinationCoordsPair))
+            #trips.append(searchSosTrip(startCoordsPair, destinationCoordsPair))
             #trips.append(searchTramTrip(startCoordsPair, destinationCoordsPair))
+            trips.append(searchTrip(startCoordsPair, destinationCoordsPair))
+            print(trips)
         except Exception as error:
             print(Fore.RED + "\n----------ERROR-----------\n")
             print(traceback.format_exc())
