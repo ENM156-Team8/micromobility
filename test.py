@@ -103,8 +103,8 @@ def checkVtJourney(start: coordinatePair, end: coordinatePair, journey : vtJourn
     if journey.nr_connections > 0: # kan flyttas ut 
         stations = createStations(apiCallerVt(start, end, vtApiType.LOCATION, radius))
 
-        for station in stations:
-            print(station.show())
+        # for station in stations:
+        #     print(station.show())
 
         if len(stations) >= 30:
             farAway = stations[len(stations)-30:]
