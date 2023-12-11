@@ -2,14 +2,19 @@
 __all__ = ["apiCallerSos", "apiCallerVt", "_getCordByName", "apiCallerGoogleDirections", "location_api", "journey_api"]
 
 
+__all__ = ["apiCallerSos", "apiCallerVt",
+           "_getCordByName", "apiCallerGoogleDirections"]
+
 import openapi_client
 from openapi_client.models.vt_api_planera_resa_web_v4_models_journey_transport_mode import VTApiPlaneraResaWebV4ModelsJourneyTransportMode
 import requests
+from globals import coordinatePair, vtApiType, googleApiMode, sosStation
 from globals import coordinatePair, vtApiType, googleApiMode
 
 # General
 
-def getTokens():
+
+def _getTokens():
     with open("apiToken.txt", "r") as apiTokenFile:
         apiTokenLines = apiTokenFile.readlines()
     vtToken = apiTokenLines[0].strip()
@@ -19,7 +24,7 @@ def getTokens():
 
 
 apiBaseUrlVt = 'https://ext-api.vasttrafik.se/pr/v4'
-tokens = getTokens()
+tokens = _getTokens()
 appIdSos = tokens.get("sos", '')
 accessTokenVt = tokens.get("vt", '')
 accessTokenGoogle = tokens.get("google", '')
@@ -40,7 +45,7 @@ with openapi_client.ApiClient(configuration) as api_client:
 
 
 
-def requestHandler(url: str, headers: dict) -> any:
+def _requestHandler(url: str, headers: dict) -> any:
     response = requests.get(url, headers=headers)
     # the coordinates are percieved as identical
     if response.status_code == 400 and response.json().get("errorCode") == 2020:
@@ -49,6 +54,8 @@ def requestHandler(url: str, headers: dict) -> any:
         print("Error in requestHandler")
         print(response.status_code)
         print(response.text)
+        print(url)
+        print(headers)
         exit()
 
     data = response.json()
@@ -60,16 +67,26 @@ def requestHandler(url: str, headers: dict) -> any:
 
 # Styr och Ställ
 
-def apiCallerSos(center: coordinatePair) -> dict:
+def apiCallerSos(center: coordinatePair) -> [sosStation]:
     radius = 500  # meters
     url = 'https://data.goteborg.se/SelfServiceBicycleService/v2.0/Stations/' + appIdSos + '?getclosingperiods=500&latitude=' + \
         str(center.latitude) + '&longitude=' + str(center.longitude) + \
         '&radius=' + str(radius) + '&format=json'
-    return requestHandler(url, {})
+    response = _requestHandler(url, {})
+    return formatResponseSos(response)
+
+
+def formatResponseSos(jData):
+    stations = []
+    for n in jData:
+        newStation = sosStation(
+            n['Name'], n['Lat'], n['Long'], n['Distance'], n['IsOpen'], n['AvailableBikes'])
+        stations.append(newStation)
+    return stations
 
 # Västtrafik
 
-def apiCallerVt(start: coordinatePair, end: coordinatePair, apiType: vtApiType, radius) -> str: #class from client
+def apiCallerVt(start: coordinatePair, end: coordinatePair, apiType: vtApiType) -> str:
     match apiType:
         case apiType.POSITIONS:
             # urlEnd = '/positions?lowerLeftLat=' + str(start.latitude) + '&lowerLeftLong=' + str(
@@ -94,59 +111,66 @@ def apiCallerVt(start: coordinatePair, end: coordinatePair, apiType: vtApiType, 
     return response
 
 
-# call api with name of station 
+# call api with name of station
 def _apiCallerVtByName(station: str) -> coordinatePair:
     urlEnd = '/locations/by-text?q=' + station + '&limit=10&offset=0'
     url = apiBaseUrlVt + urlEnd
-    return requestHandler(url, vtHeaders)
+    return _requestHandler(url, vtHeaders)
 
 
-def _getCordByName(station: str) -> coordinatePair: 
+def _getCordByName(station: str) -> coordinatePair:
     data = _apiCallerVtByName(station)
     lat = data.get("results")[0].get("latitude")
     long = data.get("results")[0].get("longitude")
-    return coordinatePair(lat,long) 
+    return coordinatePair(lat, long)
 
 # Helper to get station id
 
-def getGid(coordinatePair: coordinatePair) -> int:
+
+def _getGid(coordinatePair: coordinatePair) -> int:
     radius = 1000  # meters
     limit = 10
     urlEnd = '/locations/by-coordinates?latitude='+str(coordinatePair.latitude) + '&longitude=' + str(
         coordinatePair.longitude) + '&radiusInMeters=' + str(radius) + '&limit='+str(limit) + '&offset=0'
-    response = requestHandler(apiBaseUrlVt + urlEnd, vtHeaders)
+    response = _requestHandler(apiBaseUrlVt + urlEnd, vtHeaders)
     closestResult = response["results"][0]
     # print(closestResult)
-    return closestResult.get("gid", None)
+    for result in response["results"]:
+        if result.get("gid", None) != None:
+            closestResult = result
+            return closestResult.get("gid")
+    print("no valid gid found")
+    print(response)
+    exit()
+    return -1
 
-#Google
 
-def apiCallerGoogleDirections(start:coordinatePair, end:coordinatePair, mode: googleApiMode=None):
+def apiCallerGoogleDirections(start: coordinatePair, end: coordinatePair, mode: googleApiMode = None):
     url = ""
+    # print(mode)
     if mode is None:
         url = f'https://maps.googleapis.com/maps/api/directions/json?origin={start.latitude},{start.longitude}&destination={end.latitude},{end.longitude}&key={accessTokenGoogle}'
     else:
         match mode:
             case mode.WALK:
                 url = f'https://maps.googleapis.com/maps/api/directions/json?origin={start.latitude},{start.longitude}&mode=walking&destination={end.latitude},{end.longitude}&key={accessTokenGoogle}'
-            
+
             case mode.BICYCLING:
                 url = f'https://maps.googleapis.com/maps/api/directions/json?origin={start.latitude},{start.longitude}&mode=bicycling&destination={end.latitude},{end.longitude}&key={accessTokenGoogle}'
-            
+
             case mode.TRANSIT:
                 url = f'https://maps.googleapis.com/maps/api/directions/json?origin={start.latitude},{start.longitude}&mode=transit&destination={end.latitude},{end.longitude}&key={accessTokenGoogle}'
-            
+
             case mode.DRIVE:
                 url = f'https://maps.googleapis.com/maps/api/directions/json?origin={start.latitude},{start.longitude}&destination={end.latitude},{end.longitude}&key={accessTokenGoogle}'
-            
-            case _: 
+
+            case _:
                 raise ValueError(f'Unsupported transport mode: {mode}')
-    
-    #print(url)
+
+    # print(url)
     response = requests.get(url)
     data = response.json()
     # print('- ' * 20)
     # print("RESPONSE")
-    # print(data, indent=4, sort_keys=True)
+    # print(json.dumps(data, indent=4, sort_keys=True))
     return data
-
