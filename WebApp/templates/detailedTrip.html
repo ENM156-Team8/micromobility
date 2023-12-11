@@ -76,13 +76,11 @@
             }
         }
 
-        /* google.maps.event.addDomListener(window, 'load', initialize); */
         window.onload = function() {
-        initialize();
-        document.getElementById('mode-switcher').addEventListener('change', function() {
-            initialize();
-        });
-    };
+            document.getElementById('mode-switcher').addEventListener('change', function() {
+                initialize();
+            });
+        };
     </script>
 {% endblock %}
 
