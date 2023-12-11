@@ -83,7 +83,10 @@ def checkVtJourney(start: coordinatePair, end: coordinatePair, journey : vtJourn
     isNewJourney = False
     if journey.nr_connections > 0: # kan flyttas ut 
         stations = createStations(apiCallerVt(start, end, vtApiType.LOCATIONS, radius))
-        farAway = stations[len(stations)-10:]
+        if len(stations) >= 10:
+            farAway = stations[len(stations)-10:]
+        else:
+            farAway = stations 
 
         for station in farAway:
             response = journey_api.journeys_get(origin_latitude=station.coord.latitude, origin_longitude=station.coord.longitude, destination_latitude=end.latitude, destination_longitude=end.longitude, transport_modes=[VTApiPlaneraResaWebV4ModelsJourneyTransportMode.TRAM, VTApiPlaneraResaWebV4ModelsJourneyTransportMode.BUS], only_direct_connections=True)
@@ -109,6 +112,14 @@ def main():
     originalJourney = getVtJourneyStats(response)
     trip = checkVtJourney(testCordStart, testCordEnd, originalJourney)
     if trip[1]: # true
+        # todo: 
+        # bikeJourney = getSosTrip(start: start point, end: new journey start point)
+        # newTripTotalTime = bikeJourney.getEstimatedTime + trip.getEstimatedTime
+        # if newTripTotalTime < originalJourney.getEstimatedTime:
+        #   return newTrip (list of waypoints including start cord, end cord and transportmode for each tripleg)
+        # else:
+        #   return originalJourney (as list of waypoints)
+
         getSosTrip
         
     # print(originalJourney.show())
