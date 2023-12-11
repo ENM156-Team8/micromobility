@@ -25,6 +25,21 @@ class sosStation:
         return f'{self.name, self.latitude, self.longitude, self.distance, self.open, self.availableBikes}'
 
 
+class trip:
+    def __init__(self, waypoints: list, duration: int):
+        self.waypoints = waypoints
+        self.duration = duration
+
+class waypoint:
+    def __init__(self, start: coordinatePair, destination: coordinatePair, mode: Enum, duration: int, distance: int, line: tuple):
+        self.start = start
+        self.destination = destination
+        self.mode = mode
+        self.duration = duration
+        self.distance = distance
+        self.line = line
+
+
 # Enums used to fetch different data from vtApi
 # POSITIONS: Returns journey positions within a bounding box
 # JOURNEY: Returns journeys matching the specified search parameters
