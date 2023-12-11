@@ -15,7 +15,7 @@ mapsAPIKey = getMapsToken()
 trips = []
 
 
-
+# tripObj is the searchedTrip from input fields
 class tripObj:
     def __init__(self, startLocation: str, startLocationCoords: str, destinationLocation: str, destinationLocationCoords: str, opt1: bool, opt2: bool):
         self.startLocation: str = startLocation
