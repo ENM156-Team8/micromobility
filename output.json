@@ -1,0 +1,2192 @@
+{
+  "results": [
+    {
+      "reconstruction_reference": "\u00b6HKI\u00b6T$A=1@O=Chalmers, G\u00f6teborg@L=1960001@a=128@$A=1@O=Svingeln, G\u00f6teborg@L=6480002@a=128@$202312081536$202312081548$Sp\u00e5    6$$1$$$$$$\u00a7W$A=1@O=Svingeln, G\u00f6teborg@L=6480002@a=128@$A=1@O=Svingeln, G\u00f6teborg@L=6480007@a=128@$202312081548$202312081553$$$1$$$$$$\u00a7T$A=1@O=Svingeln, G\u00f6teborg@L=6480007@a=128@$A=1@O=Studieg\u00e5ngen, G\u00f6teborg@L=7160002@a=128@$202312081554$202312081605$Bus   17$$1$$$$$$\u00b6KC\u00b6#VE#2#CF#100#CA#0#CM#0#SICT#0#AM#97#AM2#0#RT#15#\u00b6KRCC\u00b6#VE#1#",
+      "details_reference": "eyJUIjpbeyJSIjoiMXwyMzc4NnwyfDgwfDgxMjIwMjMiLCJPIjoyNiwiRCI6MzEsIkkiOjB9LHsiUiI6IjF8MTg2ODh8M3w4MHw4MTIyMDIzIiwiTyI6MTUsIkQiOjIyLCJJIjoyfV0sIkMiOlt7IlIiOiJIfDF8VyRBPTFATz1TdmluZ2VsbiwgR8O2dGVib3JnQEw9NjQ4MDAwMkBhPTEyOEAkQT0xQE89U3ZpbmdlbG4sIEfDtnRlYm9yZ0BMPTY0ODAwMDdAYT0xMjhAJDIwMjMxMjA4MTU0OCQyMDIzMTIwODE1NTMkJCQxJCQkJCQkfCNWRSMyI0NGIzEwMCNDQSMwI0NNIzAjU0lDVCMwI0FNIzk3I0FNMiMwI1JUIzE1IyIsIkkiOjF9XX0",
+      "departure_access_link": null,
+      "trip_legs": [
+        {
+          "origin": {
+            "stop_point": {
+              "gid": "9022014001960001",
+              "name": "Chalmers, G\u00f6teborg",
+              "platform": "A",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014001960000",
+                "name": "Chalmers",
+                "latitude": 57.690003776189016,
+                "longitude": 11.97295361700603,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T15:36:00.0000000+01:00",
+            "estimated_time": "2023-12-08T15:40:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T15:40:00.0000000+01:00",
+            "notes": []
+          },
+          "destination": {
+            "stop_point": {
+              "gid": "9022014006480002",
+              "name": "Svingeln, G\u00f6teborg",
+              "platform": "B",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014006480000",
+                "name": "Svingeln",
+                "latitude": 57.71314870580614,
+                "longitude": 11.991089173159567,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T15:48:00.0000000+01:00",
+            "estimated_time": "2023-12-08T15:50:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T15:50:00.0000000+01:00",
+            "notes": []
+          },
+          "is_cancelled": false,
+          "is_part_cancelled": false,
+          "service_journey": {
+            "gid": "9015014500600139",
+            "direction": "Nym\u00e5negatan",
+            "number": "139",
+            "line": {
+              "name": "Sp\u00e5rvagn 6",
+              "background_color": "#f89828",
+              "foreground_color": "#00435c",
+              "border_color": "#f89828",
+              "transport_mode": "tram",
+              "transport_sub_mode": "none",
+              "short_name": "6",
+              "designation": "6",
+              "is_wheelchair_accessible": true
+            }
+          },
+          "notes": [],
+          "estimated_distance_in_meters": null,
+          "planned_connecting_time_in_minutes": null,
+          "estimated_connecting_time_in_minutes": null,
+          "is_risk_of_missing_connection": null,
+          "planned_departure_time": "2023-12-08T15:36:00.0000000+01:00",
+          "planned_arrival_time": "2023-12-08T15:48:00.0000000+01:00",
+          "planned_duration_in_minutes": 12,
+          "estimated_departure_time": "2023-12-08T15:40:00.0000000+01:00",
+          "estimated_arrival_time": "2023-12-08T15:50:00.0000000+01:00",
+          "estimated_duration_in_minutes": 10,
+          "estimated_otherwise_planned_arrival_time": "2023-12-08T15:50:00.0000000+01:00",
+          "estimated_otherwise_planned_departure_time": "2023-12-08T15:40:00.0000000+01:00",
+          "occupancy": null,
+          "journey_leg_index": 0
+        },
+        {
+          "origin": {
+            "stop_point": {
+              "gid": "9022014006480007",
+              "name": "Svingeln, G\u00f6teborg",
+              "platform": "G",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014006480000",
+                "name": "Svingeln",
+                "latitude": 57.71314870580614,
+                "longitude": 11.991089173159567,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T15:54:00.0000000+01:00",
+            "estimated_time": "2023-12-08T16:05:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T16:05:00.0000000+01:00",
+            "notes": []
+          },
+          "destination": {
+            "stop_point": {
+              "gid": "9022014007160002",
+              "name": "Studieg\u00e5ngen, G\u00f6teborg",
+              "platform": "B",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014007160000",
+                "name": "Studieg\u00e5ngen",
+                "latitude": 57.71440958711786,
+                "longitude": 12.039586898442312,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T16:05:00.0000000+01:00",
+            "estimated_time": "2023-12-08T16:16:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T16:16:00.0000000+01:00",
+            "notes": []
+          },
+          "is_cancelled": false,
+          "is_part_cancelled": false,
+          "service_journey": {
+            "gid": "9015014501700189",
+            "direction": "\u00d6stra Sjukhuset",
+            "number": "189",
+            "line": {
+              "name": "Buss 17",
+              "background_color": "#00008e",
+              "foreground_color": "#ffff50",
+              "border_color": "#00008e",
+              "transport_mode": "bus",
+              "transport_sub_mode": "none",
+              "short_name": "17",
+              "designation": "17",
+              "is_wheelchair_accessible": true
+            }
+          },
+          "notes": [],
+          "estimated_distance_in_meters": null,
+          "planned_connecting_time_in_minutes": 6,
+          "estimated_connecting_time_in_minutes": 15,
+          "is_risk_of_missing_connection": false,
+          "planned_departure_time": "2023-12-08T15:54:00.0000000+01:00",
+          "planned_arrival_time": "2023-12-08T16:05:00.0000000+01:00",
+          "planned_duration_in_minutes": 11,
+          "estimated_departure_time": "2023-12-08T16:05:00.0000000+01:00",
+          "estimated_arrival_time": "2023-12-08T16:16:00.0000000+01:00",
+          "estimated_duration_in_minutes": 11,
+          "estimated_otherwise_planned_arrival_time": "2023-12-08T16:16:00.0000000+01:00",
+          "estimated_otherwise_planned_departure_time": "2023-12-08T16:05:00.0000000+01:00",
+          "occupancy": null,
+          "journey_leg_index": 2
+        }
+      ],
+      "connection_links": [
+        {
+          "transport_mode": "walk",
+          "transport_sub_mode": "none",
+          "origin": {
+            "stop_point": {
+              "gid": "9022014006480002",
+              "name": "Svingeln, G\u00f6teborg",
+              "platform": "B",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014006480000",
+                "name": "Svingeln",
+                "latitude": 57.71314870580614,
+                "longitude": 11.991089173159567,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T15:48:00.0000000+01:00",
+            "estimated_time": "2023-12-08T15:50:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T15:50:00.0000000+01:00",
+            "notes": []
+          },
+          "destination": {
+            "stop_point": {
+              "gid": "9022014006480007",
+              "name": "Svingeln, G\u00f6teborg",
+              "platform": "G",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014006480000",
+                "name": "Svingeln",
+                "latitude": 57.71314870580614,
+                "longitude": 11.991089173159567,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T15:53:00.0000000+01:00",
+            "estimated_time": "2023-12-08T15:55:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T15:55:00.0000000+01:00",
+            "notes": []
+          },
+          "notes": [],
+          "distance_in_meters": 26,
+          "planned_departure_time": "2023-12-08T15:48:00.0000000+01:00",
+          "planned_arrival_time": "2023-12-08T15:53:00.0000000+01:00",
+          "planned_duration_in_minutes": 5,
+          "estimated_departure_time": "2023-12-08T15:50:00.0000000+01:00",
+          "estimated_arrival_time": "2023-12-08T15:55:00.0000000+01:00",
+          "estimated_duration_in_minutes": 5,
+          "estimated_number_of_steps": 40,
+          "link_coordinates": [
+            {
+              "latitude": 57.713336,
+              "longitude": 11.991745,
+              "elevation": null,
+              "is_on_trip_leg": null,
+              "is_trip_leg_start": null,
+              "is_trip_leg_stop": null
+            },
+            {
+              "latitude": 57.713534,
+              "longitude": 11.991511,
+              "elevation": null,
+              "is_on_trip_leg": null,
+              "is_trip_leg_start": null,
+              "is_trip_leg_stop": null
+            }
+          ],
+          "segments": null,
+          "journey_leg_index": 1
+        }
+      ],
+      "arrival_access_link": null,
+      "destination_link": null,
+      "is_departed": false,
+      "occupancy": null
+    },
+    {
+      "reconstruction_reference": "\u00b6HKI\u00b6T$A=1@O=Chalmers, G\u00f6teborg@L=1960001@a=128@$A=1@O=Redbergsplatsen, G\u00f6teborg@L=5460004@a=128@$202312081542$202312081557$Sp\u00e5    8$$1$$$$$$\u00a7W$A=1@O=Redbergsplatsen, G\u00f6teborg@L=5460004@a=128@$A=1@O=Redbergsplatsen, G\u00f6teborg@L=5460006@a=128@$202312081557$202312081600$$$1$$$$$$\u00a7T$A=1@O=Redbergsplatsen, G\u00f6teborg@L=5460006@a=128@$A=1@O=Studieg\u00e5ngen, G\u00f6teborg@L=7160002@a=128@$202312081602$202312081609$Bus   17$$1$$$$$$\u00b6KC\u00b6#VE#2#CF#100#CA#0#CM#0#SICT#0#AM#97#AM2#0#RT#15#\u00b6KRCC\u00b6#VE#1#",
+      "details_reference": "eyJUIjpbeyJSIjoiMXwxMjkzOHwxfDgwfDgxMjIwMjMiLCJPIjoxMSwiRCI6MTgsIkkiOjB9LHsiUiI6IjF8NDczMDF8Nnw4MHw4MTIyMDIzIiwiTyI6OCwiRCI6MTMsIkkiOjJ9XSwiQyI6W3siUiI6Ikh8MXxXJEE9MUBPPVJlZGJlcmdzcGxhdHNlbiwgR8O2dGVib3JnQEw9NTQ2MDAwNEBhPTEyOEAkQT0xQE89UmVkYmVyZ3NwbGF0c2VuLCBHw7Z0ZWJvcmdATD01NDYwMDA2QGE9MTI4QCQyMDIzMTIwODE1NTckMjAyMzEyMDgxNjAwJCQkMSQkJCQkJHwjVkUjMiNDRiMxMDAjQ0EjMCNDTSMwI1NJQ1QjMCNBTSM5NyNBTTIjMCNSVCMxNSMiLCJJIjoxfV19",
+      "departure_access_link": null,
+      "trip_legs": [
+        {
+          "origin": {
+            "stop_point": {
+              "gid": "9022014001960001",
+              "name": "Chalmers, G\u00f6teborg",
+              "platform": "A",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014001960000",
+                "name": "Chalmers",
+                "latitude": 57.690003776189016,
+                "longitude": 11.97295361700603,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T15:42:00.0000000+01:00",
+            "estimated_time": "2023-12-08T15:43:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T15:43:00.0000000+01:00",
+            "notes": []
+          },
+          "destination": {
+            "stop_point": {
+              "gid": "9022014005460004",
+              "name": "Redbergsplatsen, G\u00f6teborg",
+              "platform": "D",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014005460000",
+                "name": "Redbergsplatsen",
+                "latitude": 57.71642258779708,
+                "longitude": 12.004824551186488,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T15:57:00.0000000+01:00",
+            "estimated_time": "2023-12-08T15:57:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T15:57:00.0000000+01:00",
+            "notes": []
+          },
+          "is_cancelled": false,
+          "is_part_cancelled": false,
+          "service_journey": {
+            "gid": "9015014500800135",
+            "direction": "Angered",
+            "number": "135",
+            "line": {
+              "name": "Sp\u00e5rvagn 8",
+              "background_color": "#a5449a",
+              "foreground_color": "#ffffff",
+              "border_color": "#a5449a",
+              "transport_mode": "tram",
+              "transport_sub_mode": "none",
+              "short_name": "8",
+              "designation": "8",
+              "is_wheelchair_accessible": true
+            }
+          },
+          "notes": [],
+          "estimated_distance_in_meters": null,
+          "planned_connecting_time_in_minutes": null,
+          "estimated_connecting_time_in_minutes": null,
+          "is_risk_of_missing_connection": null,
+          "planned_departure_time": "2023-12-08T15:42:00.0000000+01:00",
+          "planned_arrival_time": "2023-12-08T15:57:00.0000000+01:00",
+          "planned_duration_in_minutes": 15,
+          "estimated_departure_time": "2023-12-08T15:43:00.0000000+01:00",
+          "estimated_arrival_time": "2023-12-08T15:57:00.0000000+01:00",
+          "estimated_duration_in_minutes": 14,
+          "estimated_otherwise_planned_arrival_time": "2023-12-08T15:57:00.0000000+01:00",
+          "estimated_otherwise_planned_departure_time": "2023-12-08T15:43:00.0000000+01:00",
+          "occupancy": null,
+          "journey_leg_index": 0
+        },
+        {
+          "origin": {
+            "stop_point": {
+              "gid": "9022014005460006",
+              "name": "Redbergsplatsen, G\u00f6teborg",
+              "platform": "F",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014005460000",
+                "name": "Redbergsplatsen",
+                "latitude": 57.71642258779708,
+                "longitude": 12.004824551186488,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T16:02:00.0000000+01:00",
+            "estimated_time": "2023-12-08T16:02:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T16:02:00.0000000+01:00",
+            "notes": []
+          },
+          "destination": {
+            "stop_point": {
+              "gid": "9022014007160002",
+              "name": "Studieg\u00e5ngen, G\u00f6teborg",
+              "platform": "B",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014007160000",
+                "name": "Studieg\u00e5ngen",
+                "latitude": 57.71440958711786,
+                "longitude": 12.039586898442312,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T16:09:00.0000000+01:00",
+            "estimated_time": "2023-12-08T16:09:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T16:09:00.0000000+01:00",
+            "notes": []
+          },
+          "is_cancelled": false,
+          "is_part_cancelled": false,
+          "service_journey": {
+            "gid": "9015014501700203",
+            "direction": "\u00d6stra Sjukhuset",
+            "number": "203",
+            "line": {
+              "name": "Buss 17",
+              "background_color": "#00008e",
+              "foreground_color": "#ffff50",
+              "border_color": "#00008e",
+              "transport_mode": "bus",
+              "transport_sub_mode": "none",
+              "short_name": "17",
+              "designation": "17",
+              "is_wheelchair_accessible": true
+            }
+          },
+          "notes": [],
+          "estimated_distance_in_meters": null,
+          "planned_connecting_time_in_minutes": 5,
+          "estimated_connecting_time_in_minutes": 5,
+          "is_risk_of_missing_connection": false,
+          "planned_departure_time": "2023-12-08T16:02:00.0000000+01:00",
+          "planned_arrival_time": "2023-12-08T16:09:00.0000000+01:00",
+          "planned_duration_in_minutes": 7,
+          "estimated_departure_time": "2023-12-08T16:02:00.0000000+01:00",
+          "estimated_arrival_time": "2023-12-08T16:09:00.0000000+01:00",
+          "estimated_duration_in_minutes": 7,
+          "estimated_otherwise_planned_arrival_time": "2023-12-08T16:09:00.0000000+01:00",
+          "estimated_otherwise_planned_departure_time": "2023-12-08T16:02:00.0000000+01:00",
+          "occupancy": null,
+          "journey_leg_index": 2
+        }
+      ],
+      "connection_links": [
+        {
+          "transport_mode": "walk",
+          "transport_sub_mode": "none",
+          "origin": {
+            "stop_point": {
+              "gid": "9022014005460004",
+              "name": "Redbergsplatsen, G\u00f6teborg",
+              "platform": "D",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014005460000",
+                "name": "Redbergsplatsen",
+                "latitude": 57.71642258779708,
+                "longitude": 12.004824551186488,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T15:57:00.0000000+01:00",
+            "estimated_time": "2023-12-08T15:57:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T15:57:00.0000000+01:00",
+            "notes": []
+          },
+          "destination": {
+            "stop_point": {
+              "gid": "9022014005460006",
+              "name": "Redbergsplatsen, G\u00f6teborg",
+              "platform": "F",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014005460000",
+                "name": "Redbergsplatsen",
+                "latitude": 57.71642258779708,
+                "longitude": 12.004824551186488,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T16:00:00.0000000+01:00",
+            "estimated_time": "2023-12-08T16:00:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T16:00:00.0000000+01:00",
+            "notes": []
+          },
+          "notes": [],
+          "distance_in_meters": 49,
+          "planned_departure_time": "2023-12-08T15:57:00.0000000+01:00",
+          "planned_arrival_time": "2023-12-08T16:00:00.0000000+01:00",
+          "planned_duration_in_minutes": 3,
+          "estimated_departure_time": "2023-12-08T15:57:00.0000000+01:00",
+          "estimated_arrival_time": "2023-12-08T16:00:00.0000000+01:00",
+          "estimated_duration_in_minutes": 3,
+          "estimated_number_of_steps": 75,
+          "link_coordinates": [
+            {
+              "latitude": 57.7165,
+              "longitude": 12.004698,
+              "elevation": null,
+              "is_on_trip_leg": null,
+              "is_trip_leg_start": null,
+              "is_trip_leg_stop": null
+            },
+            {
+              "latitude": 57.716069,
+              "longitude": 12.004824,
+              "elevation": null,
+              "is_on_trip_leg": null,
+              "is_trip_leg_start": null,
+              "is_trip_leg_stop": null
+            }
+          ],
+          "segments": null,
+          "journey_leg_index": 1
+        }
+      ],
+      "arrival_access_link": null,
+      "destination_link": null,
+      "is_departed": false,
+      "occupancy": null
+    },
+    {
+      "reconstruction_reference": "\u00b6HKI\u00b6T$A=1@O=Chalmers, G\u00f6teborg@L=1960001@a=128@$A=1@O=Svingeln, G\u00f6teborg@L=6480002@a=128@$202312081544$202312081556$Sp\u00e5    6$$1$$$$$$\u00a7W$A=1@O=Svingeln, G\u00f6teborg@L=6480002@a=128@$A=1@O=Svingeln, G\u00f6teborg@L=6480007@a=128@$202312081556$202312081601$$$1$$$$$$\u00a7T$A=1@O=Svingeln, G\u00f6teborg@L=6480007@a=128@$A=1@O=Studieg\u00e5ngen, G\u00f6teborg@L=7160002@a=128@$202312081554$202312081605$Bus   17$$1$$$$$$\u00b6KC\u00b6#VE#2#CF#100#CA#0#CM#0#SICT#0#AM#97#AM2#0#RT#15#\u00b6KRCC\u00b6#VE#1#VOLL#IST#",
+      "details_reference": "eyJUIjpbeyJSIjoiMXwyMzc0OXwxfDgwfDgxMjIwMjMiLCJPIjoyNiwiRCI6MzEsIkkiOjB9LHsiUiI6IjF8MTg2ODh8M3w4MHw4MTIyMDIzIiwiTyI6MTUsIkQiOjIyLCJJIjoyfV0sIkMiOlt7IlIiOiJIfDF8VyRBPTFATz1TdmluZ2VsbiwgR8O2dGVib3JnQEw9NjQ4MDAwMkBhPTEyOEAkQT0xQE89U3ZpbmdlbG4sIEfDtnRlYm9yZ0BMPTY0ODAwMDdAYT0xMjhAJDIwMjMxMjA4MTU1NiQyMDIzMTIwODE2MDEkJCQxJCQkJCQkfCNWRSMyI0NGIzEwMCNDQSMwI0NNIzAjU0lDVCMwI0FNIzk3I0FNMiMwI1JUIzE1IyIsIkkiOjF9XX0",
+      "departure_access_link": null,
+      "trip_legs": [
+        {
+          "origin": {
+            "stop_point": {
+              "gid": "9022014001960001",
+              "name": "Chalmers, G\u00f6teborg",
+              "platform": "A",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014001960000",
+                "name": "Chalmers",
+                "latitude": 57.690003776189016,
+                "longitude": 11.97295361700603,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T15:44:00.0000000+01:00",
+            "estimated_time": "2023-12-08T15:49:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T15:49:00.0000000+01:00",
+            "notes": []
+          },
+          "destination": {
+            "stop_point": {
+              "gid": "9022014006480002",
+              "name": "Svingeln, G\u00f6teborg",
+              "platform": "B",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014006480000",
+                "name": "Svingeln",
+                "latitude": 57.71314870580614,
+                "longitude": 11.991089173159567,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T15:56:00.0000000+01:00",
+            "estimated_time": "2023-12-08T15:59:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T15:59:00.0000000+01:00",
+            "notes": []
+          },
+          "is_cancelled": false,
+          "is_part_cancelled": false,
+          "service_journey": {
+            "gid": "9015014500600141",
+            "direction": "Nym\u00e5negatan",
+            "number": "141",
+            "line": {
+              "name": "Sp\u00e5rvagn 6",
+              "background_color": "#f89828",
+              "foreground_color": "#00435c",
+              "border_color": "#f89828",
+              "transport_mode": "tram",
+              "transport_sub_mode": "none",
+              "short_name": "6",
+              "designation": "6",
+              "is_wheelchair_accessible": true
+            }
+          },
+          "notes": [],
+          "estimated_distance_in_meters": null,
+          "planned_connecting_time_in_minutes": null,
+          "estimated_connecting_time_in_minutes": null,
+          "is_risk_of_missing_connection": null,
+          "planned_departure_time": "2023-12-08T15:44:00.0000000+01:00",
+          "planned_arrival_time": "2023-12-08T15:56:00.0000000+01:00",
+          "planned_duration_in_minutes": 12,
+          "estimated_departure_time": "2023-12-08T15:49:00.0000000+01:00",
+          "estimated_arrival_time": "2023-12-08T15:59:00.0000000+01:00",
+          "estimated_duration_in_minutes": 10,
+          "estimated_otherwise_planned_arrival_time": "2023-12-08T15:59:00.0000000+01:00",
+          "estimated_otherwise_planned_departure_time": "2023-12-08T15:49:00.0000000+01:00",
+          "occupancy": null,
+          "journey_leg_index": 0
+        },
+        {
+          "origin": {
+            "stop_point": {
+              "gid": "9022014006480007",
+              "name": "Svingeln, G\u00f6teborg",
+              "platform": "G",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014006480000",
+                "name": "Svingeln",
+                "latitude": 57.71314870580614,
+                "longitude": 11.991089173159567,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T15:54:00.0000000+01:00",
+            "estimated_time": "2023-12-08T16:05:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T16:05:00.0000000+01:00",
+            "notes": []
+          },
+          "destination": {
+            "stop_point": {
+              "gid": "9022014007160002",
+              "name": "Studieg\u00e5ngen, G\u00f6teborg",
+              "platform": "B",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014007160000",
+                "name": "Studieg\u00e5ngen",
+                "latitude": 57.71440958711786,
+                "longitude": 12.039586898442312,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T16:05:00.0000000+01:00",
+            "estimated_time": "2023-12-08T16:16:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T16:16:00.0000000+01:00",
+            "notes": []
+          },
+          "is_cancelled": false,
+          "is_part_cancelled": false,
+          "service_journey": {
+            "gid": "9015014501700189",
+            "direction": "\u00d6stra Sjukhuset",
+            "number": "189",
+            "line": {
+              "name": "Buss 17",
+              "background_color": "#00008e",
+              "foreground_color": "#ffff50",
+              "border_color": "#00008e",
+              "transport_mode": "bus",
+              "transport_sub_mode": "none",
+              "short_name": "17",
+              "designation": "17",
+              "is_wheelchair_accessible": true
+            }
+          },
+          "notes": [],
+          "estimated_distance_in_meters": null,
+          "planned_connecting_time_in_minutes": -2,
+          "estimated_connecting_time_in_minutes": 6,
+          "is_risk_of_missing_connection": false,
+          "planned_departure_time": "2023-12-08T15:54:00.0000000+01:00",
+          "planned_arrival_time": "2023-12-08T16:05:00.0000000+01:00",
+          "planned_duration_in_minutes": 11,
+          "estimated_departure_time": "2023-12-08T16:05:00.0000000+01:00",
+          "estimated_arrival_time": "2023-12-08T16:16:00.0000000+01:00",
+          "estimated_duration_in_minutes": 11,
+          "estimated_otherwise_planned_arrival_time": "2023-12-08T16:16:00.0000000+01:00",
+          "estimated_otherwise_planned_departure_time": "2023-12-08T16:05:00.0000000+01:00",
+          "occupancy": null,
+          "journey_leg_index": 2
+        }
+      ],
+      "connection_links": [
+        {
+          "transport_mode": "walk",
+          "transport_sub_mode": "none",
+          "origin": {
+            "stop_point": {
+              "gid": "9022014006480002",
+              "name": "Svingeln, G\u00f6teborg",
+              "platform": "B",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014006480000",
+                "name": "Svingeln",
+                "latitude": 57.71314870580614,
+                "longitude": 11.991089173159567,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T15:56:00.0000000+01:00",
+            "estimated_time": "2023-12-08T15:59:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T15:59:00.0000000+01:00",
+            "notes": []
+          },
+          "destination": {
+            "stop_point": {
+              "gid": "9022014006480007",
+              "name": "Svingeln, G\u00f6teborg",
+              "platform": "G",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014006480000",
+                "name": "Svingeln",
+                "latitude": 57.71314870580614,
+                "longitude": 11.991089173159567,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T16:01:00.0000000+01:00",
+            "estimated_time": "2023-12-08T16:04:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T16:04:00.0000000+01:00",
+            "notes": []
+          },
+          "notes": [],
+          "distance_in_meters": 26,
+          "planned_departure_time": "2023-12-08T15:56:00.0000000+01:00",
+          "planned_arrival_time": "2023-12-08T16:01:00.0000000+01:00",
+          "planned_duration_in_minutes": 5,
+          "estimated_departure_time": "2023-12-08T15:59:00.0000000+01:00",
+          "estimated_arrival_time": "2023-12-08T16:04:00.0000000+01:00",
+          "estimated_duration_in_minutes": 5,
+          "estimated_number_of_steps": 40,
+          "link_coordinates": [
+            {
+              "latitude": 57.713336,
+              "longitude": 11.991745,
+              "elevation": null,
+              "is_on_trip_leg": null,
+              "is_trip_leg_start": null,
+              "is_trip_leg_stop": null
+            },
+            {
+              "latitude": 57.713534,
+              "longitude": 11.991511,
+              "elevation": null,
+              "is_on_trip_leg": null,
+              "is_trip_leg_start": null,
+              "is_trip_leg_stop": null
+            }
+          ],
+          "segments": null,
+          "journey_leg_index": 1
+        }
+      ],
+      "arrival_access_link": null,
+      "destination_link": null,
+      "is_departed": false,
+      "occupancy": null
+    },
+    {
+      "reconstruction_reference": "\u00b6HKI\u00b6T$A=1@O=Chalmers, G\u00f6teborg@L=1960001@a=128@$A=1@O=Svingeln, G\u00f6teborg@L=6480002@a=128@$202312081544$202312081556$Sp\u00e5    6$$1$$$$$$\u00a7W$A=1@O=Svingeln, G\u00f6teborg@L=6480002@a=128@$A=1@O=Svingeln, G\u00f6teborg@L=6480007@a=128@$202312081556$202312081601$$$1$$$$$$\u00a7T$A=1@O=Svingeln, G\u00f6teborg@L=6480007@a=128@$A=1@O=Studieg\u00e5ngen, G\u00f6teborg@L=7160002@a=128@$202312081602$202312081613$Bus   17$$1$$$$$$\u00b6KC\u00b6#VE#2#CF#100#CA#0#CM#0#SICT#0#AM#97#AM2#0#RT#15#\u00b6KRCC\u00b6#VE#1#",
+      "details_reference": "eyJUIjpbeyJSIjoiMXwyMzc0OXwxfDgwfDgxMjIwMjMiLCJPIjoyNiwiRCI6MzEsIkkiOjB9LHsiUiI6IjF8MTg2ODh8NHw4MHw4MTIyMDIzIiwiTyI6MTUsIkQiOjIyLCJJIjoyfV0sIkMiOlt7IlIiOiJIfDF8VyRBPTFATz1TdmluZ2VsbiwgR8O2dGVib3JnQEw9NjQ4MDAwMkBhPTEyOEAkQT0xQE89U3ZpbmdlbG4sIEfDtnRlYm9yZ0BMPTY0ODAwMDdAYT0xMjhAJDIwMjMxMjA4MTU1NiQyMDIzMTIwODE2MDEkJCQxJCQkJCQkfCNWRSMyI0NGIzEwMCNDQSMwI0NNIzAjU0lDVCMwI0FNIzk3I0FNMiMwI1JUIzE1IyIsIkkiOjF9XX0",
+      "departure_access_link": null,
+      "trip_legs": [
+        {
+          "origin": {
+            "stop_point": {
+              "gid": "9022014001960001",
+              "name": "Chalmers, G\u00f6teborg",
+              "platform": "A",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014001960000",
+                "name": "Chalmers",
+                "latitude": 57.690003776189016,
+                "longitude": 11.97295361700603,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T15:44:00.0000000+01:00",
+            "estimated_time": "2023-12-08T15:49:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T15:49:00.0000000+01:00",
+            "notes": []
+          },
+          "destination": {
+            "stop_point": {
+              "gid": "9022014006480002",
+              "name": "Svingeln, G\u00f6teborg",
+              "platform": "B",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014006480000",
+                "name": "Svingeln",
+                "latitude": 57.71314870580614,
+                "longitude": 11.991089173159567,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T15:56:00.0000000+01:00",
+            "estimated_time": "2023-12-08T15:59:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T15:59:00.0000000+01:00",
+            "notes": []
+          },
+          "is_cancelled": false,
+          "is_part_cancelled": false,
+          "service_journey": {
+            "gid": "9015014500600141",
+            "direction": "Nym\u00e5negatan",
+            "number": "141",
+            "line": {
+              "name": "Sp\u00e5rvagn 6",
+              "background_color": "#f89828",
+              "foreground_color": "#00435c",
+              "border_color": "#f89828",
+              "transport_mode": "tram",
+              "transport_sub_mode": "none",
+              "short_name": "6",
+              "designation": "6",
+              "is_wheelchair_accessible": true
+            }
+          },
+          "notes": [],
+          "estimated_distance_in_meters": null,
+          "planned_connecting_time_in_minutes": null,
+          "estimated_connecting_time_in_minutes": null,
+          "is_risk_of_missing_connection": null,
+          "planned_departure_time": "2023-12-08T15:44:00.0000000+01:00",
+          "planned_arrival_time": "2023-12-08T15:56:00.0000000+01:00",
+          "planned_duration_in_minutes": 12,
+          "estimated_departure_time": "2023-12-08T15:49:00.0000000+01:00",
+          "estimated_arrival_time": "2023-12-08T15:59:00.0000000+01:00",
+          "estimated_duration_in_minutes": 10,
+          "estimated_otherwise_planned_arrival_time": "2023-12-08T15:59:00.0000000+01:00",
+          "estimated_otherwise_planned_departure_time": "2023-12-08T15:49:00.0000000+01:00",
+          "occupancy": null,
+          "journey_leg_index": 0
+        },
+        {
+          "origin": {
+            "stop_point": {
+              "gid": "9022014006480007",
+              "name": "Svingeln, G\u00f6teborg",
+              "platform": "G",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014006480000",
+                "name": "Svingeln",
+                "latitude": 57.71314870580614,
+                "longitude": 11.991089173159567,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T16:02:00.0000000+01:00",
+            "estimated_time": "2023-12-08T16:09:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T16:09:00.0000000+01:00",
+            "notes": []
+          },
+          "destination": {
+            "stop_point": {
+              "gid": "9022014007160002",
+              "name": "Studieg\u00e5ngen, G\u00f6teborg",
+              "platform": "B",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014007160000",
+                "name": "Studieg\u00e5ngen",
+                "latitude": 57.71440958711786,
+                "longitude": 12.039586898442312,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T16:13:00.0000000+01:00",
+            "estimated_time": "2023-12-08T16:20:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T16:20:00.0000000+01:00",
+            "notes": []
+          },
+          "is_cancelled": false,
+          "is_part_cancelled": false,
+          "service_journey": {
+            "gid": "9015014501700193",
+            "direction": "\u00d6stra Sjukhuset",
+            "number": "193",
+            "line": {
+              "name": "Buss 17",
+              "background_color": "#00008e",
+              "foreground_color": "#ffff50",
+              "border_color": "#00008e",
+              "transport_mode": "bus",
+              "transport_sub_mode": "none",
+              "short_name": "17",
+              "designation": "17",
+              "is_wheelchair_accessible": true
+            }
+          },
+          "notes": [],
+          "estimated_distance_in_meters": null,
+          "planned_connecting_time_in_minutes": 6,
+          "estimated_connecting_time_in_minutes": 10,
+          "is_risk_of_missing_connection": false,
+          "planned_departure_time": "2023-12-08T16:02:00.0000000+01:00",
+          "planned_arrival_time": "2023-12-08T16:13:00.0000000+01:00",
+          "planned_duration_in_minutes": 11,
+          "estimated_departure_time": "2023-12-08T16:09:00.0000000+01:00",
+          "estimated_arrival_time": "2023-12-08T16:20:00.0000000+01:00",
+          "estimated_duration_in_minutes": 11,
+          "estimated_otherwise_planned_arrival_time": "2023-12-08T16:20:00.0000000+01:00",
+          "estimated_otherwise_planned_departure_time": "2023-12-08T16:09:00.0000000+01:00",
+          "occupancy": null,
+          "journey_leg_index": 2
+        }
+      ],
+      "connection_links": [
+        {
+          "transport_mode": "walk",
+          "transport_sub_mode": "none",
+          "origin": {
+            "stop_point": {
+              "gid": "9022014006480002",
+              "name": "Svingeln, G\u00f6teborg",
+              "platform": "B",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014006480000",
+                "name": "Svingeln",
+                "latitude": 57.71314870580614,
+                "longitude": 11.991089173159567,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T15:56:00.0000000+01:00",
+            "estimated_time": "2023-12-08T15:59:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T15:59:00.0000000+01:00",
+            "notes": []
+          },
+          "destination": {
+            "stop_point": {
+              "gid": "9022014006480007",
+              "name": "Svingeln, G\u00f6teborg",
+              "platform": "G",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014006480000",
+                "name": "Svingeln",
+                "latitude": 57.71314870580614,
+                "longitude": 11.991089173159567,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T16:01:00.0000000+01:00",
+            "estimated_time": "2023-12-08T16:04:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T16:04:00.0000000+01:00",
+            "notes": []
+          },
+          "notes": [],
+          "distance_in_meters": 26,
+          "planned_departure_time": "2023-12-08T15:56:00.0000000+01:00",
+          "planned_arrival_time": "2023-12-08T16:01:00.0000000+01:00",
+          "planned_duration_in_minutes": 5,
+          "estimated_departure_time": "2023-12-08T15:59:00.0000000+01:00",
+          "estimated_arrival_time": "2023-12-08T16:04:00.0000000+01:00",
+          "estimated_duration_in_minutes": 5,
+          "estimated_number_of_steps": 40,
+          "link_coordinates": [
+            {
+              "latitude": 57.713336,
+              "longitude": 11.991745,
+              "elevation": null,
+              "is_on_trip_leg": null,
+              "is_trip_leg_start": null,
+              "is_trip_leg_stop": null
+            },
+            {
+              "latitude": 57.713534,
+              "longitude": 11.991511,
+              "elevation": null,
+              "is_on_trip_leg": null,
+              "is_trip_leg_start": null,
+              "is_trip_leg_stop": null
+            }
+          ],
+          "segments": null,
+          "journey_leg_index": 1
+        }
+      ],
+      "arrival_access_link": null,
+      "destination_link": null,
+      "is_departed": false,
+      "occupancy": null
+    },
+    {
+      "reconstruction_reference": "\u00b6HKI\u00b6T$A=1@O=Chalmers, G\u00f6teborg@L=1960001@a=128@$A=1@O=Redbergsplatsen, G\u00f6teborg@L=5460004@a=128@$202312081552$202312081607$Sp\u00e5    8$$1$$$$$$\u00a7W$A=1@O=Redbergsplatsen, G\u00f6teborg@L=5460004@a=128@$A=1@O=Redbergsplatsen, G\u00f6teborg@L=5460006@a=128@$202312081607$202312081610$$$1$$$$$$\u00a7T$A=1@O=Redbergsplatsen, G\u00f6teborg@L=5460006@a=128@$A=1@O=Studieg\u00e5ngen, G\u00f6teborg@L=7160002@a=128@$202312081611$202312081618$Bus   17$$1$$$$$$\u00b6KC\u00b6#VE#2#CF#100#CA#0#CM#0#SICT#0#AM#97#AM2#0#RT#15#\u00b6KRCC\u00b6#VE#1#",
+      "details_reference": "eyJUIjpbeyJSIjoiMXwxMzAzOHwwfDgwfDgxMjIwMjMiLCJPIjoxMSwiRCI6MTgsIkkiOjB9LHsiUiI6IjF8NDczMDN8MHw4MHw4MTIyMDIzIiwiTyI6OCwiRCI6MTMsIkkiOjJ9XSwiQyI6W3siUiI6Ikh8MXxXJEE9MUBPPVJlZGJlcmdzcGxhdHNlbiwgR8O2dGVib3JnQEw9NTQ2MDAwNEBhPTEyOEAkQT0xQE89UmVkYmVyZ3NwbGF0c2VuLCBHw7Z0ZWJvcmdATD01NDYwMDA2QGE9MTI4QCQyMDIzMTIwODE2MDckMjAyMzEyMDgxNjEwJCQkMSQkJCQkJHwjVkUjMiNDRiMxMDAjQ0EjMCNDTSMwI1NJQ1QjMCNBTSM5NyNBTTIjMCNSVCMxNSMiLCJJIjoxfV19",
+      "departure_access_link": null,
+      "trip_legs": [
+        {
+          "origin": {
+            "stop_point": {
+              "gid": "9022014001960001",
+              "name": "Chalmers, G\u00f6teborg",
+              "platform": "A",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014001960000",
+                "name": "Chalmers",
+                "latitude": 57.690003776189016,
+                "longitude": 11.97295361700603,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T15:52:00.0000000+01:00",
+            "estimated_time": "2023-12-08T15:53:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T15:53:00.0000000+01:00",
+            "notes": []
+          },
+          "destination": {
+            "stop_point": {
+              "gid": "9022014005460004",
+              "name": "Redbergsplatsen, G\u00f6teborg",
+              "platform": "D",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014005460000",
+                "name": "Redbergsplatsen",
+                "latitude": 57.71642258779708,
+                "longitude": 12.004824551186488,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T16:07:00.0000000+01:00",
+            "estimated_time": "2023-12-08T16:06:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T16:06:00.0000000+01:00",
+            "notes": []
+          },
+          "is_cancelled": false,
+          "is_part_cancelled": false,
+          "service_journey": {
+            "gid": "9015014500800137",
+            "direction": "Angered",
+            "number": "137",
+            "line": {
+              "name": "Sp\u00e5rvagn 8",
+              "background_color": "#a5449a",
+              "foreground_color": "#ffffff",
+              "border_color": "#a5449a",
+              "transport_mode": "tram",
+              "transport_sub_mode": "none",
+              "short_name": "8",
+              "designation": "8",
+              "is_wheelchair_accessible": true
+            }
+          },
+          "notes": [],
+          "estimated_distance_in_meters": null,
+          "planned_connecting_time_in_minutes": null,
+          "estimated_connecting_time_in_minutes": null,
+          "is_risk_of_missing_connection": null,
+          "planned_departure_time": "2023-12-08T15:52:00.0000000+01:00",
+          "planned_arrival_time": "2023-12-08T16:07:00.0000000+01:00",
+          "planned_duration_in_minutes": 15,
+          "estimated_departure_time": "2023-12-08T15:53:00.0000000+01:00",
+          "estimated_arrival_time": "2023-12-08T16:06:00.0000000+01:00",
+          "estimated_duration_in_minutes": 13,
+          "estimated_otherwise_planned_arrival_time": "2023-12-08T16:06:00.0000000+01:00",
+          "estimated_otherwise_planned_departure_time": "2023-12-08T15:53:00.0000000+01:00",
+          "occupancy": null,
+          "journey_leg_index": 0
+        },
+        {
+          "origin": {
+            "stop_point": {
+              "gid": "9022014005460006",
+              "name": "Redbergsplatsen, G\u00f6teborg",
+              "platform": "F",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014005460000",
+                "name": "Redbergsplatsen",
+                "latitude": 57.71642258779708,
+                "longitude": 12.004824551186488,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T16:11:00.0000000+01:00",
+            "estimated_time": "2023-12-08T16:11:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T16:11:00.0000000+01:00",
+            "notes": []
+          },
+          "destination": {
+            "stop_point": {
+              "gid": "9022014007160002",
+              "name": "Studieg\u00e5ngen, G\u00f6teborg",
+              "platform": "B",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014007160000",
+                "name": "Studieg\u00e5ngen",
+                "latitude": 57.71440958711786,
+                "longitude": 12.039586898442312,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T16:18:00.0000000+01:00",
+            "estimated_time": "2023-12-08T16:18:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T16:18:00.0000000+01:00",
+            "notes": []
+          },
+          "is_cancelled": false,
+          "is_part_cancelled": false,
+          "service_journey": {
+            "gid": "9015014501700207",
+            "direction": "\u00d6stra Sjukhuset",
+            "number": "207",
+            "line": {
+              "name": "Buss 17",
+              "background_color": "#00008e",
+              "foreground_color": "#ffff50",
+              "border_color": "#00008e",
+              "transport_mode": "bus",
+              "transport_sub_mode": "none",
+              "short_name": "17",
+              "designation": "17",
+              "is_wheelchair_accessible": true
+            }
+          },
+          "notes": [],
+          "estimated_distance_in_meters": null,
+          "planned_connecting_time_in_minutes": 4,
+          "estimated_connecting_time_in_minutes": 5,
+          "is_risk_of_missing_connection": false,
+          "planned_departure_time": "2023-12-08T16:11:00.0000000+01:00",
+          "planned_arrival_time": "2023-12-08T16:18:00.0000000+01:00",
+          "planned_duration_in_minutes": 7,
+          "estimated_departure_time": "2023-12-08T16:11:00.0000000+01:00",
+          "estimated_arrival_time": "2023-12-08T16:18:00.0000000+01:00",
+          "estimated_duration_in_minutes": 7,
+          "estimated_otherwise_planned_arrival_time": "2023-12-08T16:18:00.0000000+01:00",
+          "estimated_otherwise_planned_departure_time": "2023-12-08T16:11:00.0000000+01:00",
+          "occupancy": null,
+          "journey_leg_index": 2
+        }
+      ],
+      "connection_links": [
+        {
+          "transport_mode": "walk",
+          "transport_sub_mode": "none",
+          "origin": {
+            "stop_point": {
+              "gid": "9022014005460004",
+              "name": "Redbergsplatsen, G\u00f6teborg",
+              "platform": "D",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014005460000",
+                "name": "Redbergsplatsen",
+                "latitude": 57.71642258779708,
+                "longitude": 12.004824551186488,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T16:07:00.0000000+01:00",
+            "estimated_time": "2023-12-08T16:06:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T16:06:00.0000000+01:00",
+            "notes": []
+          },
+          "destination": {
+            "stop_point": {
+              "gid": "9022014005460006",
+              "name": "Redbergsplatsen, G\u00f6teborg",
+              "platform": "F",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014005460000",
+                "name": "Redbergsplatsen",
+                "latitude": 57.71642258779708,
+                "longitude": 12.004824551186488,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T16:10:00.0000000+01:00",
+            "estimated_time": "2023-12-08T16:09:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T16:09:00.0000000+01:00",
+            "notes": []
+          },
+          "notes": [],
+          "distance_in_meters": 49,
+          "planned_departure_time": "2023-12-08T16:07:00.0000000+01:00",
+          "planned_arrival_time": "2023-12-08T16:10:00.0000000+01:00",
+          "planned_duration_in_minutes": 3,
+          "estimated_departure_time": "2023-12-08T16:06:00.0000000+01:00",
+          "estimated_arrival_time": "2023-12-08T16:09:00.0000000+01:00",
+          "estimated_duration_in_minutes": 3,
+          "estimated_number_of_steps": 75,
+          "link_coordinates": [
+            {
+              "latitude": 57.7165,
+              "longitude": 12.004698,
+              "elevation": null,
+              "is_on_trip_leg": null,
+              "is_trip_leg_start": null,
+              "is_trip_leg_stop": null
+            },
+            {
+              "latitude": 57.716069,
+              "longitude": 12.004824,
+              "elevation": null,
+              "is_on_trip_leg": null,
+              "is_trip_leg_start": null,
+              "is_trip_leg_stop": null
+            }
+          ],
+          "segments": null,
+          "journey_leg_index": 1
+        }
+      ],
+      "arrival_access_link": null,
+      "destination_link": null,
+      "is_departed": false,
+      "occupancy": null
+    },
+    {
+      "reconstruction_reference": "\u00b6HKI\u00b6T$A=1@O=Chalmers, G\u00f6teborg@L=1960001@a=128@$A=1@O=Redbergsplatsen, G\u00f6teborg@L=5460004@a=128@$202312081554$202312081609$Sp\u00e5    6$$1$$$$$$\u00a7W$A=1@O=Redbergsplatsen, G\u00f6teborg@L=5460004@a=128@$A=1@O=Redbergsplatsen, G\u00f6teborg@L=5460006@a=128@$202312081609$202312081612$$$1$$$$$$\u00a7T$A=1@O=Redbergsplatsen, G\u00f6teborg@L=5460006@a=128@$A=1@O=Studieg\u00e5ngen, G\u00f6teborg@L=7160002@a=128@$202312081614$202312081621$Bus   17$$1$$$$$$\u00b6KC\u00b6#VE#2#CF#100#CA#0#CM#0#SICT#0#AM#97#AM2#0#RT#15#\u00b6KRCC\u00b6#VE#1#",
+      "details_reference": "eyJUIjpbeyJSIjoiMXwyMzc4NnwzfDgwfDgxMjIwMjMiLCJPIjoyNiwiRCI6MzMsIkkiOjB9LHsiUiI6IjF8MTg2ODh8NXw4MHw4MTIyMDIzIiwiTyI6MTcsIkQiOjIyLCJJIjoyfV0sIkMiOlt7IlIiOiJIfDF8VyRBPTFATz1SZWRiZXJnc3BsYXRzZW4sIEfDtnRlYm9yZ0BMPTU0NjAwMDRAYT0xMjhAJEE9MUBPPVJlZGJlcmdzcGxhdHNlbiwgR8O2dGVib3JnQEw9NTQ2MDAwNkBhPTEyOEAkMjAyMzEyMDgxNjA5JDIwMjMxMjA4MTYxMiQkJDEkJCQkJCR8I1ZFIzIjQ0YjMTAwI0NBIzAjQ00jMCNTSUNUIzAjQU0jOTcjQU0yIzAjUlQjMTUjIiwiSSI6MX1dfQ",
+      "departure_access_link": null,
+      "trip_legs": [
+        {
+          "origin": {
+            "stop_point": {
+              "gid": "9022014001960001",
+              "name": "Chalmers, G\u00f6teborg",
+              "platform": "A",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014001960000",
+                "name": "Chalmers",
+                "latitude": 57.690003776189016,
+                "longitude": 11.97295361700603,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T15:54:00.0000000+01:00",
+            "estimated_time": "2023-12-08T15:58:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T15:58:00.0000000+01:00",
+            "notes": []
+          },
+          "destination": {
+            "stop_point": {
+              "gid": "9022014005460004",
+              "name": "Redbergsplatsen, G\u00f6teborg",
+              "platform": "D",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014005460000",
+                "name": "Redbergsplatsen",
+                "latitude": 57.71642258779708,
+                "longitude": 12.004824551186488,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T16:09:00.0000000+01:00",
+            "estimated_time": "2023-12-08T16:12:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T16:12:00.0000000+01:00",
+            "notes": []
+          },
+          "is_cancelled": false,
+          "is_part_cancelled": false,
+          "service_journey": {
+            "gid": "9015014500600143",
+            "direction": "Nym\u00e5negatan",
+            "number": "143",
+            "line": {
+              "name": "Sp\u00e5rvagn 6",
+              "background_color": "#f89828",
+              "foreground_color": "#00435c",
+              "border_color": "#f89828",
+              "transport_mode": "tram",
+              "transport_sub_mode": "none",
+              "short_name": "6",
+              "designation": "6",
+              "is_wheelchair_accessible": true
+            }
+          },
+          "notes": [],
+          "estimated_distance_in_meters": null,
+          "planned_connecting_time_in_minutes": null,
+          "estimated_connecting_time_in_minutes": null,
+          "is_risk_of_missing_connection": null,
+          "planned_departure_time": "2023-12-08T15:54:00.0000000+01:00",
+          "planned_arrival_time": "2023-12-08T16:09:00.0000000+01:00",
+          "planned_duration_in_minutes": 15,
+          "estimated_departure_time": "2023-12-08T15:58:00.0000000+01:00",
+          "estimated_arrival_time": "2023-12-08T16:12:00.0000000+01:00",
+          "estimated_duration_in_minutes": 14,
+          "estimated_otherwise_planned_arrival_time": "2023-12-08T16:12:00.0000000+01:00",
+          "estimated_otherwise_planned_departure_time": "2023-12-08T15:58:00.0000000+01:00",
+          "occupancy": null,
+          "journey_leg_index": 0
+        },
+        {
+          "origin": {
+            "stop_point": {
+              "gid": "9022014005460006",
+              "name": "Redbergsplatsen, G\u00f6teborg",
+              "platform": "F",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014005460000",
+                "name": "Redbergsplatsen",
+                "latitude": 57.71642258779708,
+                "longitude": 12.004824551186488,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T16:14:00.0000000+01:00",
+            "estimated_time": "2023-12-08T16:15:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T16:15:00.0000000+01:00",
+            "notes": []
+          },
+          "destination": {
+            "stop_point": {
+              "gid": "9022014007160002",
+              "name": "Studieg\u00e5ngen, G\u00f6teborg",
+              "platform": "B",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014007160000",
+                "name": "Studieg\u00e5ngen",
+                "latitude": 57.71440958711786,
+                "longitude": 12.039586898442312,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T16:21:00.0000000+01:00",
+            "estimated_time": "2023-12-08T16:23:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T16:23:00.0000000+01:00",
+            "notes": []
+          },
+          "is_cancelled": false,
+          "is_part_cancelled": false,
+          "service_journey": {
+            "gid": "9015014501700197",
+            "direction": "\u00d6stra Sjukhuset",
+            "number": "197",
+            "line": {
+              "name": "Buss 17",
+              "background_color": "#00008e",
+              "foreground_color": "#ffff50",
+              "border_color": "#00008e",
+              "transport_mode": "bus",
+              "transport_sub_mode": "none",
+              "short_name": "17",
+              "designation": "17",
+              "is_wheelchair_accessible": true
+            }
+          },
+          "notes": [],
+          "estimated_distance_in_meters": null,
+          "planned_connecting_time_in_minutes": 5,
+          "estimated_connecting_time_in_minutes": 3,
+          "is_risk_of_missing_connection": false,
+          "planned_departure_time": "2023-12-08T16:14:00.0000000+01:00",
+          "planned_arrival_time": "2023-12-08T16:21:00.0000000+01:00",
+          "planned_duration_in_minutes": 7,
+          "estimated_departure_time": "2023-12-08T16:15:00.0000000+01:00",
+          "estimated_arrival_time": "2023-12-08T16:23:00.0000000+01:00",
+          "estimated_duration_in_minutes": 8,
+          "estimated_otherwise_planned_arrival_time": "2023-12-08T16:23:00.0000000+01:00",
+          "estimated_otherwise_planned_departure_time": "2023-12-08T16:15:00.0000000+01:00",
+          "occupancy": null,
+          "journey_leg_index": 2
+        }
+      ],
+      "connection_links": [
+        {
+          "transport_mode": "walk",
+          "transport_sub_mode": "none",
+          "origin": {
+            "stop_point": {
+              "gid": "9022014005460004",
+              "name": "Redbergsplatsen, G\u00f6teborg",
+              "platform": "D",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014005460000",
+                "name": "Redbergsplatsen",
+                "latitude": 57.71642258779708,
+                "longitude": 12.004824551186488,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T16:09:00.0000000+01:00",
+            "estimated_time": "2023-12-08T16:12:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T16:12:00.0000000+01:00",
+            "notes": []
+          },
+          "destination": {
+            "stop_point": {
+              "gid": "9022014005460006",
+              "name": "Redbergsplatsen, G\u00f6teborg",
+              "platform": "F",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014005460000",
+                "name": "Redbergsplatsen",
+                "latitude": 57.71642258779708,
+                "longitude": 12.004824551186488,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T16:12:00.0000000+01:00",
+            "estimated_time": "2023-12-08T16:15:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T16:15:00.0000000+01:00",
+            "notes": []
+          },
+          "notes": [],
+          "distance_in_meters": 49,
+          "planned_departure_time": "2023-12-08T16:09:00.0000000+01:00",
+          "planned_arrival_time": "2023-12-08T16:12:00.0000000+01:00",
+          "planned_duration_in_minutes": 3,
+          "estimated_departure_time": "2023-12-08T16:12:00.0000000+01:00",
+          "estimated_arrival_time": "2023-12-08T16:15:00.0000000+01:00",
+          "estimated_duration_in_minutes": 3,
+          "estimated_number_of_steps": 75,
+          "link_coordinates": [
+            {
+              "latitude": 57.7165,
+              "longitude": 12.004698,
+              "elevation": null,
+              "is_on_trip_leg": null,
+              "is_trip_leg_start": null,
+              "is_trip_leg_stop": null
+            },
+            {
+              "latitude": 57.716069,
+              "longitude": 12.004824,
+              "elevation": null,
+              "is_on_trip_leg": null,
+              "is_trip_leg_start": null,
+              "is_trip_leg_stop": null
+            }
+          ],
+          "segments": null,
+          "journey_leg_index": 1
+        }
+      ],
+      "arrival_access_link": null,
+      "destination_link": null,
+      "is_departed": false,
+      "occupancy": null
+    },
+    {
+      "reconstruction_reference": "\u00b6HKI\u00b6T$A=1@O=Chalmers, G\u00f6teborg@L=1960001@a=128@$A=1@O=Redbergsplatsen, G\u00f6teborg@L=5460004@a=128@$202312081600$202312081615$Sp\u00e5    8$$1$$$$$$\u00a7W$A=1@O=Redbergsplatsen, G\u00f6teborg@L=5460004@a=128@$A=1@O=Redbergsplatsen, G\u00f6teborg@L=5460006@a=128@$202312081615$202312081618$$$1$$$$$$\u00a7T$A=1@O=Redbergsplatsen, G\u00f6teborg@L=5460006@a=128@$A=1@O=Studieg\u00e5ngen, G\u00f6teborg@L=7160002@a=128@$202312081618$202312081625$Bus   17$$1$$$$$$\u00b6KC\u00b6#VE#2#CF#100#CA#0#CM#0#SICT#0#AM#97#AM2#0#RT#15#\u00b6KRCC\u00b6#VE#1#VOLL#IST#",
+      "details_reference": "eyJUIjpbeyJSIjoiMXwxMzAzOHwxfDgwfDgxMjIwMjMiLCJPIjoxMSwiRCI6MTgsIkkiOjB9LHsiUiI6IjF8NDczMDR8MHw4MHw4MTIyMDIzIiwiTyI6OCwiRCI6MTMsIkkiOjJ9XSwiQyI6W3siUiI6Ikh8MXxXJEE9MUBPPVJlZGJlcmdzcGxhdHNlbiwgR8O2dGVib3JnQEw9NTQ2MDAwNEBhPTEyOEAkQT0xQE89UmVkYmVyZ3NwbGF0c2VuLCBHw7Z0ZWJvcmdATD01NDYwMDA2QGE9MTI4QCQyMDIzMTIwODE2MTUkMjAyMzEyMDgxNjE4JCQkMSQkJCQkJHwjVkUjMiNDRiMxMDAjQ0EjMCNDTSMwI1NJQ1QjMCNBTSM5NyNBTTIjMCNSVCMxNSMiLCJJIjoxfV19",
+      "departure_access_link": null,
+      "trip_legs": [
+        {
+          "origin": {
+            "stop_point": {
+              "gid": "9022014001960001",
+              "name": "Chalmers, G\u00f6teborg",
+              "platform": "A",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014001960000",
+                "name": "Chalmers",
+                "latitude": 57.690003776189016,
+                "longitude": 11.97295361700603,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T16:00:00.0000000+01:00",
+            "estimated_time": "2023-12-08T16:01:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T16:01:00.0000000+01:00",
+            "notes": []
+          },
+          "destination": {
+            "stop_point": {
+              "gid": "9022014005460004",
+              "name": "Redbergsplatsen, G\u00f6teborg",
+              "platform": "D",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014005460000",
+                "name": "Redbergsplatsen",
+                "latitude": 57.71642258779708,
+                "longitude": 12.004824551186488,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T16:15:00.0000000+01:00",
+            "estimated_time": "2023-12-08T16:14:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T16:14:00.0000000+01:00",
+            "notes": []
+          },
+          "is_cancelled": false,
+          "is_part_cancelled": false,
+          "service_journey": {
+            "gid": "9015014500800139",
+            "direction": "Angered",
+            "number": "139",
+            "line": {
+              "name": "Sp\u00e5rvagn 8",
+              "background_color": "#a5449a",
+              "foreground_color": "#ffffff",
+              "border_color": "#a5449a",
+              "transport_mode": "tram",
+              "transport_sub_mode": "none",
+              "short_name": "8",
+              "designation": "8",
+              "is_wheelchair_accessible": true
+            }
+          },
+          "notes": [],
+          "estimated_distance_in_meters": null,
+          "planned_connecting_time_in_minutes": null,
+          "estimated_connecting_time_in_minutes": null,
+          "is_risk_of_missing_connection": null,
+          "planned_departure_time": "2023-12-08T16:00:00.0000000+01:00",
+          "planned_arrival_time": "2023-12-08T16:15:00.0000000+01:00",
+          "planned_duration_in_minutes": 15,
+          "estimated_departure_time": "2023-12-08T16:01:00.0000000+01:00",
+          "estimated_arrival_time": "2023-12-08T16:14:00.0000000+01:00",
+          "estimated_duration_in_minutes": 13,
+          "estimated_otherwise_planned_arrival_time": "2023-12-08T16:14:00.0000000+01:00",
+          "estimated_otherwise_planned_departure_time": "2023-12-08T16:01:00.0000000+01:00",
+          "occupancy": null,
+          "journey_leg_index": 0
+        },
+        {
+          "origin": {
+            "stop_point": {
+              "gid": "9022014005460006",
+              "name": "Redbergsplatsen, G\u00f6teborg",
+              "platform": "F",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014005460000",
+                "name": "Redbergsplatsen",
+                "latitude": 57.71642258779708,
+                "longitude": 12.004824551186488,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T16:18:00.0000000+01:00",
+            "estimated_time": "2023-12-08T16:18:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T16:18:00.0000000+01:00",
+            "notes": []
+          },
+          "destination": {
+            "stop_point": {
+              "gid": "9022014007160002",
+              "name": "Studieg\u00e5ngen, G\u00f6teborg",
+              "platform": "B",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014007160000",
+                "name": "Studieg\u00e5ngen",
+                "latitude": 57.71440958711786,
+                "longitude": 12.039586898442312,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T16:25:00.0000000+01:00",
+            "estimated_time": "2023-12-08T16:25:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T16:25:00.0000000+01:00",
+            "notes": []
+          },
+          "is_cancelled": false,
+          "is_part_cancelled": false,
+          "service_journey": {
+            "gid": "9015014501700211",
+            "direction": "\u00d6stra Sjukhuset",
+            "number": "211",
+            "line": {
+              "name": "Buss 17",
+              "background_color": "#00008e",
+              "foreground_color": "#ffff50",
+              "border_color": "#00008e",
+              "transport_mode": "bus",
+              "transport_sub_mode": "none",
+              "short_name": "17",
+              "designation": "17",
+              "is_wheelchair_accessible": true
+            }
+          },
+          "notes": [],
+          "estimated_distance_in_meters": null,
+          "planned_connecting_time_in_minutes": 3,
+          "estimated_connecting_time_in_minutes": 4,
+          "is_risk_of_missing_connection": false,
+          "planned_departure_time": "2023-12-08T16:18:00.0000000+01:00",
+          "planned_arrival_time": "2023-12-08T16:25:00.0000000+01:00",
+          "planned_duration_in_minutes": 7,
+          "estimated_departure_time": "2023-12-08T16:18:00.0000000+01:00",
+          "estimated_arrival_time": "2023-12-08T16:25:00.0000000+01:00",
+          "estimated_duration_in_minutes": 7,
+          "estimated_otherwise_planned_arrival_time": "2023-12-08T16:25:00.0000000+01:00",
+          "estimated_otherwise_planned_departure_time": "2023-12-08T16:18:00.0000000+01:00",
+          "occupancy": null,
+          "journey_leg_index": 2
+        }
+      ],
+      "connection_links": [
+        {
+          "transport_mode": "walk",
+          "transport_sub_mode": "none",
+          "origin": {
+            "stop_point": {
+              "gid": "9022014005460004",
+              "name": "Redbergsplatsen, G\u00f6teborg",
+              "platform": "D",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014005460000",
+                "name": "Redbergsplatsen",
+                "latitude": 57.71642258779708,
+                "longitude": 12.004824551186488,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T16:15:00.0000000+01:00",
+            "estimated_time": "2023-12-08T16:14:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T16:14:00.0000000+01:00",
+            "notes": []
+          },
+          "destination": {
+            "stop_point": {
+              "gid": "9022014005460006",
+              "name": "Redbergsplatsen, G\u00f6teborg",
+              "platform": "F",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014005460000",
+                "name": "Redbergsplatsen",
+                "latitude": 57.71642258779708,
+                "longitude": 12.004824551186488,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T16:18:00.0000000+01:00",
+            "estimated_time": "2023-12-08T16:17:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T16:17:00.0000000+01:00",
+            "notes": []
+          },
+          "notes": [],
+          "distance_in_meters": 49,
+          "planned_departure_time": "2023-12-08T16:15:00.0000000+01:00",
+          "planned_arrival_time": "2023-12-08T16:18:00.0000000+01:00",
+          "planned_duration_in_minutes": 3,
+          "estimated_departure_time": "2023-12-08T16:14:00.0000000+01:00",
+          "estimated_arrival_time": "2023-12-08T16:17:00.0000000+01:00",
+          "estimated_duration_in_minutes": 3,
+          "estimated_number_of_steps": 75,
+          "link_coordinates": [
+            {
+              "latitude": 57.7165,
+              "longitude": 12.004698,
+              "elevation": null,
+              "is_on_trip_leg": null,
+              "is_trip_leg_start": null,
+              "is_trip_leg_stop": null
+            },
+            {
+              "latitude": 57.716069,
+              "longitude": 12.004824,
+              "elevation": null,
+              "is_on_trip_leg": null,
+              "is_trip_leg_start": null,
+              "is_trip_leg_stop": null
+            }
+          ],
+          "segments": null,
+          "journey_leg_index": 1
+        }
+      ],
+      "arrival_access_link": null,
+      "destination_link": null,
+      "is_departed": false,
+      "occupancy": null
+    },
+    {
+      "reconstruction_reference": "\u00b6HKI\u00b6T$A=1@O=Chalmers, G\u00f6teborg@L=1960001@a=128@$A=1@O=Redbergsplatsen, G\u00f6teborg@L=5460004@a=128@$202312081603$202312081618$Sp\u00e5    6$$1$$$$$$\u00a7W$A=1@O=Redbergsplatsen, G\u00f6teborg@L=5460004@a=128@$A=1@O=Redbergsplatsen, G\u00f6teborg@L=5460006@a=128@$202312081618$202312081621$$$1$$$$$$\u00a7T$A=1@O=Redbergsplatsen, G\u00f6teborg@L=5460006@a=128@$A=1@O=Studieg\u00e5ngen, G\u00f6teborg@L=7160002@a=128@$202312081622$202312081629$Bus   17$$1$$$$$$\u00b6KC\u00b6#VE#2#CF#100#CA#0#CM#0#SICT#0#AM#97#AM2#0#RT#15#\u00b6KRCC\u00b6#VE#1#",
+      "details_reference": "eyJUIjpbeyJSIjoiMXwyMzYzOXwyfDgwfDgxMjIwMjMiLCJPIjoyNiwiRCI6MzMsIkkiOjB9LHsiUiI6IjF8MTg2ODh8Nnw4MHw4MTIyMDIzIiwiTyI6MTcsIkQiOjIyLCJJIjoyfV0sIkMiOlt7IlIiOiJIfDF8VyRBPTFATz1SZWRiZXJnc3BsYXRzZW4sIEfDtnRlYm9yZ0BMPTU0NjAwMDRAYT0xMjhAJEE9MUBPPVJlZGJlcmdzcGxhdHNlbiwgR8O2dGVib3JnQEw9NTQ2MDAwNkBhPTEyOEAkMjAyMzEyMDgxNjE4JDIwMjMxMjA4MTYyMSQkJDEkJCQkJCR8I1ZFIzIjQ0YjMTAwI0NBIzAjQ00jMCNTSUNUIzAjQU0jOTcjQU0yIzAjUlQjMTUjIiwiSSI6MX1dfQ",
+      "departure_access_link": null,
+      "trip_legs": [
+        {
+          "origin": {
+            "stop_point": {
+              "gid": "9022014001960001",
+              "name": "Chalmers, G\u00f6teborg",
+              "platform": "A",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014001960000",
+                "name": "Chalmers",
+                "latitude": 57.690003776189016,
+                "longitude": 11.97295361700603,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T16:03:00.0000000+01:00",
+            "estimated_time": "2023-12-08T16:07:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T16:07:00.0000000+01:00",
+            "notes": []
+          },
+          "destination": {
+            "stop_point": {
+              "gid": "9022014005460004",
+              "name": "Redbergsplatsen, G\u00f6teborg",
+              "platform": "D",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014005460000",
+                "name": "Redbergsplatsen",
+                "latitude": 57.71642258779708,
+                "longitude": 12.004824551186488,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T16:18:00.0000000+01:00",
+            "estimated_time": "2023-12-08T16:21:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T16:21:00.0000000+01:00",
+            "notes": []
+          },
+          "is_cancelled": false,
+          "is_part_cancelled": false,
+          "service_journey": {
+            "gid": "9015014500600145",
+            "direction": "Nym\u00e5negatan",
+            "number": "145",
+            "line": {
+              "name": "Sp\u00e5rvagn 6",
+              "background_color": "#f89828",
+              "foreground_color": "#00435c",
+              "border_color": "#f89828",
+              "transport_mode": "tram",
+              "transport_sub_mode": "none",
+              "short_name": "6",
+              "designation": "6",
+              "is_wheelchair_accessible": true
+            }
+          },
+          "notes": [
+            {
+              "type": "other",
+              "severity": "normal",
+              "text": "Risk of missing connection."
+            }
+          ],
+          "estimated_distance_in_meters": null,
+          "planned_connecting_time_in_minutes": null,
+          "estimated_connecting_time_in_minutes": null,
+          "is_risk_of_missing_connection": null,
+          "planned_departure_time": "2023-12-08T16:03:00.0000000+01:00",
+          "planned_arrival_time": "2023-12-08T16:18:00.0000000+01:00",
+          "planned_duration_in_minutes": 15,
+          "estimated_departure_time": "2023-12-08T16:07:00.0000000+01:00",
+          "estimated_arrival_time": "2023-12-08T16:21:00.0000000+01:00",
+          "estimated_duration_in_minutes": 14,
+          "estimated_otherwise_planned_arrival_time": "2023-12-08T16:21:00.0000000+01:00",
+          "estimated_otherwise_planned_departure_time": "2023-12-08T16:07:00.0000000+01:00",
+          "occupancy": null,
+          "journey_leg_index": 0
+        },
+        {
+          "origin": {
+            "stop_point": {
+              "gid": "9022014005460006",
+              "name": "Redbergsplatsen, G\u00f6teborg",
+              "platform": "F",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014005460000",
+                "name": "Redbergsplatsen",
+                "latitude": 57.71642258779708,
+                "longitude": 12.004824551186488,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T16:22:00.0000000+01:00",
+            "estimated_time": "2023-12-08T16:22:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T16:22:00.0000000+01:00",
+            "notes": []
+          },
+          "destination": {
+            "stop_point": {
+              "gid": "9022014007160002",
+              "name": "Studieg\u00e5ngen, G\u00f6teborg",
+              "platform": "B",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014007160000",
+                "name": "Studieg\u00e5ngen",
+                "latitude": 57.71440958711786,
+                "longitude": 12.039586898442312,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T16:29:00.0000000+01:00",
+            "estimated_time": "2023-12-08T16:30:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T16:30:00.0000000+01:00",
+            "notes": []
+          },
+          "is_cancelled": false,
+          "is_part_cancelled": false,
+          "service_journey": {
+            "gid": "9015014501700201",
+            "direction": "\u00d6stra Sjukhuset",
+            "number": "201",
+            "line": {
+              "name": "Buss 17",
+              "background_color": "#00008e",
+              "foreground_color": "#ffff50",
+              "border_color": "#00008e",
+              "transport_mode": "bus",
+              "transport_sub_mode": "none",
+              "short_name": "17",
+              "designation": "17",
+              "is_wheelchair_accessible": true
+            }
+          },
+          "notes": [],
+          "estimated_distance_in_meters": null,
+          "planned_connecting_time_in_minutes": 4,
+          "estimated_connecting_time_in_minutes": 1,
+          "is_risk_of_missing_connection": true,
+          "planned_departure_time": "2023-12-08T16:22:00.0000000+01:00",
+          "planned_arrival_time": "2023-12-08T16:29:00.0000000+01:00",
+          "planned_duration_in_minutes": 7,
+          "estimated_departure_time": "2023-12-08T16:22:00.0000000+01:00",
+          "estimated_arrival_time": "2023-12-08T16:30:00.0000000+01:00",
+          "estimated_duration_in_minutes": 8,
+          "estimated_otherwise_planned_arrival_time": "2023-12-08T16:30:00.0000000+01:00",
+          "estimated_otherwise_planned_departure_time": "2023-12-08T16:22:00.0000000+01:00",
+          "occupancy": null,
+          "journey_leg_index": 2
+        }
+      ],
+      "connection_links": [
+        {
+          "transport_mode": "walk",
+          "transport_sub_mode": "none",
+          "origin": {
+            "stop_point": {
+              "gid": "9022014005460004",
+              "name": "Redbergsplatsen, G\u00f6teborg",
+              "platform": "D",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014005460000",
+                "name": "Redbergsplatsen",
+                "latitude": 57.71642258779708,
+                "longitude": 12.004824551186488,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T16:18:00.0000000+01:00",
+            "estimated_time": "2023-12-08T16:21:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T16:21:00.0000000+01:00",
+            "notes": []
+          },
+          "destination": {
+            "stop_point": {
+              "gid": "9022014005460006",
+              "name": "Redbergsplatsen, G\u00f6teborg",
+              "platform": "F",
+              "latitude": null,
+              "longitude": null,
+              "stop_area": {
+                "gid": "9021014005460000",
+                "name": "Redbergsplatsen",
+                "latitude": 57.71642258779708,
+                "longitude": 12.004824551186488,
+                "tariff_zone1": {
+                  "gid": "9081014200003000",
+                  "name": "Zon A",
+                  "number": 3000,
+                  "short_name": "A"
+                },
+                "tariff_zone2": null
+              }
+            },
+            "planned_time": "2023-12-08T16:21:00.0000000+01:00",
+            "estimated_time": "2023-12-08T16:24:00.0000000+01:00",
+            "estimated_otherwise_planned_time": "2023-12-08T16:24:00.0000000+01:00",
+            "notes": []
+          },
+          "notes": [],
+          "distance_in_meters": 49,
+          "planned_departure_time": "2023-12-08T16:18:00.0000000+01:00",
+          "planned_arrival_time": "2023-12-08T16:21:00.0000000+01:00",
+          "planned_duration_in_minutes": 3,
+          "estimated_departure_time": "2023-12-08T16:21:00.0000000+01:00",
+          "estimated_arrival_time": "2023-12-08T16:24:00.0000000+01:00",
+          "estimated_duration_in_minutes": 3,
+          "estimated_number_of_steps": 75,
+          "link_coordinates": [
+            {
+              "latitude": 57.7165,
+              "longitude": 12.004698,
+              "elevation": null,
+              "is_on_trip_leg": null,
+              "is_trip_leg_start": null,
+              "is_trip_leg_stop": null
+            },
+            {
+              "latitude": 57.716069,
+              "longitude": 12.004824,
+              "elevation": null,
+              "is_on_trip_leg": null,
+              "is_trip_leg_start": null,
+              "is_trip_leg_stop": null
+            }
+          ],
+          "segments": null,
+          "journey_leg_index": 1
+        }
+      ],
+      "arrival_access_link": null,
+      "destination_link": null,
+      "is_departed": false,
+      "occupancy": null
+    }
+  ],
+  "pagination": null,
+  "links": {
+    "previous": "journeys?originLatitude=57.690012&originLongitude=11.972992&destinationLatitude=57.714406&destinationLongitude=12.039585&transportModes=tram&transportModes=bus&dateTime=2023-12-08T14%3A35%3A53.0000000%2B00%3A00&paginationReference=M3xPQnxNVMK1MTTCtTkwMjE2wrU5MDIxNsK1OTAyNDXCtTkwMjQ1wrUwwrUwwrU4NcK1OTAyMTXCtTHCtTDCtTLCtTDCtTDCtS0yMTQ3NDgzNjQ4wrUxwrUyfFBESMK1MjhlYTA4NDMzOTJmODg5NjAyMzFjZWU1ODQ3YTU0NTN8UkTCtTgxMjIwMjN8UlTCtTE1MzU1M3xVU8K1MHxSU8K1SU5JVA",
+    "next": "journeys?originLatitude=57.690012&originLongitude=11.972992&destinationLatitude=57.714406&destinationLongitude=12.039585&transportModes=tram&transportModes=bus&dateTime=2023-12-08T14%3A35%3A53.0000000%2B00%3A00&paginationReference=M3xPRnxNVMK1MTTCtTkwMjQzwrU5MDI0M8K1OTAyNjnCtTkwMjY5wrUwwrUwwrU4NcK1OTAyMzXCtTbCtTDCtTLCtTDCtTDCtS0yMTQ3NDgzNjQ4wrUxwrUyfFBESMK1MjhlYTA4NDMzOTJmODg5NjAyMzFjZWU1ODQ3YTU0NTN8UkTCtTgxMjIwMjN8UlTCtTE1MzU1M3xVU8K1MHxSU8K1SU5JVA",
+    "current": "journeys?originLatitude=57.690012&originLongitude=11.972992&destinationLatitude=57.714406&destinationLongitude=12.039585&transportModes=tram&transportModes=bus&dateTime=2023-12-08T14%3A35%3A53.0000000%2B00%3A00"
+  }
+}

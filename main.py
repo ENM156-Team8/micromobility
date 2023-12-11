@@ -1,9 +1,12 @@
+import json
+import requests
 
-from globals import coordinatePair, vtApiType, googleTripMode, googleApiMode, sosStation
+from globals import coordinatePair, vtApiType, googleTripMode, googleApiMode, sosStation, trip, waypoint
 import threading
 import time
 from enum import Enum
 from apiHandler import *
+from globals import coordinatePair, vtApiType, googleTripMode, googleApiMode
 
 
 def main():
@@ -15,7 +18,7 @@ def main():
     getSosTrip(testCordStart, testCordEnd)
 
 
-def getSosTrip(start: coordinatePair, end: coordinatePair):
+def getSosTrip(start: coordinatePair, end: coordinatePair) -> trip:
     '''
     Calculates the shortest trip from start to end using Styr&Ställ stations.
     :return: shortest trip as a dictionary with keys: duration, distance, instructions, segments, cost
@@ -26,84 +29,85 @@ def getSosTrip(start: coordinatePair, end: coordinatePair):
     startStations: [sosStation] = apiCallerSos(start)
     endStations: [sosStation] = apiCallerSos(end)
 
+    #if no possible trips 
+    if (len(startStations) == 0 or len(endStations) == 0):
+        return None
+
     possibleTrips = []
     for startStation in startStations:
+ 
         if startStation.open == True and startStation.availableBikes > 0:
+            #print("här1")
             startStationCord = coordinatePair(
                 startStation.latitude, startStation.longitude)
 
             # Walk to start station
             firstWalk = getGoogleTrip(
                 start, startStationCord, googleTripMode.WALK)
-            if firstWalk != -1:
-                startDistance = firstWalk.get("distance")
-                startDuration = firstWalk.get("duration")
-                startInstructions = firstWalk.get("instructions")
-                startSegment = {"type": "walk", "distance": startDistance,
-                                "duration": startDuration, "from": start.show(), "to": startStationCord.show()}
+            # print(firstWalk.waypoints.show())
+            startDistance = firstWalk.waypoints[0].distance
+            startDuration = firstWalk.duration
+            firstWaypoint = waypoint(
+                start, startStationCord, googleApiMode.WALK, startDuration, startDistance, None)
 
-                threads = list()
-                for endStation in endStations:
-                    if endStation.open == True:
-                        x = threading.Thread(
-                            target=_calculateTripHelper, args=(endStation.name, startDuration, startDistance, startInstructions, startSegment, startStationCord, endStation, end, possibleTrips))
-                        threads.append(x)
-                        x.start()
+            threads = list()
+            for endStation in endStations:
+                #print("här2")
+                if endStation.open == True:
+                    ("starting thread")
+                    x = threading.Thread(
+                        target=_calculateTripHelper, args=(endStation.name, firstWaypoint, startStationCord, endStation, end, possibleTrips))
+                    threads.append(x)
+                    x.start()
 
-                for thread in threads:
-                    thread.join()
+            for thread in threads:
+                thread.join()
 
+    print(possibleTrips)
     shortestTrip = possibleTrips[0]
-    for trip in possibleTrips:
-        if trip.get("duration") < shortestTrip.get("duration"):
-            shortestTrip = trip
+    for oneTrip in possibleTrips:
+        if oneTrip.duration < shortestTrip.duration:
+            shortestTrip = oneTrip
 
-    print("Shortest trip:", shortestTrip)
+    print("Shortest trip:", shortestTrip.show())
     print("--- %s seconds ---" % (time.time() - start_time))
     return shortestTrip
 
 
-def _calculateTripHelper(name, startDuration, startDistance, startInstructions, startSegment, startStationCord, endStation, end, possibleTrips):
+def _calculateTripHelper(name, firstWaypoint, startStationCord, endStation, end, possibleTrips):
     '''
     Helper for getSosTrip used concurrently to calculate trip from start to end station.
     :return: 1 if trip was calculated, -1 if not
     '''
-    totalDuration = startDuration
-    totalDistance = startDistance
+    print("running ")
+    totalDuration = firstWaypoint.duration
     cost = 0
-    instructions = startInstructions
-    segments = [startSegment]
-
+    waypoints = []
+    waypoints.append(firstWaypoint)
     endStationCord = coordinatePair(
         endStation.latitude, endStation.longitude)
 
     # Bike betweem stations
     bikeJourney = getGoogleTrip(startStationCord, endStationCord,
                                 googleTripMode.BICYCLING)
-    bikeDistance = bikeJourney.get("distance")
-    bikeDuration = bikeJourney.get("duration")
-
+    bikeDistance = bikeJourney.waypoints[0].distance
+    bikeDuration = bikeJourney.duration
     totalDuration += bikeDuration
-    totalDistance += bikeDistance
-    cost = bikeJourney.get("cost")
-    instructions += bikeJourney.get("instructions")
-    segments.append({"type": "bike", "distance": bikeDistance,
-                    "duration": bikeDuration, "from": startStationCord.show(), "to": endStationCord.show()})
+    cost += bikeJourney.cost
+    waypoints.append(waypoint(startStationCord, endStationCord,
+                     googleApiMode.BICYCLING, bikeDuration, bikeDistance, None))
 
     # Walk from end station
     endWalk = getGoogleTrip(endStationCord, end, googleTripMode.WALK)
-    if endWalk != -1:
-        distance = endWalk.get("distance")
-        duration = endWalk.get("duration")
-        totalDuration += duration
-        totalDistance += distance
-        instructions += endWalk.get("instructions")
-        segments.append({"type": "walk", "distance": distance,
-                        "duration": duration, "from": endStationCord.show(), "to": end.show()})
+    distance = endWalk.waypoints[0].distance
+    duration = endWalk.duration
+    totalDuration += duration
+    waypoints.append(waypoint(endStationCord, end,
+                        googleApiMode.WALK, duration, distance, None))
 
-    trip = {"duration": totalDuration,
-            "distance": totalDistance, "instructions": instructions, "segments": segments, "cost": cost}
-    possibleTrips.append(trip)
+    calculatedTrip = trip(waypoints, totalDuration, cost)
+    print(calculatedTrip)
+    possibleTrips.append(calculatedTrip)
     return 1
 
 
@@ -137,7 +141,7 @@ def getTripByTram(startStation: str, endStation: str):
     return segments
 
 
-def getGoogleTrip(start: coordinatePair, end: coordinatePair, mode: googleTripMode):
+def getGoogleTrip(start: coordinatePair, end: coordinatePair, mode: googleTripMode) -> trip:
     '''
     Request google trip
     Either walking, bicycling or Voi
@@ -145,20 +149,20 @@ def getGoogleTrip(start: coordinatePair, end: coordinatePair, mode: googleTripMo
     totalDuration = 0
     totalDistance = 0
     totalCost = 0
-    instructions = ""
+    tripMode = None
 
     match mode:
         case mode.WALK:
             data = apiCallerGoogleDirections(start, end, googleApiMode.WALK)
-            instructions += "\n Walk "
+            tripMode = googleApiMode.WALK
         case mode.BICYCLING:
             data = apiCallerGoogleDirections(
                 start, end, googleApiMode.BICYCLING)
-            instructions += "\n Bike "
+            tripMode = googleApiMode.BICYCLING
         case mode.VOI:
             data = apiCallerGoogleDirections(
                 start, end, googleApiMode.BICYCLING)
-            instructions += "\n Voi "
+            tripMode = googleApiMode.BICYCLING
         case _:
             raise ValueError(f'Unsupported trip: {mode}')
 
@@ -174,16 +178,14 @@ def getGoogleTrip(start: coordinatePair, end: coordinatePair, mode: googleTripMo
     totalDistance += float(distanceText.split(" ")[0])
     totalCost += _tripCost(totalDuration, mode)
 
-    instructions += f'{distanceText} from {journey.get("start_address")} for {durationText} to {journey.get("end_address")}.' + \
-        "\n" + f'This trip will cost you: {totalCost} kr.'
-
     # print(f'{totalDuration},{totalDistance},{totalCost}')
-    trip = {"duration": totalDuration, "distance": totalDistance,
-            "cost": totalCost, "instructions": instructions}
+    waypoints = [waypoint(start, end, mode, totalDuration, totalDistance, None)]
+    calculatedTrip = trip(waypoints, totalDuration, totalCost)
     # print("TRIP:")
     # print(trip)
 
-    return trip
+    return calculatedTrip
+
 
 
 def _tripCost(duration, mode: googleTripMode):
