@@ -38,14 +38,30 @@ class trip:
         self.waypoints = waypoints
         self.duration = duration
 
+    def to_dict(self):
+        return {
+            'waypoints': [waypoint.to_dict() for waypoint in self.waypoints],
+            'duration': self.duration
+        }
+
 class waypoint:
-    def __init__(self, start: coordinatePair, destination: coordinatePair, mode: Enum, duration: int, distance: int, line: tuple):
+    def __init__(self, start: str, destination: str, mode, duration: int, distance: int, line: tuple):
         self.start = start
         self.destination = destination
         self.mode = mode
         self.duration = duration
         self.distance = distance
         self.line = line
+    
+    def to_dict(self):
+        return {
+            'start': self.start,
+            'destination': self.destination,
+            'mode': self.mode,
+            'duration': self.duration,
+            'distance': self.distance,
+            'line': self.line
+        }
 
 
 # Enums used to fetch different data from vtApi
