@@ -2,8 +2,7 @@
 __all__ = ["apiCallerSos", "apiCallerVt", "_getCordByName", "apiCallerGoogleDirections", "location_api", "journey_api"]
 
 
-__all__ = ["apiCallerSos", "apiCallerVt",
-           "_getCordByName", "apiCallerGoogleDirections"]
+
 
 import openapi_client
 from openapi_client.models.vt_api_planera_resa_web_v4_models_journey_transport_mode import VTApiPlaneraResaWebV4ModelsJourneyTransportMode
@@ -86,7 +85,7 @@ def formatResponseSos(jData):
 
 # Västtrafik
 
-def apiCallerVt(start: coordinatePair, end: coordinatePair, apiType: vtApiType) -> str:
+def apiCallerVt(start: coordinatePair, end: coordinatePair, apiType: vtApiType, radius) -> str:
     match apiType:
         case apiType.POSITIONS:
             # urlEnd = '/positions?lowerLeftLat=' + str(start.latitude) + '&lowerLeftLong=' + str(
@@ -99,7 +98,7 @@ def apiCallerVt(start: coordinatePair, end: coordinatePair, apiType: vtApiType) 
             #     str(startGid) + '&destinationGid=' + \
             #     str(endGid)
             response = journey_api.journeys_get(origin_latitude=start.latitude, origin_longitude=start.longitude, destination_latitude=end.latitude, destination_longitude=end.longitude, transport_modes=[VTApiPlaneraResaWebV4ModelsJourneyTransportMode.TRAM, VTApiPlaneraResaWebV4ModelsJourneyTransportMode.BUS])
-        case apiType.LOCATIONS:
+        case apiType.LOCATION:
             response = location_api.locations_by_coordinates_get(start.latitude, start.longitude, radius_in_meters=radius, limit=100)
         
         case _:

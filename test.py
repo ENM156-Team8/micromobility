@@ -4,6 +4,7 @@ from globals import coordinatePair, vtApiType, googleTripMode, googleApiMode, tr
 from pprint import pprint
 import json
 from openapi_client.models.vt_api_planera_resa_web_v4_models_journey_transport_mode import VTApiPlaneraResaWebV4ModelsJourneyTransportMode
+from main import getSosTrip, getGoogleTrip
 
 class vtStation:
 
@@ -16,10 +17,10 @@ class vtStation:
         self.distance = distance
     
     def show(self):
-        return f'{self.name, self.gid, self.latitude, self.longitude, self.distance}'
+        return f'{self.name, self.gid, self.coord, self.distance}'
     
 class vtJourney:
-    def __init__(self, time, nr_connections, start: coordinatePair, end: coordinatePair, waypoints):
+    def __init__(self, time, nr_connections, start: coordinatePair, end: coordinatePair, waypoints: list):
         self.time = time
         self.nr_connections = nr_connections
         self.start = start
@@ -74,12 +75,13 @@ def getVtWaypoints(tripLegs):
         startCord = coordinatePair(leg.origin.stop_point.stop_area.latitude, leg.origin.stop_point.stop_area.longitude)
         endCord = coordinatePair(leg.destination.stop_point.stop_area.latitude, leg.destination.stop_point.stop_area.longitude)
         way = waypoint(start = startCord,
-                end = endCord,
+                destination = endCord,
                 mode = googleApiMode.TRANSIT,
                 duration = leg.estimated_duration_in_minutes,
                 distance = None,
-                line = {leg.line.designation, {leg.line.background_color, leg.line.foreground_color}})
+                line = {leg.service_journey.line.designation, leg.service_journey.line.background_color, leg.service_journey.line.foreground_color})
         waypoints.append(way)
+    return waypoints
 
 
 def getVtJourneyStats(response) -> vtJourney:
@@ -91,7 +93,7 @@ def getVtJourneyStats(response) -> vtJourney:
         nr_connections = getNumberOfConnections(response),
         start = coordinatePair(tripLegs[0].origin.stop_point.stop_area.latitude, tripLegs[0].origin.stop_point.stop_area.longitude),
         end = coordinatePair(tripLegs[lenTripLegs-1].destination.stop_point.stop_area.latitude, tripLegs[lenTripLegs-1].destination.stop_point.stop_area.longitude),
-        waypoints = getWaypoints(tripLegs))
+        waypoints = getVtWaypoints(tripLegs))
     return journey
 
 
@@ -99,14 +101,19 @@ def checkVtJourney(start: coordinatePair, end: coordinatePair, journey : vtJourn
     radius = 4000 
     isNewJourney = False
     if journey.nr_connections > 0: # kan flyttas ut 
-        stations = createStations(apiCallerVt(start, end, vtApiType.LOCATIONS, radius))
-        if len(stations) >= 10:
-            farAway = stations[len(stations)-10:]
+        stations = createStations(apiCallerVt(start, end, vtApiType.LOCATION, radius))
+
+        for station in stations:
+            print(station.show())
+
+        if len(stations) >= 20:
+            farAway = stations[len(stations)-20:]
         else:
             farAway = stations 
 
         for station in farAway:
             response = journey_api.journeys_get(origin_latitude=station.coord.latitude, origin_longitude=station.coord.longitude, destination_latitude=end.latitude, destination_longitude=end.longitude, transport_modes=[VTApiPlaneraResaWebV4ModelsJourneyTransportMode.TRAM, VTApiPlaneraResaWebV4ModelsJourneyTransportMode.BUS], only_direct_connections=True)
+            print(response.json())
             if len(response.results) > 0:
                 isNewJourney = True
                 return getVtJourneyStats(response), isNewJourney
@@ -116,37 +123,44 @@ def checkVtJourney(start: coordinatePair, end: coordinatePair, journey : vtJourn
 
 def combineVtAndSos(start: coordinatePair, vt: vtJourney):
     bikeJourney = getSosTrip(start, vt.start)   #(start point, end: new journey start point)
-    newTripTotalTime = bikeJourney.get("duration") + vt.time 
-    waypointBike = waypoint(start, vt.start, googleApiMode.BICYCLING, bikeJourney.get("duration"), bikeJourney.get("distance"), None)
-    return trip() #(list of waypoints including start cord, end cord and transportmode for each tripleg)
+    if bikeJourney == None:
+        return None
+    newTripTotalTime = bikeJourney.duration + vt.time 
+    way = bikeJourney.waypoints + vt.waypoints
+    cost = bikeJourney.cost + 35 #TODO calculate cost
+    sosVtTrip = trip(waypoints = way,
+                duration = newTripTotalTime,
+                cost = cost)
+     
+    return sosVtTrip #(list of waypoints including start cord, end cord and transportmode for each tripleg)
 
 
 def combineVtAndVoi(start: coordinatePair, vt: vtJourney):
     voiJourney = getGoogleTrip(start, vt.start, googleTripMode.VOI)
-    newTripTotalTime = voiJourney.get("duration") + vt.time
-    wayPointVoi = waypoint(start, vt.start, googleApiMode.BICYKLING, voiJourney.get("duration"), voiJourney.get("distance"), None)
-    wayPointVt = waypoint(vt.start, vt.end, googleApiMode.TRANSIT, vt.get("duration"), vt.get("distance"), vt.get("name"))
-    voiVtTrip = trip()
-    voiVtTrip.waypoints = [wayPointVoi, wayPointVt]
-    voiVtTrip.duration = newTripTotalTime
+    newTripTotalTime = voiJourney.duration + vt.time
+    
+    cost = 35 + voiJourney.cost #TODO calculate cost
+    voiVtTrip = trip(waypoints = voiJourney.waypoints + vt.waypoints, 
+                duration = newTripTotalTime, 
+                cost = cost)
     return voiVtTrip
 
     
 def getTripSuggestions(start: coordinatePair, end: coordinatePair): # return dict of trips
-    # todo: combine different waypoints to a trip dict
+    # todo: combine different waypoints to a trip dict, convert originaljourney and combinedtrips to trips
     
     tripDictionary = {}
-    tripDictionary["sosTrip"] = getSosTrip(start, end)
-    tripDictionary["originalJourney"] = getVtJourneyStats(response)
+    tripDictionary["sosTrip"] = getSosTrip(start, end) #garanterad en trip
+    response = apiCallerVt(start, end, vtApiType.JOURNEY, radius=1000)
+    vtOriginal = getVtJourneyStats(response)
+    tripDictionary["originalJourney"] =  trip(waypoints = vtOriginal.waypoints,
+                                            duration = vtOriginal.time,
+                                            cost = 35)#garanterad en trip
    
-
-    # todo: convert to trips 
-    # add to dictionary of trips (tripDictionary)
-
-    trip = checkVtJourney(testCordStart, testCordEnd, originalJourney)
-    if trip[1]: # true, there is a new jour
-        combinedVtAndSos: trip = combineVtAndSos(start, trip[0]) # new trip to be combined with sos
-        combinedVtAndVoi: trip = combineVtAndVoi(start, trip[0])
+    vtTrip = checkVtJourney(start, end, vtOriginal)
+    if vtTrip[1]: # true, there is a new jour
+        combinedVtAndSos: trip = combineVtAndSos(start, vtTrip[0]) #garanterat en trip
+        combinedVtAndVoi: trip = combineVtAndVoi(start, vtTrip[0]) #garanterat en trip
         tripDictionary["combinedTrips"] = {combinedVtAndSos, combinedVtAndVoi}
     return tripDictionary
         
@@ -155,9 +169,9 @@ def getTripSuggestions(start: coordinatePair, end: coordinatePair): # return dic
 
 #______main______
 def main():
-    radius = 1000
     testCordStart = coordinatePair(57.690012, 11.972992)  # Chalmersplatsen
     testCordEnd = _getCordByName("Studiegången")  
+    print("THE ANSWER _________________________\n", getTripSuggestions(testCordStart, testCordEnd))
 
     #response = location_api.locations_by_coordinates_get(57.690012, 11.972992, radius_in_meters=radius)
     # response = apiCallerVt(testCordStart, _getCordByName("Studiegången"), vtApiType.LOCATIONS, radius=radius)
@@ -165,7 +179,7 @@ def main():
     # s = createStations(response)
     # print(type(s[0].coord.latitude))
 
-    response = apiCallerVt(testCordStart, testCordEnd, vtApiType.JOURNEY, radius=radius)
+    
 
         
 

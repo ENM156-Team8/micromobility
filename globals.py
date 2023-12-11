@@ -57,9 +57,7 @@ class waypoint:
 # JOURNEY: Returns journeys matching the specified search parameters
 # LOCATIONS: Returns locations matching the specified text (stop areas, addresses, points of interest and meta-stations)
 vtApiType = Enum(
-    'vtApiType', ['POSITIONS', 'JOURNEY', 'LOCATION
-
-URNEY', 'TRAMJOURNEY'])
+    'vtApiType', ['POSITIONS', 'JOURNEY', 'LOCATION', 'TRAMJOURNEY'])
 
 #Enums to fetch different data from googleApi
 #WALK: Returns directions for walking
