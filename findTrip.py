@@ -99,7 +99,6 @@ def getVtJourneyStats(response) -> vtJourney:
 
 def checkVtJourney(start: coordinatePair, end: coordinatePair, journey : vtJourney):
     radius = 4000 
-    isNewJourney = False
     if journey.nr_connections > 0: # kan flyttas ut 
         stations = createStations(apiCallerVt(start, end, vtApiType.LOCATION, radius))
 
@@ -115,10 +114,9 @@ def checkVtJourney(start: coordinatePair, end: coordinatePair, journey : vtJourn
             response = journey_api.journeys_get(origin_latitude=station.coord.latitude, origin_longitude=station.coord.longitude, destination_latitude=end.latitude, destination_longitude=end.longitude, transport_modes=[VTApiPlaneraResaWebV4ModelsJourneyTransportMode.TRAM, VTApiPlaneraResaWebV4ModelsJourneyTransportMode.BUS], only_direct_connections=True)
             #print(response.json())
             if len(response.results) > 0:
-                isNewJourney = True
-                return getVtJourneyStats(response), isNewJourney
+                return getVtJourneyStats(response)
     print("No new journey was found")
-    return journey, isNewJourney
+    return None
 
 
 def combineVtAndSos(start: coordinatePair, vt: vtJourney):
@@ -158,10 +156,12 @@ def getTripSuggestions(start: coordinatePair, end: coordinatePair): # return dic
                                             cost = 35)#garanterad en trip
    
     vtTrip = checkVtJourney(start, end, vtOriginal)
-    if vtTrip[1]: # true, there is a new jour
-        combinedVtAndSos: trip = combineVtAndSos(start, vtTrip[0]) #garanterat en trip
-        combinedVtAndVoi: trip = combineVtAndVoi(start, vtTrip[0]) #garanterat en trip
-        tripDictionary["combinedTrips"] = {combinedVtAndSos, combinedVtAndVoi}
+    print(vtTrip)
+    if not vtTrip == None: # true, there is a new jour
+        combinedVtAndSos: trip = combineVtAndSos(start, vtTrip) #garanterat en trip
+        combinedVtAndVoi: trip = combineVtAndVoi(start, vtTrip) #garanterat en trip
+        tripDictionary["combinedVtAndSosTrips"] = combinedVtAndSos
+        tripDictionary["combinedVtAndVoiTrips"] = combinedVtAndVoi
     return tripDictionary
         
  

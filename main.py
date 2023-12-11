@@ -112,7 +112,7 @@ def _calculateTripHelper(name, firstWaypoint, startStationCord, endStation, end,
 
 
 # requests tram trip info
-def getTripByTram(startStation: str, endStation: str):
+""" def getTripByTram(startStation: str, endStation: str):
     startStationCord = _getCordByName(startStation)
     endStationCord = _getCordByName(endStation)
     segments = []
@@ -138,7 +138,7 @@ def getTripByTram(startStation: str, endStation: str):
     # with open("response.txt", "w") as f:
     #    f.write(json.dumps(tramJourney, indent=4, sort_keys=True))
     print(segments)
-    return segments
+    return segments """
 
 
 def getGoogleTrip(start: coordinatePair, end: coordinatePair, mode: googleTripMode) -> trip:
