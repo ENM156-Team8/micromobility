@@ -9,12 +9,6 @@ from apiHandler import *
 from globals import coordinatePair, vtApiType, googleTripMode, googleApiMode
 
 
-
-
-
-
-
-
 def main():
     testCord = coordinatePair(57.687274, 11.979054)
     testCordStart = coordinatePair(57.690012, 11.972992)  # Chalmersplatsen
@@ -193,6 +187,7 @@ def getGoogleTrip(start: coordinatePair, end: coordinatePair, mode: googleTripMo
     # print(trip)
 
     return trip
+
 
 
 def _tripCost(duration, mode: googleTripMode):
