@@ -1,11 +1,15 @@
 
-
-__all__ = ["apiCallerSos", "apiCallerVt",
-           "_getCordByName", "apiCallerGoogleDirections"]
+__all__ = ["apiCallerSos", "apiCallerVt", "_getCordByName", "apiCallerGoogleDirections", "location_api", "journey_api"]
 
 
+
+
+import openapi_client
+from openapi_client.models.vt_api_planera_resa_web_v4_models_journey_transport_mode import VTApiPlaneraResaWebV4ModelsJourneyTransportMode
+from openapi_client.models.vt_api_planera_resa_web_v4_models_location_by_coordinates_type import VTApiPlaneraResaWebV4ModelsLocationByCoordinatesType
 import requests
 from globals import coordinatePair, vtApiType, googleApiMode, sosStation
+from globals import coordinatePair, vtApiType, googleApiMode
 
 # General
 
@@ -27,6 +31,18 @@ accessTokenGoogle = tokens.get("google", '')
 vtHeaders = {
     'Authorization': 'Bearer ' + accessTokenVt
 }
+
+configuration = openapi_client.Configuration(
+    host = "https://ext-api.vasttrafik.se/pr/v4",
+    access_token = accessTokenVt)
+
+
+with openapi_client.ApiClient(configuration) as api_client:
+
+    position_api = openapi_client.PositionsApi(api_client)
+    location_api = openapi_client.LocationsApi(api_client)
+    journey_api = openapi_client.JourneysApi(api_client)
+
 
 
 def _requestHandler(url: str, headers: dict) -> any:
@@ -70,61 +86,29 @@ def formatResponseSos(jData):
 
 # Västtrafik
 
-
-def apiCallerVt(start: coordinatePair, end: coordinatePair, apiType: vtApiType) -> str:
+def apiCallerVt(start: coordinatePair, end: coordinatePair, apiType: vtApiType, radius) -> str:
     match apiType:
         case apiType.POSITIONS:
-            urlEnd = '/positions?lowerLeftLat=' + str(start.latitude) + '&lowerLeftLong=' + str(
-                start.longitude) + '&upperRightLat=' + str(end.latitude) + '&upperRightLong=' + str(end.longitude) + '&limit=100'
+            # urlEnd = '/positions?lowerLeftLat=' + str(start.latitude) + '&lowerLeftLong=' + str(
+            #     start.longitude) + '&upperRightLat=' + str(end.latitude) + '&upperRightLong=' + str(end.longitude) + '&limit=100'
+            response=[]
         case apiType.JOURNEY:
-            startGid = _getGid(start)
-            endGid = _getGid(end)
-            urlEnd = '/journeys?originGid=' + \
-                str(startGid) + '&destinationGid=' + \
-                str(endGid)
-        case apiType.BIKEJOURNEY:
-            startGid = _getGid(start)
-            endGid = _getGid(end)
-            urlEnd = '/journeys?originGid=' + \
-                str(startGid) + '&destinationGid=' + \
-                str(endGid) + "&transportModes=bike"
-        case apiType.WALKJOURNEY:
-            startGid = _getGid(start)
-            endGid = _getGid(end)
-            urlEnd = '/journeys?originGid=' + \
-                str(startGid) + '&destinationGid=' + \
-                str(endGid) + "&transportModes=walk"
-        case apiType.TRAMJOURNEY:
-            startGid = _getGid(start)
-            endGid = _getGid(end)
-            urlEnd = '/journeys?originGid=' + \
-                str(startGid) + '&destinationGid=' + \
-                str(endGid) + '&transportModes=tram'
-        case apiType.LOCATIONS:
-            urlEnd = '/locations/by-coordinates?latitude=' + \
-                str(start.latitude) + \
-                '&longitude='+str(start.longitude) + \
-                '&radiusInMeters=500&limit=10&offset=0'
+            # startGid = getGid(start)
+            # endGid = getGid(end)
+            # urlEnd = '/journeys?originGid=' + \
+            #     str(startGid) + '&destinationGid=' + \
+            #     str(endGid)
+            response = journey_api.journeys_get(origin_latitude=start.latitude, origin_longitude=start.longitude, destination_latitude=end.latitude, destination_longitude=end.longitude, transport_modes=[VTApiPlaneraResaWebV4ModelsJourneyTransportMode.TRAM, VTApiPlaneraResaWebV4ModelsJourneyTransportMode.BUS])
+        case apiType.LOCATION:
+            response = location_api.locations_by_coordinates_get(start.latitude, start.longitude, radius_in_meters=radius, types = [VTApiPlaneraResaWebV4ModelsLocationByCoordinatesType.STOPPOINT, VTApiPlaneraResaWebV4ModelsLocationByCoordinatesType.STOPAREA], limit=100)
+        
         case _:
             print("Invalid apiType: " + apiType)
             exit()
 
-    url = apiBaseUrlVt + urlEnd
-    return _requestHandler(url, vtHeaders)
-
-
-# call api with name of station
-def _apiCallerVtByName(station: str) -> coordinatePair:
-    urlEnd = '/locations/by-text?q=' + station + '&limit=10&offset=0'
-    url = apiBaseUrlVt + urlEnd
-    return _requestHandler(url, vtHeaders)
-
-
-def _getCordByName(station: str) -> coordinatePair:
-    data = _apiCallerVtByName(station)
-    lat = data.get("results")[0].get("latitude")
-    long = data.get("results")[0].get("longitude")
-    return coordinatePair(lat, long)
+    # url = apiBaseUrlVt + urlEnd
+    # return requestHandler(url, vtHeaders)
+    return response
 
 
 # call api with name of station
