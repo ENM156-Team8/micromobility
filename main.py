@@ -15,11 +15,12 @@ def main():
     getSosTrip(testCordStart, testCordEnd)
 
 
-def getSosTrip(start: coordinatePair, end: coordinatePair) -> dict[str, any]:
-    totalDuration = 0
-    totalDistance = 0
-    instructions = ""
-    segments = []
+def getSosTrip(start: coordinatePair, end: coordinatePair):
+    '''
+    Calculates the shortest trip from start to end using Styr&Ställ stations.
+    :return: shortest trip as a dictionary with keys: duration, distance, instructions, segments, cost
+    '''
+    start_time = time.time()
 
     # Get closest stations
     startStations: [sosStation] = apiCallerSos(start)
@@ -105,15 +106,11 @@ def _calculateTripHelper(name, startDuration, startDistance, startInstructions, 
     possibleTrips.append(trip)
     return 1
 
-    return trip
 
-    
 # requests tram trip info
-
-# def getTripByTram(startStation: str, endStation: str):
-    # startStationCord = _getCordByName(startStation)
-    # endStationCord = _getCordByName(endStation)
-def getTripByTram(startStationCord: str, endStationCord: str):
+def getTripByTram(startStation: str, endStation: str):
+    startStationCord = _getCordByName(startStation)
+    endStationCord = _getCordByName(endStation)
     segments = []
     data = apiCallerVt(startStationCord, endStationCord, vtApiType.TRAMJOURNEY)
 
