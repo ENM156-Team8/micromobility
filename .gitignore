@@ -5,3 +5,5 @@ generateAccess.py
 .vscode
 WebApp/__pycache__
 response.txt
+__pycache__/*
+python-client
