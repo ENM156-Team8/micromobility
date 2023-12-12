@@ -1,18 +1,27 @@
 # Västtrafik-Micromobility
 
 ### Run dev enviroment
+**Install Västtrafik API client:**
+Download the python client from: https://developer.vasttrafik.se/apis/13/v4#, unzip and install it using the following command:
+```batch
+cd python-client
+python setup.py install
+```
+
 **Windows:**
 Execute the following commands, or simply run the included run.bat file
 ```batch
-pip install -r WebApp/requirements.txt
-python WebApp/webApp.py
+cd WebApp
+pip install -r requirements.txt
+python webApp.py
 ```
 
 **Linux:**
 Execute the following commands, or simply run the included run.sh file
 ```bash
-pip install -r WebApp/requirements.txt
-python3 WebApp/webApp.py
+cd WebApp
+pip install -r requirements.txt
+python3 webApp.py
 ```
 
 Remember to put the apiToken.txt file in /WebApp with the API tokens in this exact order:
@@ -28,3 +37,4 @@ By default the site is opened on localhost:5000
 * Python 3
 * pip
 * Flask
+* Västtrafik OpenAPI client
