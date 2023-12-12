@@ -128,8 +128,10 @@ def index():
             result = getTripSuggestions(startCoordsPair, destinationCoordsPair)
             for trip in result:
                 if result[trip] is not None:
-                    trips.append(result[trip].to_dict())
-            print(trips)
+                    newTrip = result[trip].to_dict()
+                    newTrip['departure'] = datetime.now().strftime("%H:%M")
+                    newTrip["arrival"] = (datetime.now() + timedelta(minutes = newTrip["duration"])).strftime("%H:%M")
+                    trips.append(newTrip)
         except Exception as error:
             print(Fore.RED + "\n----------ERROR-----------\n")
             print(traceback.format_exc())

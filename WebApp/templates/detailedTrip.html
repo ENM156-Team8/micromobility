@@ -10,7 +10,7 @@
                 isDarkMode = $('#mode-switcher').prop("checked") != true;
                 console.log(isDarkMode);
                 map = new goo.Map(document.getElementById('map-canvas'), {
-                    center: new goo.LatLng(52.52, 13.40),
+                    center: new goo.LatLng(57.7065007, 11.9659973),
                     zoom: 10,
                     styles: isDarkMode ? darkModeStyles : lightModeStyles,
                 }),
@@ -36,17 +36,26 @@
                 console.log("End: " + end);
 
                 var mode = $(this).find('.mode').text();
+                var type = mode;
                 console.log("Mode: " + mode);
-                if (mode == "bike") {
+                if (mode == "BIKE") {
                     mode = google.maps.TravelMode.BICYCLING;
-                } else if (mode == "walk") {
+                    type = google.maps.TravelMode.BICYCLING;
+                } else if (mode == "WALK") {
                     mode = google.maps.TravelMode.WALKING;
+                    type = google.maps.TravelMode.WALKING;
+                }
+                else if (mode == 'VOI') {
+                    mode = google.maps.TravelMode.BICYCLING;
                 }
 
-                waypoint = {
-                    origin: start,
-                    destination: end,
-                    travelMode: mode
+                var waypoint = {
+                    request: {
+                        origin: start,
+                        destination: end,
+                        travelMode: mode
+                    },
+                    travelType: type
                 }
                 console.log("Waypoint: ");
                 console.log(waypoint);
@@ -69,7 +78,7 @@
             }
 
             function generateRoute(service, waypoint, display) {
-                service.route(waypoint, function (result, status) {
+                service.route(waypoint.request, function (result, status) {
                     if (status == google.maps.DirectionsStatus.OK) {
                         display.setDirections(result);
                         App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
@@ -79,6 +88,7 @@
                             TRANSIT: "{{ url_for('static', filename='images/mapicons/tram.png') }}",
                             BICYCLING: "{{ url_for('static', filename='images/mapicons/bike.png') }}",
                             WALKING: "{{ url_for('static', filename='images/mapicons/walk.png') }}",
+                            VOI: "{{ url_for('static', filename='images/mapicons/voi.png') }}",
                             // Add more travel modes and corresponding icons as needed
                         };
 
@@ -87,14 +97,14 @@
                             position: result.routes[0].legs[0].start_location,
                             map: App.map,
                             icon: {
-                                url: icons[waypoint.travelMode],
+                                url: icons[waypoint.travelType],
                                 scaledSize: new google.maps.Size(40, 40) // Adjust the size as needed
                             }
                         });
                     }
                 });
             }
-        };
+        }
 
         window.onload = function() {
             document.getElementById('mode-switcher').addEventListener('change', function() {
