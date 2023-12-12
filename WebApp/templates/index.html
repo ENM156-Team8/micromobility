@@ -71,7 +71,7 @@
             <div class="trip-container-container1">
                 <div class="trip-container-container2">
                     <div class="trip-container-location">
-                        <span class="trip-container-text"><span>{{ searchedTrip.startLocation.split(",")[0] }} - {{ searchedTrip.destinationLocation.split(",")[0] }}</span></span>
+                        <span class="trip-container-text"><img src="{{ url_for('static', filename='images/mapicons/' + (trip['travelMode'] + '.png')) }}" alt="travlemode" style="height: 22px;">  <span>{{ searchedTrip.startLocation.split(",")[0] }} - {{ searchedTrip.destinationLocation.split(",")[0] }}</span></span>
                         <div class="trip-container-time">
                             <div class="trip-container-container3">
                                 <span class="trip-container-text1"><span>{{ trip['departure'] }}</span></span>

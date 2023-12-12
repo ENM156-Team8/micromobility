@@ -131,7 +131,25 @@ def index():
                     newTrip = result[trip].to_dict()
                     newTrip['departure'] = datetime.now().strftime("%H:%M")
                     newTrip["arrival"] = (datetime.now() + timedelta(minutes = newTrip["duration"])).strftime("%H:%M")
+
+                    if len(newTrip['waypoints']) == 1:
+                        if (newTrip['waypoints'][0]['mode'] == "WALKING"):
+                            newTrip['travelMode'] = "walk"
+                    else:  
+                        for waypoint in newTrip['waypoints']:
+                            if waypoint['mode'] == "BICYCLING":
+                                newTrip['travelMode'] = "bike"
+                                break
+                            elif waypoint['mode'] == "VOI":
+                                newTrip['travelMode'] = "voi"
+                                break
+                    if "travelMode" not in newTrip:
+                        newTrip['travelMode'] = "tram"
+
+                    print(newTrip)
+
                     trips.append(newTrip)
+            trips = sorted(trips, key=lambda trip: trip['duration'])
         except Exception as error:
             print(Fore.RED + "\n----------ERROR-----------\n")
             print(traceback.format_exc())
@@ -140,6 +158,8 @@ def index():
                 httpStatus = error.status
                 httpReason = error.reason
                 errorText = f"Error: {httpStatus} {httpReason}"
+            elif isinstance(error, IndexError):
+                errorText = "Error: Hittade ingen resa"
             else:
                 errorText = "Error: 500 Internal Server Error"
                 print("Error: " + str(error))
