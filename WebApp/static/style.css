@@ -426,6 +426,7 @@ button[type="submit"]:focus {
   border-radius: var(--border-radius-large);
   color: var(--p-color);
   margin-bottom: 24px;
+  margin-top: 32px;
   padding-top: 12px;
   padding-bottom: 12px;
   padding-left: 20px;

@@ -68,7 +68,7 @@ function submitTrip() {
     }
     var dots = window.setInterval( function() {
         var wait = document.getElementById("wait");
-        if ( wait.innerHTML.length > 3 ) 
+        if ( wait.innerHTML.length > 2 ) 
             wait.innerHTML = "";
         else 
             wait.innerHTML += ".";
