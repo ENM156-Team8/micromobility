@@ -55,7 +55,6 @@ def formatCoords(coords: str) -> str:
         coords = temp[1] + ", " + temp[3]
         print("remove ':" + coords)
     if (coords.__contains__("(")):
-        # TODO substring doesnt extist
         coords = coords[1:-1]
     print("remove ():" + coords)
     return coords
@@ -94,7 +93,6 @@ def index():
         startCoordsList: list[str] = formData.get('startLocationCoords').split(',')
         destinationCoordsList: list[str] = formData.get('destinationLocationCoords').split(',')
         print(startCoordsList)
-        # create coordinatePair objects from the coordinates TODO send to main.py
         if len(startCoordsList) != 2 or len(destinationCoordsList) != 2:
             print("Error: invalid coordinates")
             session['searchedTrip'] = tripObj(
@@ -114,7 +112,6 @@ def index():
 
         # create a trip object
         searchedTrip = tripObj(
-            # TODO get coordinates from start and destination addresses
             startLocation = formData.get('startLocation'),
             startLocationCoords = formData.get('startLocationCoords'),
             destinationLocation = formData.get('destinationLocation'), 
@@ -123,7 +120,7 @@ def index():
             opt2 = False if formData.get('opt2') is None else True
         )
 
-        # TODO get trips from main.py
+        # get trips from backend
         try:
             result = getTripSuggestions(startCoordsPair, destinationCoordsPair)
             for trip in result:
@@ -180,6 +177,8 @@ def index():
     else:
         trips = session.pop('trips', []) 
         searchedTrip = session.pop('searchedTrip', searchedTrip)
+        if searchedTrip is None:
+            searchedTrip = tripObj("", "", "", "", True, True).to_dict()
         noTripSearchedError = session.pop('noTripSearchedError', "Sök en resa för att börja")
         return render_template('index.html', searchedTrip = searchedTrip, trips = trips, noTripSearchedError = noTripSearchedError, mapsAPIKey = mapsAPIKey)
 

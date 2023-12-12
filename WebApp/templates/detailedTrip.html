@@ -89,10 +89,9 @@
                             BICYCLING: "{{ url_for('static', filename='images/mapicons/bike.png') }}",
                             WALKING: "{{ url_for('static', filename='images/mapicons/walk.png') }}",
                             VOI: "{{ url_for('static', filename='images/mapicons/voi.png') }}",
-                            // Add more travel modes and corresponding icons as needed
                         };
 
-                        // Add a marker at the start of the leg
+                        // Add a marker at the start of each leg
                         new google.maps.Marker({
                             position: result.routes[0].legs[0].start_location,
                             map: App.map,
@@ -101,11 +100,15 @@
                                 scaledSize: new google.maps.Size(40, 40) // Adjust the size as needed
                             }
                         });
-                        var lastLeg = result.routes[0].legs[result.routes[0].legs.length - 1];
-                        new google.maps.Marker({
-                            position: lastLeg.end_location,
-                            map: App.map,
-                        });
+
+                        // Add a marker at the end of the last leg
+                        if (waypoints.indexOf(waypoint) == waypoints.length - 1) {
+                            var lastLeg = result.routes[0].legs[result.routes[0].legs.length - 1];
+                            new google.maps.Marker({
+                                position: lastLeg.end_location,
+                                map: App.map,
+                            });
+                        }
                     }
                 });
             }
