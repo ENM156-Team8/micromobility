@@ -63,7 +63,7 @@ def _requestHandler(url: str, headers: dict) -> any:
         print(response.text)
         print(url)
         print(headers)
-        exit()
+        #exit()
 
         errorData = {
             "url": url,

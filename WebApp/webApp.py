@@ -1,6 +1,8 @@
 import traceback
 from flask import Flask, render_template, request, url_for, redirect, session
 import os, sys, secrets
+
+import openapi_client
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from globals import waypoint, trip
 from findTrip import getTripSuggestions
@@ -176,11 +178,11 @@ def index():
         except Exception as error:
             print(Fore.RED + "\n----------ERROR-----------\n")
             print(traceback.format_exc())
-            errorData = error.args[0]
-            if isinstance(errorData, dict):
-                statusCode = errorData.get('statusCode')
-                errorText = "Error: " + str(statusCode) + " " + str(errorData.get('message'))
-                print(errorText + ", url: " + str(errorData.get('url')))
+            print(type(error))
+            if isinstance(error, openapi_client.exceptions.BadRequestException) or isinstance(error, openapi_client.exceptions.UnauthorizedException):
+                httpStatus = error.status
+                httpReason = error.reason
+                errorText = f"Error: {httpStatus} {httpReason}"
             else:
                 errorText = "Error: 500 Internal Server Error"
                 print("Error: " + str(error))
