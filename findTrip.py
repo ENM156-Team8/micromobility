@@ -4,7 +4,8 @@ from globals import coordinatePair, vtApiType, googleTripMode, googleApiMode, tr
 from pprint import pprint
 import json
 from openapi_client.models.vt_api_planera_resa_web_v4_models_journey_transport_mode import VTApiPlaneraResaWebV4ModelsJourneyTransportMode
-from main import getSosTrip, getGoogleTrip
+from findSosTrip import getSosTrip, getGoogleTrip
+import time
 
 class vtStation:
 
@@ -146,7 +147,7 @@ def combineVtAndVoi(start: coordinatePair, vt: vtJourney):
     
 def getTripSuggestions(start: coordinatePair, end: coordinatePair): # return dict of trips
     # todo: combine different waypoints to a trip dict, convert originaljourney and combinedtrips to trips
-    
+    t0 = time.time()
     tripDictionary = {}
     tripDictionary["sosTrip"] = getSosTrip(start, end) #garanterad en trip
     response = apiCallerVt(start, end, vtApiType.JOURNEY, radius=1000)
@@ -156,16 +157,15 @@ def getTripSuggestions(start: coordinatePair, end: coordinatePair): # return dic
                                             cost = 35)#garanterad en trip
    
     vtTrip = checkVtJourney(start, end, vtOriginal)
-    print(vtTrip)
+    #print(vtTrip)
     if not vtTrip == None: # true, there is a new jour
         combinedVtAndSos: trip = combineVtAndSos(start, vtTrip) #garanterat en trip
         combinedVtAndVoi: trip = combineVtAndVoi(start, vtTrip) #garanterat en trip
         tripDictionary["combinedVtAndSosTrips"] = combinedVtAndSos
         tripDictionary["combinedVtAndVoiTrips"] = combinedVtAndVoi
+    print("--- %s seconds ---" % (time.time() - t0))
     return tripDictionary
         
- 
-
 
 #______main______
 def main():
@@ -178,12 +178,6 @@ def main():
 
     # s = createStations(response)
     # print(type(s[0].coord.latitude))
-
-    
-
-        
-
-
 
     #bikeJourney2 = getSosTrip(start, vt.end) #start and end point for original trip
     #if bikeJourney2 < originalJourney.getEstimatedTime:
