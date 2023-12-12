@@ -46,48 +46,6 @@ def formatTime(timeDate: str) -> str:
     timeArr = time.split(":")
     return timeArr[0] + ":" + timeArr[1]
 
-""" def searchSosTrip(startCoordsPair, destinationCoordsPair):
-    sosTrip = getSosTrip(startCoordsPair, destinationCoordsPair)
-    #print(sosTrip)
-    for segment in sosTrip["segments"]:
-        # print("from " + str(segment["from"]))
-        # segment["from"] = segment["from"].to_dict()
-        # print("to " + str(segment["to"]))
-        # segment["to"] = segment["to"].to_dict()
-        sosTrip["departure"] = datetime.now().strftime("%H:%M")
-        sosTrip["arrival"] = (datetime.now() + timedelta(minutes = sosTrip["duration"])).strftime("%H:%M")
-    return sosTrip
-
-def searchTramTrip(startCoordsPair, destinationCoordsPair):
-    tramTrip = getTripByTram(startCoordsPair, destinationCoordsPair)[0]
-    print(tramTrip)
-    tramTrip["from"] = tramTrip["from"].to_dict()
-    tramTrip["to"] = tramTrip["to"].to_dict()
-    tramTrip["departure"] = formatTime(tramTrip["departure"])
-    tramTrip["arrival"] = formatTime(tramTrip["arrival"])
-    return tramTrip """
-
-""" def searchTrip(startCoordsPair, destinationCoordsPair):
-    # TODO replace with real function
-    #result = searchCombinedTrip(startCoordsPair, destinationCoordsPair)
-    result = getSosTrip(startCoordsPair, destinationCoordsPair)
-    print(result)
-    waypoints: list = []
-    for segment in result["segments"]:
-        start: str = formatCoords(segment["from"])
-        end: str = formatCoords(segment["to"])
-        mode = segment["type"]
-        currentWaypoint = waypoint(start, end, mode, None, None, None)
-        waypoints.append(currentWaypoint)
-    print("number of waypoints: " + str(len(waypoints)))
-    newTrip = trip(waypoints, None).to_dict()
-    return newTrip
-
-    # TODO replace with real names
-    #combinedTrip = result['combinedTrip']
-    #bikeTrip = result['bikeTrip']
-    #walkTrip = result['walkTrip'] """
-
 
 
 def formatCoords(coords: str) -> str:
@@ -167,9 +125,6 @@ def index():
 
         # TODO get trips from main.py
         try:
-            #trips.append(searchSosTrip(startCoordsPair, destinationCoordsPair))
-            #trips.append(searchTramTrip(startCoordsPair, destinationCoordsPair))
-            #trips.append(searchTrip(startCoordsPair, destinationCoordsPair))
             result = getTripSuggestions(startCoordsPair, destinationCoordsPair)
             for trip in result:
                 if result[trip] is not None:
@@ -204,14 +159,12 @@ def index():
         trips = session.pop('trips', []) 
         searchedTrip = session.pop('searchedTrip', searchedTrip)
         noTripSearchedError = session.pop('noTripSearchedError', "Sök en resa för att börja")
-        print(trips)
         return render_template('index.html', searchedTrip = searchedTrip, trips = trips, noTripSearchedError = noTripSearchedError, mapsAPIKey = mapsAPIKey)
 
 
 @app.route('/detailedTrip/tripIndex=<int:tripIndex>', methods=['POST', 'GET'])
 def detailedTrip(tripIndex):
     print("index = " + str(tripIndex))
-    print(trips)
     return render_template('detailedTrip.html', mapsAPIKey = mapsAPIKey, trip = trips[tripIndex])
 
 
