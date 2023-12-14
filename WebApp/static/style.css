@@ -63,6 +63,9 @@ body.light-mode {
     color: var(--text-color-light);
     background-color: var(--background-color-light);
 }
+#title {
+  margin-right: 62.5px;
+}
 
 a {
     color: var(--text-color-dark);
@@ -457,9 +460,6 @@ button[type="submit"]:focus {
   CHECKBOX               
 -----------------------------------------*/
 
-.checkbox-wrapper-3 {
-  margin-left: 62.5px;
-}
 .checkbox-wrapper-3 input[type="checkbox"] {
   visibility: hidden;
   display: none;
