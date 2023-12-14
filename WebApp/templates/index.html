@@ -42,14 +42,14 @@
                         <input type="checkbox" name="opt1" id="opt1" aria-label="opt1" {% if searchedTrip.opt1 %} checked {% endif %}/>
                         <label for="opt1" class="toggle"><span></span></label>
                     </div>
-                    <span class="home-text7">Placeholder</span>
+                    <span class="home-text7">Styr&Ställ</span>
                 </div>
                 <div class="checkbox-container">
                     <div class="checkbox-wrapper-3">
                         <input type="checkbox" name="opt2" id="opt2" aria-label="opt2" {% if searchedTrip.opt2 %} checked {% endif %}/>
                         <label for="opt2" class="toggle"><span></span></label>
                     </div>
-                    <span class="home-text8">Placeholder</span>
+                    <span class="home-text8">Voi</span>
                 </div>
             </div>
             <div>
@@ -65,28 +65,33 @@
     <div class="home-container7 list">
 
     {% for trip in trips %}
-        <!-- <a href="detailedTrip.html?tripIndex={{trips.index(trip)}}" class="tripButton"> -->
-        <!-- <a href="detailedTrip.html?tripIndex={{trips.index(trip)}}" class="trip-container-container tripButton"> -->
-        <a href="/detailedTrip/tripIndex={{trips.index(trip)}}" class="trip-container-container tripButton">
-            <div class="trip-container-container1">
-                <div class="trip-container-container2">
-                    <div class="trip-container-location">
-                        <span class="trip-container-text"><img src="{{ url_for('static', filename='images/mapicons/' + (trip['travelMode'] + '.png')) }}" alt="travlemode" style="height: 22px;">  <span>{{ searchedTrip.startLocation.split(",")[0] }} - {{ searchedTrip.destinationLocation.split(",")[0] }}</span></span>
-                        <div class="trip-container-time">
-                            <div class="trip-container-container3">
-                                <span class="trip-container-text1"><span>{{ trip['departure'] }}</span></span>
-                                <span class="trip-container-text2"><span>-</span></span>
-                                <span class="trip-container-text3"><span>{{ trip['arrival'] }}</span></span>
+        {% if ((trip['travelMode'] == 'tram') or (searchedTrip['opt1'] and (trip['travelMode'] == 'bike')) or (searchedTrip['opt2'] and (trip['travelMode'] == 'voi'))) %}
+            <!-- <a href="detailedTrip.html?tripIndex={{trips.index(trip)}}" class="tripButton"> -->
+            <!-- <a href="detailedTrip.html?tripIndex={{trips.index(trip)}}" class="trip-container-container tripButton"> -->
+            <a href="/detailedTrip/tripIndex={{trips.index(trip)}}" class="trip-container-container tripButton">
+                <div class="trip-container-container1">
+                    <div class="trip-container-container2">
+                        <div class="trip-container-location">
+                            <span class="trip-container-text">
+                                <img src="{{ url_for('static', filename='images/mapicons/' + (trip['travelMode'] + '.png')) }}" alt="travlemode" style="height: 22px;">
+                                <span>  {{ searchedTrip.startLocation.split(",")[0] }} - {{ searchedTrip.destinationLocation.split(",")[0] }}</span>
+                            </span>
+                            <div class="trip-container-time">
+                                <div class="trip-container-container3">
+                                    <span class="trip-container-text1"><span>{{ trip['departure'] }}</span></span>
+                                    <span class="trip-container-text2"><span>-</span></span>
+                                    <span class="trip-container-text3"><span>{{ trip['arrival'] }}</span></span>
+                                </div>
+                                <span class="trip-container-text4"><span>{{ trip['duration'] }} minuter</span></span>
                             </div>
                         </div>
-                        <span class="trip-container-text4"><span>{{ trip['duration'] }} minuter</span></span>
+                    </div>
+                    <div class="trip-container-container4">
+                        <span class="trip-container-text5"><span>Pris: {{ trip['cost'] }}:-</span></span>
                     </div>
                 </div>
-                <div class="trip-container-container4">
-                    <span class="trip-container-text5"><span>Pris: {{ trip['cost'] }}:-</span></span>
-                </div>
-            </div>
-        </a>    
+            </a>
+        {% endif %}
     {% endfor %} 
 
         {% if (noTripSearchedError != None) %}
