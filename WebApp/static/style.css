@@ -99,6 +99,11 @@ form {
     width: 80%; /* adjust this value as needed */
     max-width: 900px; /* adjust this value as needed */
 }
+#githublink {
+  position: absolute;
+  right: 0px;
+  bottom: 10px;
+}
 .home-container {
     width: 100%;
     display: flex;
@@ -107,6 +112,7 @@ form {
     align-items: center;
     flex-direction: column;
     justify-content: flex-start;
+    position: relative;
   }
   .home-header {
     width: 100%;
