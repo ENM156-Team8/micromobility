@@ -457,6 +457,9 @@ button[type="submit"]:focus {
   CHECKBOX               
 -----------------------------------------*/
 
+.checkbox-wrapper-3 {
+  margin-left: 62.5px;
+}
 .checkbox-wrapper-3 input[type="checkbox"] {
   visibility: hidden;
   display: none;
