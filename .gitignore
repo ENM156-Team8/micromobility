@@ -7,3 +7,6 @@ WebApp/__pycache__
 response.txt
 __pycache__/*
 python-client
+output.json
+output.txt
+output2.json
