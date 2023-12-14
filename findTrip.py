@@ -33,8 +33,8 @@ class vtJourney:
     
 
 
-#Uesd in conjunction with locations_by_coordiantes_get to create a list of nearby stations
-#On index = 0 is the closest station
+# Used in conjunction with locations_by_coordiantes_get to create a list of nearby stations
+# On index = 0 is the closest station
 def createStations(response):
     #print(res)
     stations = []
@@ -116,7 +116,7 @@ def checkVtJourney(start: coordinatePair, end: coordinatePair, journey : vtJourn
             #print(response.json())
             if len(response.results) > 0:
                 return getVtJourneyStats(response)
-    print("No new journey was found")
+    # print("No new journey was found")
     return None
 
 
@@ -130,7 +130,6 @@ def combineVtAndSos(start: coordinatePair, vt: vtJourney):
     sosVtTrip = trip(waypoints = way,
                 duration = newTripTotalTime,
                 cost = cost)
-     
     return sosVtTrip #(list of waypoints including start cord, end cord and transportmode for each tripleg)
 
 
@@ -147,17 +146,18 @@ def combineVtAndVoi(start: coordinatePair, vt: vtJourney):
     
 def getTripSuggestions(start: coordinatePair, end: coordinatePair): # return dict of trips
     # todo: combine different waypoints to a trip dict, convert originaljourney and combinedtrips to trips
-    t0 = time.time()
+    
     tripDictionary = {}
     tripDictionary["sosTrip"] = getSosTrip(start, end) #garanterad en trip
     response = apiCallerVt(start, end, vtApiType.JOURNEY, radius=1000)
     vtOriginal = getVtJourneyStats(response)
     tripDictionary["originalJourney"] =  trip(waypoints = vtOriginal.waypoints,
                                             duration = vtOriginal.time,
-                                            cost = 35)#garanterad en trip
+                                            cost = 35) # garanterad en trip
    
     vtTrip = checkVtJourney(start, end, vtOriginal)
     #print(vtTrip)
+    t0 = time.time()
     if not vtTrip == None: # true, there is a new jour
         combinedVtAndSos: trip = combineVtAndSos(start, vtTrip) #garanterat en trip
         combinedVtAndVoi: trip = combineVtAndVoi(start, vtTrip) #garanterat en trip
@@ -165,35 +165,3 @@ def getTripSuggestions(start: coordinatePair, end: coordinatePair): # return dic
         tripDictionary["combinedVtAndVoiTrips"] = combinedVtAndVoi
     print("--- %s seconds ---" % (time.time() - t0))
     return tripDictionary
-        
-
-#______main______
-def main():
-    testCordStart = coordinatePair(57.690012, 11.972992)  # Chalmersplatsen
-    testCordEnd = _getCordByName("Studiegången")  
-    print("THE ANSWER _________________________\n", getTripSuggestions(testCordStart, testCordEnd))
-
-    #response = location_api.locations_by_coordinates_get(57.690012, 11.972992, radius_in_meters=radius)
-    # response = apiCallerVt(testCordStart, _getCordByName("Studiegången"), vtApiType.LOCATIONS, radius=radius)
-
-    # s = createStations(response)
-    # print(type(s[0].coord.latitude))
-
-    #bikeJourney2 = getSosTrip(start, vt.end) #start and end point for original trip
-    #if bikeJourney2 < originalJourney.getEstimatedTime:
-    #    return bikeJourney2 #(as list of waypoints)
-    #else:
-    #    return originalJourney #(as list of waypoints)
-        
-    # print(originalJourney.show())
-    # print(trip['new'].show())
-
-
-
-    # print(getNumberOfConnections(response1))
-    # print(estimatedTime(response1))
-    # print(response1.json())
-
-
-if __name__ == '__main__':
-    main()
