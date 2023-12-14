@@ -3,7 +3,7 @@ __all__ = ["apiCallerSos", "apiCallerVt", "_getCordByName", "apiCallerGoogleDire
 
 
 
-
+import json
 import openapi_client
 from openapi_client.models.vt_api_planera_resa_web_v4_models_journey_transport_mode import VTApiPlaneraResaWebV4ModelsJourneyTransportMode
 from openapi_client.models.vt_api_planera_resa_web_v4_models_location_by_coordinates_type import VTApiPlaneraResaWebV4ModelsLocationByCoordinatesType
@@ -21,6 +21,13 @@ def _getTokens():
     sosToken = apiTokenLines[1].strip()
     googleToken = apiTokenLines[2].strip()
     return {"vt": vtToken, "sos": sosToken, "google": googleToken}
+
+
+def getMapsToken():
+    with open("apiToken.txt", "r") as apiTokenFile:
+        apiTokenLines = apiTokenFile.readlines()
+    mapsToken = apiTokenLines[2].strip()
+    return mapsToken
 
 
 apiBaseUrlVt = 'https://ext-api.vasttrafik.se/pr/v4'
@@ -56,7 +63,15 @@ def _requestHandler(url: str, headers: dict) -> any:
         print(response.text)
         print(url)
         print(headers)
-        exit()
+        #exit()
+
+        errorData = {
+            "url": url,
+            "statusCode": response.status_code,
+            "message": json.loads(response.text)['fault']['message'],
+            "description": json.loads(response.text)['fault']['description']
+        }
+        raise Exception(errorData)
 
     data = response.json()
     # print('- ' * 20)

@@ -1,5 +1,9 @@
-generateAccess.py
+
 apiToken.txt
+__pycache__/*
+generateAccess.py
+.vscode
+WebApp/__pycache__
 response.txt
 __pycache__/*
 python-client

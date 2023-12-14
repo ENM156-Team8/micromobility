@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+    <title>DetailedTrip</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ mapsAPIKey }}&callback=initialize&v=weekly" async defer></script>
+    <script>
+        function initialize() {
+            var goo = google.maps,
+                isDarkMode = $('#mode-switcher').prop("checked") != true;
+                console.log(isDarkMode);
+                map = new goo.Map(document.getElementById('map-canvas'), {
+                    center: new goo.LatLng(57.7065007, 11.9659973),
+                    zoom: 10,
+                    styles: isDarkMode ? darkModeStyles : lightModeStyles,
+                }),
+                App = {
+                    map: map,
+                    bounds: new goo.LatLngBounds(),
+                    directionsService: new goo.DirectionsService(),
+                    directionsDisplays: []
+                },
+                colors = ['red', 'blue', 'yellow', 'green', 'purple']; // Add more colors if needed
+
+
+            var waypoints = [];
+            
+            $('.waypoint').each(function(){
+                console.log("Object: ");
+                console.log(this);
+
+                var start = $(this).find('.start').text();
+                console.log("Start: " + start);
+
+                var end = $(this).find('.end').text();
+                console.log("End: " + end);
+
+                var mode = $(this).find('.mode').text();
+                var type = mode;
+                console.log("Mode: " + mode);
+                if (mode == "BIKE") {
+                    mode = google.maps.TravelMode.BICYCLING;
+                    type = google.maps.TravelMode.BICYCLING;
+                } else if (mode == "WALK") {
+                    mode = google.maps.TravelMode.WALKING;
+                    type = google.maps.TravelMode.WALKING;
+                }
+                else if (mode == 'VOI') {
+                    mode = google.maps.TravelMode.BICYCLING;
+                }
+
+                var waypoint = {
+                    request: {
+                        origin: start,
+                        destination: end,
+                        travelMode: mode
+                    },
+                    travelType: type
+                }
+                console.log("Waypoint: ");
+                console.log(waypoint);
+                waypoints.push(waypoint);
+            });
+            console.log("Waypointafter : ");
+            console.log(waypoints);
+
+            for (var i = 0; i < waypoints.length; i++) {
+                var directionsDisplay = new goo.DirectionsRenderer({
+                    map: map,
+                    preserveViewport: true,
+                    suppressMarkers: true,
+                    suppressBicyclingLayer: true,
+                    polylineOptions: { strokeColor: colors[i % colors.length], strokeWeight: 5},
+                    panel: document.getElementById('panel').appendChild(document.createElement('li'))
+                });
+                App.directionsDisplays.push(directionsDisplay);
+                generateRoute(App.directionsService, waypoints[i], directionsDisplay);
+            }
+
+            function generateRoute(service, waypoint, display) {
+                service.route(waypoint.request, function (result, status) {
+                    if (status == google.maps.DirectionsStatus.OK) {
+                        display.setDirections(result);
+                        App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
+
+                        // Define the marker icons
+                        var icons = {
+                            TRANSIT: "{{ url_for('static', filename='images/mapicons/tram.png') }}",
+                            BICYCLING: "{{ url_for('static', filename='images/mapicons/bike.png') }}",
+                            WALKING: "{{ url_for('static', filename='images/mapicons/walk.png') }}",
+                            VOI: "{{ url_for('static', filename='images/mapicons/voi.png') }}",
+                        };
+
+                        // Add a marker at the start of each leg
+                        new google.maps.Marker({
+                            position: result.routes[0].legs[0].start_location,
+                            map: App.map,
+                            icon: {
+                                url: icons[waypoint.travelType],
+                                scaledSize: new google.maps.Size(40, 40) // Adjust the size as needed
+                            }
+                        });
+
+                        // Add a marker at the end of the last leg
+                        if (waypoints.indexOf(waypoint) == waypoints.length - 1) {
+                            var lastLeg = result.routes[0].legs[result.routes[0].legs.length - 1];
+                            new google.maps.Marker({
+                                position: lastLeg.end_location,
+                                map: App.map,
+                            });
+                        }
+                    }
+                });
+            }
+        }
+
+        window.onload = function() {
+            document.getElementById('mode-switcher').addEventListener('change', function() {
+                initialize();
+            });
+        };
+    </script>
+{% endblock %}
+
+
+{% block body %}
+    <div class="home-container7">
+        <div id="map-canvas"></div>
+        <ol id="panel"></ol>
+
+        <div class="trip-container-text">
+            <div> Restid: {{ trip['duration']}} min</div>
+            <div> Kostnad: {{ trip['cost']}} kr</div>
+            <br></br>
+
+            {% for waypoint in trip['waypoints'] %}
+                <div>Ressätt: {{ waypoint['mode'] }} </div>
+                <div>Starttime | Startlocation </div>
+                <!-- <div>Starttime {{ waypoint['startAdress'] }} </div> -->
+                <!-- <div> Starttime  </div> -->
+                <div> |</div>
+                <div>Destinationtime | Destinationlocation </div>
+                <!-- <div>Endtime {{ waypoint['destinationAdress'] }} </div> -->
+                <!-- <div> Endtime </div> -->
+                <div>. . . . . .</div>
+            {% endfor %}
+        </div>
+
+
+
+        <!-- test -->
+        <p>{{ trip['instructions'] }}</p>
+    </div>
+
+    <div id="trip" hidden>
+        {% for waypoint in trip['waypoints'] %}
+            <div class="waypoint">
+                <div class="start">{{ waypoint['start'] }}</div>
+                <div class="end">{{ waypoint['destination'] }}</div>
+                <div class="mode">{{ waypoint['mode'] }}</div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

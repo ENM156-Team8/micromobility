@@ -4,7 +4,8 @@ from globals import coordinatePair, vtApiType, googleTripMode, googleApiMode, tr
 from pprint import pprint
 import json
 from openapi_client.models.vt_api_planera_resa_web_v4_models_journey_transport_mode import VTApiPlaneraResaWebV4ModelsJourneyTransportMode
-from main import getSosTrip, getGoogleTrip
+from findSosTrip import getSosTrip, getGoogleTrip
+import time
 
 class vtStation:
 
@@ -32,8 +33,8 @@ class vtJourney:
     
 
 
-#Uesd in conjunction with locations_by_coordiantes_get to create a list of nearby stations
-#On index = 0 is the closest station
+# Used in conjunction with locations_by_coordiantes_get to create a list of nearby stations
+# On index = 0 is the closest station
 def createStations(response):
     #print(res)
     stations = []
@@ -99,7 +100,6 @@ def getVtJourneyStats(response) -> vtJourney:
 
 def checkVtJourney(start: coordinatePair, end: coordinatePair, journey : vtJourney):
     radius = 4000 
-    isNewJourney = False
     if journey.nr_connections > 0: # kan flyttas ut 
         stations = createStations(apiCallerVt(start, end, vtApiType.LOCATION, radius))
 
@@ -115,10 +115,9 @@ def checkVtJourney(start: coordinatePair, end: coordinatePair, journey : vtJourn
             response = journey_api.journeys_get(origin_latitude=station.coord.latitude, origin_longitude=station.coord.longitude, destination_latitude=end.latitude, destination_longitude=end.longitude, transport_modes=[VTApiPlaneraResaWebV4ModelsJourneyTransportMode.TRAM, VTApiPlaneraResaWebV4ModelsJourneyTransportMode.BUS], only_direct_connections=True)
             #print(response.json())
             if len(response.results) > 0:
-                isNewJourney = True
-                return getVtJourneyStats(response), isNewJourney
-    print("No new journey was found")
-    return journey, isNewJourney
+                return getVtJourneyStats(response)
+    # print("No new journey was found")
+    return None
 
 
 def combineVtAndSos(start: coordinatePair, vt: vtJourney):
@@ -131,7 +130,6 @@ def combineVtAndSos(start: coordinatePair, vt: vtJourney):
     sosVtTrip = trip(waypoints = way,
                 duration = newTripTotalTime,
                 cost = cost)
-     
     return sosVtTrip #(list of waypoints including start cord, end cord and transportmode for each tripleg)
 
 
@@ -155,51 +153,15 @@ def getTripSuggestions(start: coordinatePair, end: coordinatePair): # return dic
     vtOriginal = getVtJourneyStats(response)
     tripDictionary["originalJourney"] =  trip(waypoints = vtOriginal.waypoints,
                                             duration = vtOriginal.time,
-                                            cost = 35)#garanterad en trip
+                                            cost = 35) # garanterad en trip
    
     vtTrip = checkVtJourney(start, end, vtOriginal)
-    if vtTrip[1]: # true, there is a new jour
-        combinedVtAndSos: trip = combineVtAndSos(start, vtTrip[0]) #garanterat en trip
-        combinedVtAndVoi: trip = combineVtAndVoi(start, vtTrip[0]) #garanterat en trip
-        tripDictionary["combinedTrips"] = {combinedVtAndSos, combinedVtAndVoi}
+    #print(vtTrip)
+    t0 = time.time()
+    if not vtTrip == None: # true, there is a new jour
+        combinedVtAndSos: trip = combineVtAndSos(start, vtTrip) #garanterat en trip
+        combinedVtAndVoi: trip = combineVtAndVoi(start, vtTrip) #garanterat en trip
+        tripDictionary["combinedVtAndSosTrips"] = combinedVtAndSos
+        tripDictionary["combinedVtAndVoiTrips"] = combinedVtAndVoi
+    print("--- %s seconds ---" % (time.time() - t0))
     return tripDictionary
-        
- 
-
-
-#______main______
-def main():
-    testCordStart = coordinatePair(57.690012, 11.972992)  # Chalmersplatsen
-    testCordEnd = _getCordByName("Studiegången")  
-    print("THE ANSWER _________________________\n", getTripSuggestions(testCordStart, testCordEnd))
-
-    #response = location_api.locations_by_coordinates_get(57.690012, 11.972992, radius_in_meters=radius)
-    # response = apiCallerVt(testCordStart, _getCordByName("Studiegången"), vtApiType.LOCATIONS, radius=radius)
-
-    # s = createStations(response)
-    # print(type(s[0].coord.latitude))
-
-    
-
-        
-
-
-
-    #bikeJourney2 = getSosTrip(start, vt.end) #start and end point for original trip
-    #if bikeJourney2 < originalJourney.getEstimatedTime:
-    #    return bikeJourney2 #(as list of waypoints)
-    #else:
-    #    return originalJourney #(as list of waypoints)
-        
-    # print(originalJourney.show())
-    # print(trip['new'].show())
-
-
-
-    # print(getNumberOfConnections(response1))
-    # print(estimatedTime(response1))
-    # print(response1.json())
-
-
-if __name__ == '__main__':
-    main()

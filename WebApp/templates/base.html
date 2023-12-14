@@ -1,0 +1,52 @@
+
+
+<!DOCTYPE html>
+<html lang="sv">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+        <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='app.js') }}"></script>
+        {% block head %}{% endblock %}
+    </head>
+    <body>
+        <div class="centered-body">
+            <div class="home-container">
+                <header data-role="Header" class="home-header">
+                    <a href="/">
+                        <img
+                            alt="logo"
+                            src="{{ url_for('static', filename='images/vasttrafik_logga.svg') }}"
+                            loading="lazy"
+                            class="home-image"
+                        />
+                    </a>
+
+                    <h1>Västtrafik microbilitet</h1>
+                    
+                    <div class="checkbox-wrapper-3">
+                        <input id="mode-switcher" name="light-dark-mode-switcher" aria-label="Switch Mode" type="checkbox">Light mode</input>
+                        <label for="mode-switcher" class="toggle"><span></span></label>
+                    </div>
+
+
+                </header>
+                
+
+                <!-- `{% block form %}{% endblock %}` is a template tag in the Django web framework. It
+                is used to define a block of content that can be overridden in child templates. -->
+
+                {%block body %}{% endblock %}
+                
+
+                <div id="githublink">
+                    <a href="https://github.com/ENM156-Team8/micromobility" target=”_blank”>
+                        <img src="{{ url_for('static', filename='images/github.svg') }}" alt="github" style="height: 70px;">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </body>  
+</html>
