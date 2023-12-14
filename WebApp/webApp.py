@@ -176,6 +176,15 @@ def index():
                     newTrip['travleModeList'] = travleModeList
                     #print(newTrip)
 
+                    """ for waypoint in newTrip['waypoints']:
+                        print("Start: ")
+                        print(waypoint['start'])
+                        waypoint['startAdress'] = get_location_by_coordinates(waypoint['start']).split(',', 1)[0]
+                        print("Destination: ")
+                        print(waypoint['destination'])
+                        waypoint['destinationAdress'] = get_location_by_coordinates(waypoint['destination']).split(',', 1)[0]
+                    """
+
                     trips.append(newTrip)
             trips = sorted(trips, key=lambda trip: trip['duration'])
         except Exception as error:
