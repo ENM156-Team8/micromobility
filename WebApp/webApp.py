@@ -203,8 +203,12 @@ def index():
     
     # if the request is GET
     else:
-        trips = session.pop('trips', []) 
+        #trips = session.pop('trips', []) 
         searchedTrip = session.pop('searchedTrip', searchedTrip)
+        if "trips" in session and searchedTrip is not None:
+            trips = session['trips']
+        else:
+            trips = []
         if searchedTrip is None:
             searchedTrip = tripObj("", "", "", "", True, True).to_dict()
         noTripSearchedError = session.pop('noTripSearchedError', "Sök en resa för att börja")
