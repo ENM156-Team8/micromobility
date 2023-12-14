@@ -10,6 +10,7 @@ from main import *
 from apiHandler import getMapsToken
 from colorama import Fore
 from datetime import datetime, timedelta
+from geopy.geocoders import Nominatim
 
 
 # get maps api key from file
@@ -59,6 +60,25 @@ def formatCoords(coords: str) -> str:
         coords = coords[1:-1]
     print("remove ():" + coords)
     return coords
+
+
+"""
+The function `get_location_by_coordinates` takes latitude and longitude coordinates as input and
+returns the corresponding address using the Nominatim geocoding service.
+
+:param lat: The latitude of the location you want to get the address for
+:param lon: The "lon" parameter represents the longitude coordinate of a location
+:return: the address of the location corresponding to the given latitude and longitude coordinates.
+"""
+geolocator = Nominatim(user_agent="VastTrafikMicrobilitet")
+def get_location_by_coordinates(coords):
+    """ coords = tuple(float(i) for i in coords.split(', '))
+    location = geolocator.reverse(coords, exactly_one=True) """
+    print("Coords: ", coords)
+    location = geolocator.reverse(coords, exactly_one=True)
+    print("Location: ", location)
+    print("Adress:", location.address)
+    return location.address
 
 
 app = Flask(__name__)  
@@ -146,7 +166,15 @@ def index():
                     if "travelMode" not in newTrip:
                         newTrip['travelMode'] = "tram"
 
-                    print(newTrip)
+                    """ for waypoint in newTrip['waypoints']:
+                        print("Start: ")
+                        print(waypoint['start'])
+                        waypoint['startAdress'] = get_location_by_coordinates(waypoint['start']).split(',', 1)[0]
+                        print("Destination: ")
+                        print(waypoint['destination'])
+                        waypoint['destinationAdress'] = get_location_by_coordinates(waypoint['destination']).split(',', 1)[0]
+                    """
+                    #print(newTrip)
 
                     trips.append(newTrip)
             trips = sorted(trips, key=lambda trip: trip['duration'])

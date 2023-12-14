@@ -133,9 +133,11 @@
             {% for waypoint in trip['waypoints'] %}
                 <div>Ressätt: {{ waypoint['mode'] }} </div>
                 <div>Starttime | Startlocation </div>
+                <!-- <div>Starttime {{ waypoint['startAdress'] }} </div> -->
                 <!-- <div> Starttime  </div> -->
                 <div> |</div>
                 <div>Destinationtime | Destinationlocation </div>
+                <!-- <div>Endtime {{ waypoint['destinationAdress'] }} </div> -->
                 <!-- <div> Endtime </div> -->
                 <div>. . . . . .</div>
             {% endfor %}
