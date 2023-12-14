@@ -75,7 +75,10 @@
                     <div class="trip-container-container2">
                         <div class="trip-container-location">
                             <span class="trip-container-text">
-                                <img src="{{ url_for('static', filename='images/mapicons/' + (trip['travelMode'] + '.png')) }}" alt="travlemode" style="height: 22px;">
+                                <!-- <img src="{{ url_for('static', filename='images/mapicons/' + (trip['travleModeList'][0] + '.png')) }}" alt="" style="height: 22px;"> -->
+                                {% for mode in trip['travleModeList'] %}
+                                    <img src="{{ url_for('static', filename='images/mapicons/' + (mode + '.png')) }}" alt="travlemode" style="height: 22px;">
+                                {% endfor %}
                                 <span>  {{ searchedTrip.startLocation.split(",")[0] }} - {{ searchedTrip.destinationLocation.split(",")[0] }}</span>
                             </span>
                             <div class="trip-container-time">

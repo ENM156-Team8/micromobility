@@ -144,6 +144,7 @@ def index():
         try:
             result = getTripSuggestions(startCoordsPair, destinationCoordsPair)
             for trip in result:
+                travleModeList = []
                 if result[trip] is not None:
                     newTrip = result[trip].to_dict()
                     newTrip['departure'] = datetime.now().strftime("%H:%M")
@@ -162,15 +163,17 @@ def index():
                                 break
                     if "travelMode" not in newTrip:
                         newTrip['travelMode'] = "tram"
-
-                    """ for waypoint in newTrip['waypoints']:
-                        print("Start: ")
-                        print(waypoint['start'])
-                        waypoint['startAdress'] = get_location_by_coordinates(waypoint['start']).split(',', 1)[0]
-                        print("Destination: ")
-                        print(waypoint['destination'])
-                        waypoint['destinationAdress'] = get_location_by_coordinates(waypoint['destination']).split(',', 1)[0]
-                    """
+                    
+                    for waypoint in newTrip['waypoints']:
+                        if waypoint['mode'] == "BICYCLING" and "bike" not in travleModeList:
+                            travleModeList.append("bike")
+                        elif waypoint['mode'] == "VOI" and "voi" not in travleModeList:
+                            travleModeList.append("voi")
+                        elif waypoint['mode'] == "TRANSIT" and "tram" not in travleModeList:
+                            travleModeList.append("tram")
+                    
+                    #print("travleModeList: " + str(travleModeList))
+                    newTrip['travleModeList'] = travleModeList
                     #print(newTrip)
 
                     trips.append(newTrip)
