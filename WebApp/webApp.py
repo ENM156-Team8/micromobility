@@ -93,7 +93,7 @@ def index():
         # get the coordinates from the form data
         startCoordsList: list[str] = formData.get('startLocationCoords').split(',')
         destinationCoordsList: list[str] = formData.get('destinationLocationCoords').split(',')
-        print(startCoordsList)
+        #print(startCoordsList)
         # create coordinatePair objects from the coordinates TODO send to main.py
         if len(startCoordsList) != 2 or len(destinationCoordsList) != 2:
             print("Error: invalid coordinates")

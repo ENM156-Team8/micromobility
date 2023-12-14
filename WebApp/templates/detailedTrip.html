@@ -125,6 +125,24 @@
         <div id="map-canvas"></div>
         <ol id="panel"></ol>
 
+        <div class="trip-container-text">
+            <div> Restid: {{ trip['duration']}} min</div>
+            <div> Kostnad: {{ trip['cost']}} kr</div>
+            <br></br>
+
+            {% for waypoint in trip['waypoints'] %}
+                <div>Ressätt: {{ waypoint['mode'] }} </div>
+                <div>Starttime | Startlocation </div>
+                <!-- <div> Starttime  </div> -->
+                <div> |</div>
+                <div>Destinationtime | Destinationlocation </div>
+                <!-- <div> Endtime </div> -->
+                <div>. . . . . .</div>
+            {% endfor %}
+        </div>
+
+
+
         <!-- test -->
         <p>{{ trip['instructions'] }}</p>
     </div>
