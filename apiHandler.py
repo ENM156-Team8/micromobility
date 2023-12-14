@@ -113,7 +113,7 @@ def apiCallerVt(start: coordinatePair, end: coordinatePair, apiType: vtApiType, 
             # urlEnd = '/journeys?originGid=' + \
             #     str(startGid) + '&destinationGid=' + \
             #     str(endGid)
-            response = journey_api.journeys_get(origin_latitude=start.latitude, origin_longitude=start.longitude, destination_latitude=end.latitude, destination_longitude=end.longitude, transport_modes=[VTApiPlaneraResaWebV4ModelsJourneyTransportMode.TRAM, VTApiPlaneraResaWebV4ModelsJourneyTransportMode.BUS, VTApiPlaneraResaWebV4ModelsJourneyTransportMode.WALK])
+            response = journey_api.journeys_get(origin_latitude=start.latitude, origin_longitude=start.longitude, destination_latitude=end.latitude, destination_longitude=end.longitude, transport_modes=[VTApiPlaneraResaWebV4ModelsJourneyTransportMode.TRAM, VTApiPlaneraResaWebV4ModelsJourneyTransportMode.BUS])
         case apiType.LOCATION:
             response = location_api.locations_by_coordinates_get(start.latitude, start.longitude, radius_in_meters=radius, types = [VTApiPlaneraResaWebV4ModelsLocationByCoordinatesType.STOPPOINT, VTApiPlaneraResaWebV4ModelsLocationByCoordinatesType.STOPAREA], limit=100)
         

@@ -184,10 +184,12 @@ def getTripSuggestions(start: coordinatePair, end: coordinatePair): # return dic
         combinedVtAndVoi: trip = combineVtAndVoi(start, vtTrip) #garanterat en trip
         if vtTrip.end != end:
             endWalk = getGoogleTrip(vtTrip.end, end, googleTripMode.WALK)
-            combinedVtAndSos.waypoints = combinedVtAndSos.waypoints + endWalk.waypoints
             combinedVtAndVoi.waypoints = combinedVtAndVoi.waypoints + endWalk.waypoints
-            combinedVtAndSos.duration = combinedVtAndSos.duration + endWalk.duration
             combinedVtAndVoi.duration = combinedVtAndVoi.duration + endWalk.duration
+            if combinedVtAndSos != None:
+                combinedVtAndSos.duration = combinedVtAndSos.duration + endWalk.duration
+                combinedVtAndSos.waypoints = combinedVtAndSos.waypoints + endWalk.waypoints
+
 
             
        
