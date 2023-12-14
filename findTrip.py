@@ -1,4 +1,4 @@
-
+import threading
 from apiHandler import *
 from globals import coordinatePair, vtApiType, googleTripMode, googleApiMode, trip, waypoint
 from pprint import pprint
@@ -100,24 +100,40 @@ def getVtJourneyStats(response) -> vtJourney:
 
 def checkVtJourney(start: coordinatePair, end: coordinatePair, journey : vtJourney):
     radius = 4000 
+    possibleTrips = []
     if journey.nr_connections > 0: # kan flyttas ut 
         stations = createStations(apiCallerVt(start, end, vtApiType.LOCATION, radius))
 
-        # for station in stations:
-        #     print(station.show())
+        threads = list()
+        for station in stations:
+            ("starting thread")
+            x = threading.Thread(
+                target=parallelCheckVtJourney, args=(station, end, possibleTrips)
+            )
+            threads.append(x)
+            x.start()
 
-        if len(stations) >= 30:
-            farAway = stations[len(stations)-30:]
-        else:
-            farAway = stations 
-
-        for station in farAway:
-            response = journey_api.journeys_get(origin_latitude=station.coord.latitude, origin_longitude=station.coord.longitude, destination_latitude=end.latitude, destination_longitude=end.longitude, transport_modes=[VTApiPlaneraResaWebV4ModelsJourneyTransportMode.TRAM, VTApiPlaneraResaWebV4ModelsJourneyTransportMode.BUS], only_direct_connections=True)
-            #print(response.json())
-            if len(response.results) > 0:
-                return getVtJourneyStats(response)
+        for thread in threads:
+             thread.join()
     # print("No new journey was found")
-    return None
+    if len(possibleTrips) == 0:
+        return None
+
+    bestTrip = possibleTrips[0]
+    for trip in possibleTrips:
+        if trip.time < bestTrip.time:
+            bestTrip = trip
+    return bestTrip
+
+def parallelCheckVtJourney(station, end: coordinatePair, possibleTrips: list):
+    try:
+        response = journey_api.journeys_get(origin_latitude=station.coord.latitude, origin_longitude=station.coord.longitude, destination_latitude=end.latitude, destination_longitude=end.longitude, transport_modes=[VTApiPlaneraResaWebV4ModelsJourneyTransportMode.TRAM, VTApiPlaneraResaWebV4ModelsJourneyTransportMode.BUS], only_direct_connections=True)
+        #print(response.json())
+        if len(response.results) > 0:
+            possibleTrips.append(getVtJourneyStats(response))
+    except:
+        print("Error from client in checkVtJourney")
+    return 1
 
 
 def combineVtAndSos(start: coordinatePair, vt: vtJourney):
