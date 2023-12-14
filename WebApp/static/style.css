@@ -254,11 +254,24 @@ form {
   .home-container7 {
     flex: 1;
     width: 80%;
-    border: 2px dashed rgba(120, 120, 120, 0.4);
+    /* border: 2px dashed rgba(120, 120, 120, 0.4); */
     height: auto;
     display: flex;
     align-items: flex-start;
     flex-direction: column;
+  }
+  hr{
+    border: 0;
+    height: 1px;
+    width: 80%;
+    color: #ccc;
+    background: #ccc;
+    background-image: linear-gradient(to right, #333, #ccc, #333);
+  }
+  body.light-mode hr{
+    color: var(--background-color-dark);
+    background: #ccc;
+    background-image: linear-gradient(to right, #ccc, #333, #ccc);
   }
   @media(max-width: 767px) {
     .home-header {
