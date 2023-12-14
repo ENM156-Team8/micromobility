@@ -167,8 +167,13 @@ def getTripSuggestions(start: coordinatePair, end: coordinatePair): # return dic
     tripDictionary["sosTrip"] = getSosTrip(start, end) #garanterad en trip
     response = apiCallerVt(start, end, vtApiType.JOURNEY, radius=1000)
     vtOriginal = getVtJourneyStats(response)
-    tripDictionary["originalJourney"] =  trip(waypoints = vtOriginal.waypoints,
-                                            duration = vtOriginal.time,
+    if vtOriginal.end != end:
+        endWalk = getGoogleTrip(vtOriginal.end, end, googleTripMode.WALK)
+    if vtOriginal.start != start:
+        startWalk = getGoogleTrip(vtOriginal.start, start, googleTripMode.WALK)
+
+    tripDictionary["originalJourney"] =  trip(waypoints = startWalk.waypoints + vtOriginal.waypoints + endWalk.waypoints,
+                                            duration = startWalk.duration + vtOriginal.time + endWalk.duration,
                                             cost = 35) # garanterad en trip
    
     vtTrip = checkVtJourney(start, end, vtOriginal)
@@ -177,6 +182,15 @@ def getTripSuggestions(start: coordinatePair, end: coordinatePair): # return dic
     if not vtTrip == None: # true, there is a new jour
         combinedVtAndSos: trip = combineVtAndSos(start, vtTrip) #garanterat en trip
         combinedVtAndVoi: trip = combineVtAndVoi(start, vtTrip) #garanterat en trip
+        if vtTrip.end != end:
+            endWalk = getGoogleTrip(vtTrip.end, end, googleTripMode.WALK)
+            combinedVtAndSos.waypoints = combinedVtAndSos.waypoints + endWalk.waypoints
+            combinedVtAndVoi.waypoints = combinedVtAndVoi.waypoints + endWalk.waypoints
+            combinedVtAndSos.duration = combinedVtAndSos.duration + endWalk.duration
+            combinedVtAndVoi.duration = combinedVtAndVoi.duration + endWalk.duration
+
+            
+       
         tripDictionary["combinedVtAndSosTrips"] = combinedVtAndSos
         tripDictionary["combinedVtAndVoiTrips"] = combinedVtAndVoi
     print("--- %s seconds ---" % (time.time() - t0))
